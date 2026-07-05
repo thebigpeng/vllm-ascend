@@ -28,6 +28,7 @@ class MoECommType(Enum):
     MC2 = 1
     ALLTOALL = 2
     FUSED_MC2 = 3
+    ZBAL = 4
 
 
 @contextmanager
@@ -233,6 +234,17 @@ def select_moe_comm_method(num_tokens: int, vllm_config: VllmConfig, is_draft_mo
         "moe_quantize",
         getattr(vllm_config.model_config.hf_text_config, "quantize", None),
     )
+
+    # ZBAL MoE communication takes priority when explicitly enabled.
+    # ZBAL requires multi-rank all-to-all, so it is only selected when
+    # expert parallel is enabled with EP size > 1.
+    if (
+        envs_ascend.VLLM_ASCEND_ZBAL_MOE_ENABLE
+        and envs_ascend.VLLM_ASCEND_ZBAL_LOCAL_MEM_SIZE > 0
+        and vllm_config.parallel_config.enable_expert_parallel
+        and get_ep_group().world_size > 1
+    ):
+        return MoECommType.ZBAL
 
     if not vllm_config.parallel_config.enable_expert_parallel or get_ep_group().world_size == 1:
         moe_comm_type = MoECommType.ALLGATHER

@@ -57,6 +57,10 @@ def setup_moe_comm_method(moe_config):
     _MoECommMethods[MoECommType.ALLGATHER] = AllGatherCommImpl(moe_config)
     _MoECommMethods[MoECommType.MC2] = MC2CommImpl(moe_config)
     _MoECommMethods[MoECommType.FUSED_MC2] = FusedMC2CommImpl(moe_config)
+    # Register ZBAL MoE communication method when enabled.
+    if envs_ascend.VLLM_ASCEND_ZBAL_MOE_ENABLE and envs_ascend.VLLM_ASCEND_ZBAL_LOCAL_MEM_SIZE > 0:
+        from vllm_ascend.ops.fused_moe.zbal_moe_comm import ZBALCommImpl
+        _MoECommMethods[MoECommType.ZBAL] = ZBALCommImpl(moe_config)
 
 
 def set_gmmswigluquant_method():
