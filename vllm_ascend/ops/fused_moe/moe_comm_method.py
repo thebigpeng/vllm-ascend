@@ -44,7 +44,6 @@ from vllm_ascend.ops.fused_moe.token_dispatcher import (
     TokenDispatcherWithMC2,
 )
 from vllm_ascend.quantization.quant_type import QuantType
-from vllm_ascend.ops.fused_moe.zbal_moe_comm import ZBALCommImpl
 
 _MoECommMethods: dict[MoECommType | None, MoECommMethod] = {}
 
@@ -54,6 +53,8 @@ def get_moe_comm_method(moe_comm_type: MoECommType | None) -> MoECommMethod | No
 
 
 def setup_moe_comm_method(moe_config):
+    from vllm_ascend.ops.fused_moe.zbal_moe_comm import ZBALCommImpl
+
     _MoECommMethods[MoECommType.ALLTOALL] = AlltoAllCommImpl(moe_config)
     _MoECommMethods[MoECommType.ALLGATHER] = AllGatherCommImpl(moe_config)
     _MoECommMethods[MoECommType.MC2] = MC2CommImpl(moe_config)
