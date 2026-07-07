@@ -560,7 +560,6 @@ class NPUWorker(WorkerBase):
                     self.device, self.local_rank, self.rank,
                     self.parallel_config.world_size,
                 )
-                self.model_runner.profile_run()
 
     def profile(self, is_start: bool = True, profile_prefix: str | None = None):
         # Check if profiling is enabled (RFC #6954 - align with upstream vLLM)
