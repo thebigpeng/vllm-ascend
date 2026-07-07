@@ -112,6 +112,36 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         topk_weights = token_dispatch_input.topk_weights
         topk_ids = token_dispatch_input.topk_ids
 
+        # ZBAL does not support dynamic expert placement (EPLB) yet.
+        # The dispatch kernel assumes uniform expert distribution:
+        # dstRankId = dstExpertId / moeExpertNumPerRank.
+        if token_dispatch_input.routing.expert_map is not None:
+            raise NotImplementedError(
+                "ZBAL MoE communication does not support expert_map (EPLB) yet. "
+                "Please disable dynamic EPLB or use a different MoE comm method."
+            )
+
+        # ZBAL combine kernel always applies topk_weights (weighted reduction).
+        # When apply_router_weight_on_input=True, weights are already
+        # pre-multiplied into hidden_states, so combine must use ones to avoid
+        # double weighting.
+        apply_router_weight_on_input = (
+            token_dispatch_input.routing.apply_router_weight_on_input
+        )
+        if apply_router_weight_on_input:
+            assert topk_weights.dim() == 2, (
+                "`topk_weights` should be in shape (num_tokens, topk)"
+            )
+            _, topk = topk_weights.shape
+            assert topk == 1, (
+                "Only support topk=1 when `apply_router_weight_on_input` is True"
+            )
+            hidden_states = hidden_states * topk_weights.to(hidden_states.dtype)
+            combine_weights = torch.ones_like(topk_weights, dtype=torch.float32)
+        else:
+            # ZBAL C++ combine kernel requires float32 topk_weights.
+            combine_weights = topk_weights.to(torch.float32)
+
         logger.debug(
             "[TokenDispatcherWithZBAL] Dispatching tokens: "
             "hidden_states.shape=%s, topk_ids.shape=%s",
@@ -132,10 +162,11 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             )
         else:
             # Pass topk_weights so zbal can forward them to receiving ranks.
+            # In standard mode, the handle stores these weights for combine.
             recv_x, recv_topk_idx, handle_dict = self._adapter.dispatch(
                 x=hidden_states,
                 topk_idx=topk_idx,
-                topk_weights=topk_weights,
+                topk_weights=combine_weights,
             )
 
         # Build group_list for MLP computation.
@@ -153,7 +184,7 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
 
         combine_metadata = MoEZBALCombineMetadata(
             topk_ids=topk_ids,
-            topk_weights=topk_weights,
+            topk_weights=combine_weights,
             handle=handle_dict["handle"],
             num_recv_tokens_per_expert_list=num_recv_tokens_per_expert_list,
         )
@@ -183,6 +214,9 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         )
 
         topk_weights = combine_metadata.topk_weights
+        # ZBAL C++ combine kernel requires float32 topk_weights.
+        if topk_weights.dtype != torch.float32:
+            topk_weights = topk_weights.to(torch.float32)
         handle = combine_metadata.handle
 
         # Use standard or low-latency combine based on config.
