@@ -153,9 +153,14 @@ class ZBALMoEAdapter:
         )
 
         # Step 2: Execute dispatch (pass topk_weights so zbal can forward them).
+        # ZBAL buffer.dispatch returns 6 values:
+        # (recv_x, recv_topk_idx, recv_topk_weights,
+        #  num_recv_tokens_per_expert_list, handle, event)
+        # In non-quant mode recv_x is a tensor; in quant mode
+        # (DEEP_NORMAL_MODE_USE_INT8_QUANT=1) recv_x is a tuple
+        # (recv_x, recv_x_scales).
         (
             recv_x,
-            _recv_x_scales,
             recv_topk_idx,
             recv_topk_weights,
             num_recv_tokens_per_expert_list,
@@ -177,6 +182,11 @@ class ZBALMoEAdapter:
             allocate_on_comm_stream=allocate_on_comm_stream,
         )
 
+        # Unpack recv_x in quant mode (tuple of tensor + scales).
+        recv_x_scales = None
+        if isinstance(recv_x, tuple):
+            recv_x, recv_x_scales = recv_x
+
         handle_dict = {
             "handle": handle,
             "event": dispatch_event,
@@ -190,7 +200,7 @@ class ZBALMoEAdapter:
             "[ZBALMoEAdapter] Dispatch completed: recv_x.shape=%s", recv_x.shape
         )
 
-        return recv_x, recv_topk_idx, handle_dict
+        return recv_x, recv_topk_idx, handle_dict, recv_x_scales
 
     def combine(
         self,

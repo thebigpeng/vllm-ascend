@@ -154,6 +154,7 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         topk_idx = topk_ids.to(torch.int64)
 
         # Use standard or low-latency dispatch based on config.
+        recv_x_scales = None
         if envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY:
             num_max_tokens_per_rank = hidden_states.shape[0]
             recv_x, recv_count, handle_dict, event = self._adapter.low_latency_dispatch(
@@ -165,7 +166,7 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         else:
             # Pass topk_weights so zbal can forward them to receiving ranks.
             # In standard mode, the handle stores these weights for combine.
-            recv_x, recv_topk_idx, handle_dict = self._adapter.dispatch(
+            recv_x, recv_topk_idx, handle_dict, recv_x_scales = self._adapter.dispatch(
                 x=hidden_states,
                 topk_idx=topk_idx,
                 topk_weights=combine_weights,
@@ -201,6 +202,7 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             group_list=group_list,
             group_list_type=1,
             combine_metadata=combine_metadata,
+            dynamic_scale=recv_x_scales,
         )
 
     def token_combine(
