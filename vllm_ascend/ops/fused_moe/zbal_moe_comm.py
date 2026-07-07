@@ -112,12 +112,14 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         topk_weights = token_dispatch_input.topk_weights
         topk_ids = token_dispatch_input.topk_ids
 
-        # ZBAL does not support dynamic expert placement (EPLB) yet.
-        # The dispatch kernel assumes uniform expert distribution:
-        # dstRankId = dstExpertId / moeExpertNumPerRank.
-        if token_dispatch_input.routing.expert_map is not None:
+        # ZBAL dispatch kernel routes tokens by dstExpertId / moeExpertNumPerRank,
+        # which assumes uniform expert distribution. EPLB (dynamic expert
+        # rebalancing) uses log2phy to remap expert indices, breaking this
+        # assumption. expert_map alone (without log2phy) is fine — it just marks
+        # which experts are local and ZBAL handles routing correctly.
+        if token_dispatch_input.routing.log2phy is not None:
             raise NotImplementedError(
-                "ZBAL MoE communication does not support expert_map (EPLB) yet. "
+                "ZBAL MoE communication does not support EPLB (log2phy) yet. "
                 "Please disable dynamic EPLB or use a different MoE comm method."
             )
 
