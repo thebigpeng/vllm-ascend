@@ -1,0 +1,96 @@
+File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2495, in _dummy_run
+(Worker_TP2_EP2 pid=7392) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     outputs = self._model_forward(
+(Worker_TP2_EP2 pid=7392) ERROR 07-07 12:33:52 [multiproc_executor.py:932]               ^^^^^^^^^^^^^^^^^^^^
+(WoFile "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/fx/graph_module.py", line 400, in __call__
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     return super(self.cls, obj).__call__(*args, **kwargs)  # type: ignore[misc]
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     return self._call_impl(*args, **kwargs)
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     return forward_call(*args, **kwargs)
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "<eval_with_key>.110", line 15, in forward
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     moe_forward_default = torch.ops.vllm.moe_forward.default(alias_default, unquantized_gemm_1, None, 'from_forward_context');  alias_default = unquantized_gemm_1 = None
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_ops.py", line 841, in __call__
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     return self._op(*args, **kwargs)
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]            ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/model_executor/layers/fused_moe/runner/default_moe_runner.py", line 85, in _moe_forward
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     return layer.runner.forward_impl(
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 280, in forward_impl
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     result = layer.forward_impl(hidden_states, router_logits)
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 730, in forward_impl
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     fused_moe_results = AscendFusedMoE.forward_impl(
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 512, in forward_impl
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     fused_experts_results: FusedExpertsResult = self.quant_method.apply(
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 184, in apply
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     final_hidden_states = moe_comm_method.fused_experts(
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/moe_comm_method.py", line 140, in fused_experts
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     token_dispatch_output = self.token_dispatcher.token_dispatch(token_dispatch_input=token_dispatch_input)
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/zbal_moe_comm.py", line 168, in token_dispatch
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     recv_x, recv_topk_idx, handle_dict = self._adapter.dispatch(
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]                                          ^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/zbal_moe_adapter.py", line 156, in dispatch
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     (
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932] ValueError: not enough values to unpack (expected 7, got 6)
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932] Traceback (most recent call last):
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 927, in worker_busy_loop
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     output = func(*args, **kwargs)
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 306, in initialize_from_config
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     self.worker.initialize_from_config(kv_cache_config)  # type: ignore
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 563, in initialize_from_config
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     self.model_runner.profile_run()
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2553, in profile_run
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     super().profile_run()
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 5516, in profile_run
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     hidden_states, last_hidden_states = self._dummy_run(
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]                                         ^^^^^^^^^^^^^^^^
+(Worker_TP1_EP1 pid=7391) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/fx/graph_module.py", line 400, in __call__
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     return super(self.cls, obj).__call__(*args, **kwargs)  # type: ignore[misc]
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     return self._call_impl(*args, **kwargs)
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     return forward_call(*args, **kwargs)
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "<eval_with_key>.110", line 15, in forward
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     moe_forward_default = torch.ops.vllm.moe_forward.default(alias_default, unquantized_gemm_1, None, 'from_forward_context');  alias_default = unquantized_gemm_1 = None
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_ops.py", line 841, in __call__
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     return self._op(*args, **kwargs)
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]            ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/model_executor/layers/fused_moe/runner/default_moe_runner.py", line 85, in _moe_forward
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     return layer.runner.forward_impl(
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 280, in forward_impl
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     result = layer.forward_impl(hidden_states, router_logits)
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 730, in forward_impl
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     fused_moe_results = AscendFusedMoE.forward_impl(
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 512, in forward_impl
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     fused_experts_results: FusedExpertsResult = self.quant_method.apply(
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 184, in apply
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     final_hidden_states = moe_comm_method.fused_experts(
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/moe_comm_method.py", line 140, in fused_experts
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     token_dispatch_output = self.token_dispatcher.token_dispatch(token_dispatch_input=token_dispatch_input)
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/zbal_moe_comm.py", line 168, in token_dispatch
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     recv_x, recv_topk_idx, handle_dict = self._adapter.dispatch(
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]                                          ^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/zbal_moe_adapter.py", line 156, in dispatch
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932]     (
+(Worker_TP0_EP0 pid=7390) ERROR 07-07 12:33:52 [multiproc_executor.py:932] ValueError: not enough values to unpack (expected 7, got 6)
