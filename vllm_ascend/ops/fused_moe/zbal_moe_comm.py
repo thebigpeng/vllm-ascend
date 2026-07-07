@@ -173,17 +173,18 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             )
 
         # Build group_list for MLP computation.
+        # npu_grouped_matmul requires int64 group_list.
         num_recv_tokens_per_expert_list = handle_dict.get(
             "num_recv_tokens_per_expert_list", []
         )
         if num_recv_tokens_per_expert_list:
             group_list = torch.tensor(
                 num_recv_tokens_per_expert_list,
-                dtype=torch.int32,
+                dtype=torch.int64,
                 device=hidden_states.device,
             )
         else:
-            group_list = torch.zeros(1, dtype=torch.int32, device=hidden_states.device)
+            group_list = torch.zeros(1, dtype=torch.int64, device=hidden_states.device)
 
         combine_metadata = MoEZBALCombineMetadata(
             topk_ids=topk_ids,
