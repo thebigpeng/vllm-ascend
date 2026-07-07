@@ -354,6 +354,9 @@ class AscendFusedMoE(FusedMoE):
         self.moe_config.num_experts = self.global_num_experts
         self.moe_config.num_local_experts = self.local_num_experts
         self.moe_config.global_redundant_expert_num = self.global_redundant_expert_num
+        # Expose hidden_size on moe_config so that MoE comm methods (e.g. ZBAL)
+        # can resolve it during __init__ without reaching back into the layer.
+        self.moe_config.hidden_size = self.hidden_size
 
         moe_quant_params = {
             "num_experts": self.local_num_experts,

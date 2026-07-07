@@ -43,6 +43,8 @@ from vllm_ascend.ops.fused_moe.prepare_finalize import (
     PrepareAndFinalizeWithAll2All,
 )
 from vllm_ascend.ops.fused_moe.token_dispatcher import MoETokenDispatcher
+from vllm_ascend.ops.fused_moe.zbal_moe_adapter import ZBALMoEAdapter
+
 
 logger = logging.getLogger(__name__)
 
@@ -70,32 +72,23 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
     """
 
     def __init__(self, **kwargs):
-        from vllm_ascend.ops.fused_moe.zbal_moe_adapter import ZBALMoEAdapter
-
         super().__init__(**kwargs)
 
-        device_group = get_ep_group().device_group
-        num_experts = kwargs.get("num_experts", 0)
+        self.device_group = get_ep_group().device_group
+        self.num_experts = kwargs.get("num_experts", 0)
         # hidden_size is required for ZBAL buffer initialization.
-        hidden_size = kwargs.get("hidden_size", 0)
-        if hidden_size == 0:
+        self.hidden_size = kwargs.get("hidden_size", 0)
+        if self.hidden_size == 0:
             raise ValueError(
                 "hidden_size must be provided to TokenDispatcherWithZBAL"
             )
 
         # Read buffer sizes from environment variables.
-        num_nvl_bytes = envs_ascend.VLLM_ASCEND_ZBAL_MOE_NVL_BYTES
-        num_rdma_bytes = envs_ascend.VLLM_ASCEND_ZBAL_MOE_RDMA_BYTES
-        low_latency_mode = envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY
+        self.num_nvl_bytes = envs_ascend.VLLM_ASCEND_ZBAL_MOE_NVL_BYTES
+        self.num_rdma_bytes = envs_ascend.VLLM_ASCEND_ZBAL_MOE_RDMA_BYTES
+        self.low_latency_mode = envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY
 
-        self._adapter = ZBALMoEAdapter(
-            group=device_group,
-            num_experts=num_experts,
-            hidden_size=hidden_size,
-            num_nvl_bytes=num_nvl_bytes,
-            num_rdma_bytes=num_rdma_bytes,
-            low_latency_mode=low_latency_mode,
-        )
+        self._adapter = None
 
         self.ep_rank_id = get_ep_group().rank_in_group
         self.ep_world_size = get_ep_group().world_size
@@ -104,6 +97,16 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         self,
         token_dispatch_input: MoETokenDispatchInput,
     ) -> MoETokenDispatchOutput[MoEZBALCombineMetadata]:
+        if self._adapter is None:
+            self._adapter = ZBALMoEAdapter(
+                group=self.device_group,
+                num_experts=self.num_experts,
+                hidden_size=self.hidden_size,
+                num_nvl_bytes=self.num_nvl_bytes,
+                num_rdma_bytes=self.num_rdma_bytes,
+                low_latency_mode=self.low_latency_mode,
+            )
+
         """Dispatch tokens to expert ranks using ZBAL Buffer."""
         hidden_states = token_dispatch_input.hidden_states
         topk_weights = token_dispatch_input.topk_weights
@@ -229,10 +232,12 @@ class ZBALCommImpl(MoECommMethod):
                 "ZBAL MoE is not enabled. Please set VLLM_ASCEND_ZBAL_MOE_ENABLE=1"
             )
 
-        super().__init__(moe_config)
-
-        # Determine hidden_size from moe_config for ZBAL buffer initialization.
+        # Resolve hidden_size BEFORE super().__init__(): the parent ctor calls
+        # _get_token_dispatcher(), which reads self._hidden_size. Setting it
+        # afterwards triggers AttributeError.
         self._hidden_size = self._resolve_hidden_size(moe_config)
+
+        super().__init__(moe_config)
 
         logger.info(
             "[ZBALCommImpl] Initialized ZBAL MoE communication method "
