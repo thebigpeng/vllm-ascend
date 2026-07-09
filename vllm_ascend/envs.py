@@ -122,6 +122,18 @@ env_variables: dict[str, Callable[[], Any]] = {
     # Optional bootstrap URL for multi-node zbal initialization.
     # If not set, zbal derives the address from MASTER_ADDR/MASTER_PORT.
     "VLLM_ASCEND_ZBAL_BOOTSTRAP_URL": lambda: os.getenv("VLLM_ASCEND_ZBAL_BOOTSTRAP_URL", ""),
+    # Whether to enable ZBAL buffer for MoE dispatch/combine communication.
+    # This provides DeepEP-like functionality using ZBAL's high-throughput
+    # intranode all-to-all communication. Requires ZBAL to be enabled
+    # (VLLM_ASCEND_ZBAL_LOCAL_MEM_SIZE > 0).
+    # 0 (default): disabled, uses standard MoE communication methods.
+    # 1: enabled, uses ZBAL Buffer for MoE dispatch/combine.
+    "VLLM_ASCEND_ZBAL_MOE_ENABLE": lambda: bool(int(os.getenv("VLLM_ASCEND_ZBAL_MOE_ENABLE", "0"))),
+    # Whether to use ZBAL low-latency mode for MoE dispatch/combine.
+    # Only effective when VLLM_ASCEND_ZBAL_MOE_ENABLE=1.
+    # 0 (default): use standard dispatch/combine.
+    # 1: use low-latency dispatch/combine for online serving.
+    "VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY": lambda: bool(int(os.getenv("VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY", "0"))),
 }
 
 # end-env-vars-definition

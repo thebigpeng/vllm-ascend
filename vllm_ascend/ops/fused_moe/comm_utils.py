@@ -20,6 +20,8 @@ import torch.distributed
 import torch.distributed as dist
 import torch_npu
 
+from vllm_ascend.distributed.zbal_utils import is_zbal_enabled
+
 COMM_STREAM = None
 
 
@@ -34,9 +36,7 @@ def async_all_to_all(input_, output_split_sizes, input_split_sizes, group, event
             dtype=input_.dtype,
             device=torch.npu.current_device(),
         )
-
-    if event:
-        # multi stream wait event
+    if event and not is_zbal_enabled():
         global COMM_STREAM
         if COMM_STREAM is None:
             COMM_STREAM = torch_npu.npu.Stream(device=torch.npu.current_device())
