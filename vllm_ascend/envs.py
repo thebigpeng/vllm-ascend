@@ -122,6 +122,30 @@ env_variables: dict[str, Callable[[], Any]] = {
     # Optional bootstrap URL for multi-node zbal initialization.
     # If not set, zbal derives the address from MASTER_ADDR/MASTER_PORT.
     "VLLM_ASCEND_ZBAL_BOOTSTRAP_URL": lambda: os.getenv("VLLM_ASCEND_ZBAL_BOOTSTRAP_URL", ""),
+    # Whether to enable ZBAL buffer for MoE dispatch/combine communication.
+    # This provides DeepEP-like functionality using ZBAL's high-throughput
+    # intranode all-to-all communication. Requires ZBAL to be enabled
+    # (VLLM_ASCEND_ZBAL_LOCAL_MEM_SIZE > 0).
+    # 0 (default): disabled, uses standard MoE communication methods.
+    # 1: enabled, uses ZBAL Buffer for MoE dispatch/combine.
+    "VLLM_ASCEND_ZBAL_MOE_ENABLE": lambda: bool(int(os.getenv("VLLM_ASCEND_ZBAL_MOE_ENABLE", "0"))),
+    # Whether to use ZBAL low-latency mode for MoE dispatch/combine.
+    # Only effective when VLLM_ASCEND_ZBAL_MOE_ENABLE=1.
+    # 0 (default): use standard dispatch/combine.
+    # 1: use low-latency dispatch/combine for online serving.
+    "VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY": lambda: bool(int(os.getenv("VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY", "0"))),
+    # Static cap for ZBAL low-latency dispatch buffer. The RDMA buffer is
+    # allocated ONCE based on this value at adapter construction time and
+    # reused across forward passes. The same value is passed as
+    # `num_max_dispatch_tokens_per_rank` to every `low_latency_dispatch` call.
+    # Any forward whose `hidden_states.shape[0]` exceeds this cap will
+    # transparently fall back to the normal (non-low-latency) dispatch/combine
+    # path to avoid writing past the pre-allocated buffer.
+    # Default 128 (matches SGLang default). Set to >= expected max decode
+    # batch size to avoid frequent fallbacks.
+    "VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK": lambda: int(
+        os.getenv("VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK", "128")
+    ),
 }
 
 # end-env-vars-definition
