@@ -129,6 +129,33 @@ class ZBALMoEAdapter:
         # Lazy import: zbal is only available on NPU environments.
         from zbal.zbal_buffer import Buffer
 
+        # In low-latency mode, the ZBAL C++ runtime allocates the RDMA
+        # buffer ONCE (lazily on first low_latency_dispatch call) and reuses
+        # it across forward passes. If we let it auto-size based on the
+        # first batch's token count, subsequent larger batches will overflow
+        # the buffer and trigger MTE address out-of-bounds errors.
+        # To prevent this, we explicitly size the RDMA buffer using the
+        # static cap from VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK.
+        # This mirrors SGLang's approach of passing the same static value to
+        # both Buffer construction and every dispatch call.
+        self.low_latency_num_max_tokens_per_rank = (
+            envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK
+            if low_latency_mode else 0
+        )
+        if low_latency_mode:
+            hinted_rdma_bytes = Buffer.get_low_latency_rdma_size_hint(
+                self.low_latency_num_max_tokens_per_rank,
+                hidden_size,
+                self.group_size,
+                num_experts,
+            )
+            num_rdma_bytes = max(num_rdma_bytes, hinted_rdma_bytes)
+            logger.info(
+                "[ZBALMoEAdapter] Low-latency RDMA buffer sized for "
+                "num_max_tokens_per_rank=%s, num_rdma_bytes=%s",
+                self.low_latency_num_max_tokens_per_rank, num_rdma_bytes,
+            )
+
         self.buffer = Buffer(
             group=group,
             num_nvl_bytes=num_nvl_bytes,
