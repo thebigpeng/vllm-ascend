@@ -1,37 +1,39 @@
 #!/bin/bash
 
-ROLE="prefill"              # prefill / decode
+ROLE="decode"              # prefill / decode
 HARDWARE_SERIES="A3"        # A2 (800I/800T A2) or A3 (800I/800T A3)
 LOCAL_IP="80.5.17.37"
 NIC_NAME="enp194s0f0"
 
 export VLLM_ASCEND_ZBAL_LOCAL_MEM_SIZE=60416
-export VLLM_ASCEND_ZBAL_BOOTSTRAP_URL="tcp://80.5.17.37:16989"
+#export VLLM_ASCEND_ZBAL_LOCAL_MEM_SIZE=58368
+export VLLM_ASCEND_ZBAL_BOOTSTRAP_URL="tcp://80.5.17.37:16999"
 export VLLM_ASCEND_ZBAL_MOE_ENABLE=1
-export VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY=0
+export VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY=1
 export VLLM_ASCEND_ZBAL_MOE_NVL_BYTES=10240
 export VLLM_ASCEND_ZBAL_MOE_RDMA_BYTES=10240
-
+export VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK=512
 
 #MODEL_PATH="/home/weights/Qwen3-32B-W8A8/"
 MODEL_PATH="/data/deepseekv4-flash-w8a8-mtp/"
 
 SERVED_MODEL_NAME="dsv4"
-P_DATA_PARALLEL_SIZE=1
-D_DATA_PARALLEL_SIZE=1
-P_TENSOR_PARALLEL_SIZE=8
-D_TENSOR_PARALLEL_SIZE=8
-#export ASCEND_RT_VISIBLE_DEVICES=4,5
-export ASCEND_RT_VISIBLE_DEVICES=8,9,10,11,12,13,14,15
-#export ASCEND_RT_VISIBLE_DEVICES=8,9,10,11,
+P_DATA_PARALLEL_SIZE=4
+P_TENSOR_PARALLEL_SIZE=4
+D_DATA_PARALLEL_SIZE=16
+D_TENSOR_PARALLEL_SIZE=1
+#export ASCEND_RT_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+#export ASCEND_RT_VISIBLE_DEVICES=8,9,10,11,12,13,14,15
 #export ZBAL_HCCL_OP="alltoall"
-
 export ASCEND_LAUNCH_BLOCKING=0
+
 export MMC_LOCAL_CONFIG_PATH=/home/p00801009/vllm-ascend/vllm_test/mmc-local.conf
+export ZBAL_NPU_ALLOC_CONF=use_vmm_for_static_memory:True
+export VLLM_PREFIX_CACHE_RETENTION_INTERVAL=0
 
 export TASK_QUEUE_ENABLE=1
 export VLLM_ASCEND_APPLY_DSV4_PATCH=1
-export VLLM_ASCEND_ENABLE_FLASHCOMM1=1
+#export VLLM_ASCEND_ENABLE_FLASHCOMM1=1
 
 if [ "$ROLE" == "prefill" ]; then
     KV_ROLE="kv_producer"
@@ -70,12 +72,9 @@ export HCCL_BUFFSIZE=200
 export OMP_PROC_BIND=false
 export OMP_NUM_THREADS=10
 #export PYTORCH_NPU_ALLOC_CONF=expandable_segments:True
-#export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libjemalloc.so.2:$LD_PRELOAD
 unset PYTORCH_NPU_ALLOC_CONF
-export VLLM_USE_V1=1
 export PYTORCH_NPU_ALLOC_CONF=expandable_segments:True
-export ZBAL_NPU_ALLOC_CONF=use_vmm_for_static_memory:True
-export VLLM_PREFIX_CACHE_RETENTION_INTERVAL=0
+export VLLM_USE_V1=1
 
 KV_CONFIG='{
   "kv_connector": "MultiConnector",
@@ -97,55 +96,23 @@ KV_CONFIG='{
           }
         }
       }
-
     ]
   }
 }'
 
-CMD_ARGS=(
-  --model "$MODEL_PATH"
-  --served-model-name "$SERVED_MODEL_NAME"
-  --trust-remote-code
-  --enforce-eager
-  --enable-expert-parallel
-  --data-parallel-size "$DATA_PARALLEL_SIZE"
-  --tensor-parallel-size "$P_TENSOR_PARALLEL_SIZE"
-  --port 40060
-  --max-num_seqs 4
-  --max-model-len 4096
-  --max-num-batched-tokens 8192
-  --seed 1024
-  --block-size 128
-  --tokenizer-mode deepseek_v4
-  --tool-call-parser deepseek_v4
-  --enable-auto-tool-choice
-  --reasoning-parser deepseek_v4
-  --quantization ascend
-  --gpu-memory-utilization 0.8
-  --safetensors-load-strategy 'prefetch'
-  --model-loader-extra-config='{"enable_multithread_load": "true", "num_threads": 128}'
-  --speculative-config '{"num_speculative_tokens": 1, "method": "mtp", "enforce_eager": true}'
-  --compilation-config '{"cudagraph_mode": "FULL_DECODE_ONLY"}'
-  --additional-config '{"enable_cpu_binding": true, "enable_shared_expert_dp": true,  "enable_dsa_cp": true}'
-  --profiler-config '{"profiler": "torch", "torch_profiler_dir": "/home/p00801009/vllm-ascend/vllm_test/vllm_profile", "torch_profiler_with_stack": false}'
-  --kv-transfer-config "$KV_CONFIG"
-)
-
-
 # --compilation-config '{"cudagraph_mode": "FULL_DECODE_ONLY"}'\
-# --no-disable-hybrid-kv-cache-manager \
 # --async-scheduling \
 NEW_ARGS=(
-    --port 40060
+    --port 40051
     --model "$MODEL_PATH" \
-    --max_model_len 26624 \
-    --max-num-batched-tokens 512 \
+    --max_model_len 20480 \
+    --max-num-batched-tokens 120 \
     --served-model-name dsv4 \
-    --gpu-memory-utilization 0.91 \
-    --block-size 64 \
-    --max-num-seqs 32 \
-    --data-parallel-size 1 \
-    --tensor-parallel-size 8 \
+    --gpu-memory-utilization 0.90 \
+    --block-size 128 \
+    --max-num-seqs 8 \
+    --data-parallel-size 16 \
+    --tensor-parallel-size 1 \
     --enforce-eager \
     --enable-expert-parallel \
     --tokenizer-mode deepseek_v4 \
@@ -167,14 +134,11 @@ NEW_ARGS=(
             "enable_static_kernel": false
         },
         "enable_cpu_binding": true,
-        "enable_dsa_cp": true,
-        "multistream_overlap_shared_expert": true
+        "multistream_overlap_shared_expert": true,
+        "recompute_scheduler_enable":true
     }'
 )
 TS=$(date +"%Y%m%d_%H%M%S")
 python -m vllm.entrypoints.openai.api_server "${NEW_ARGS[@]}" 2>&1 | tee log_${TS}_${ROLE}.log
 
 echo "vLLM started. Log file: log_${ROLE}.log"
-
-
-python3 aisbench_test.py --input_len 2048 --output_len 2048 --data_num 160 --concurrency 40 --request_rate 10
