@@ -71,7 +71,10 @@ class MoEZBALCombineMetadata:
     topk_ids: torch.Tensor
     topk_weights: torch.Tensor
     handle: tuple
-    num_recv_tokens_per_expert_list: list
+    # In low-latency path this holds a device tensor (kept on-device so the
+    # dispatch/combine pipeline stays cudagraph-capturable). In normal path
+    # it may be a Python list returned by the C++ buffer.dispatch.
+    num_recv_tokens_per_expert_list: list | torch.Tensor
     is_low_latency: bool = False
 
 
@@ -225,8 +228,13 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             # low_latency_dispatch returns recv_count with shape
             # [num_local_experts], which is the per-expert token count
             # needed by npu_grouped_matmul as group_list.
+            # Keep recv_count as a device tensor to avoid a D2H sync
+            # (`.tolist()`) that would break ACL graph capture. The downstream
+            # `npu_grouped_matmul` and `cumsum_group_list` accept device
+            # tensors for group_list, and the low-latency combine path does
+            # not consume `num_recv_tokens_per_expert_list` at all.
             group_list = recv_count.to(torch.int64)
-            num_recv_tokens_per_expert_list = recv_count.tolist()
+            num_recv_tokens_per_expert_list = group_list
         else:
             # Pass topk_weights so zbal can forward them to receiving ranks.
             # In standard mode, the handle stores these weights for combine.
