@@ -66,7 +66,7 @@ class MoEZBALCombineMetadata:
     topk_ids: torch.Tensor
     topk_weights: torch.Tensor
     handle: tuple
-    num_recv_tokens_per_expert_list: list
+    num_recv_tokens_per_expert_list: list | torch.Tensor
 
 
 class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
@@ -156,14 +156,14 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             recv_x, recv_count, handle_dict, event = self._adapter.low_latency_dispatch(
                 x=hidden_states,
                 topk_idx=topk_idx,
-                num_max_tokens_per_rank=num_max_tokens_per_rank,
+                num_max_tokens_per_rank=2048,
                 use_fp8=False,
             )
             # low_latency_dispatch returns recv_count with shape
             # [num_local_experts], which is the per-expert token count
             # needed by npu_grouped_matmul as group_list.
             group_list = recv_count.to(torch.int64)
-            num_recv_tokens_per_expert_list = recv_count.tolist()
+            num_recv_tokens_per_expert_list = group_list
         else:
             # Pass topk_weights so zbal can forward them to receiving ranks.
             # In standard mode, the handle stores these weights for combine.
