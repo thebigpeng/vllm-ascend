@@ -1,210 +1,176 @@
-Capturing CUDA graphs (decode, FULL):   0%|          | 0/10 [00:24<?, ?it/s]
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962] WorkerProc hit an exception.
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4466, in _replace_gpu_model_runner_function_wrapper
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     yield
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4367, in capture_model
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return GPUModelRunner.capture_model(self)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return func(*args, **kwargs)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6102, in capture_model
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     self._capture_cudagraphs(
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6217, in _capture_cudagraphs
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     self._warmup_and_capture(
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6163, in _warmup_and_capture
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     self._dummy_run(
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return func(*args, **kwargs)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 3300, in _dummy_run
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     outputs = self._model_forward(
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]               ^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2546, in _model_forward
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     hidden_states = run_model()
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]                     ^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/compilation/acl_graph.py", line 159, in __call__
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     output = self.runnable(*args, **kwargs)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return self._call_impl(*args, **kwargs)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return forward_call(*args, **kwargs)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/models/deepseek_v4.py", line 1109, in forward
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     hidden_states = self.model(input_ids, positions, intermediate_tensors, inputs_embeds)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/compilation/decorators.py", line 480, in __call__
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return self.aot_compiled_fn(self, *args, **kwargs)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_dynamo/aot_compile.py", line 124, in __call__
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return self.fn(*args, **kwargs)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/models/deepseek_v4.py", line 946, in forward
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     def forward(
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/compilation/caching.py", line 215, in __call__
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return self.optimized_call(*args, **kwargs)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "<string>", line 5, in execution_fn
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/compilation/piecewise_backend.py", line 380, in __call__
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return range_entry.runnable(*args)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_inductor/compile_fx.py", line 2865, in wrapper
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return pytree.tree_unflatten(compiled_fn(*args, **kwargs), spec)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/aot_autograd.py", line 1148, in forward
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return compiled_fn(full_args)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 357, in runtime_wrapper
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     all_outs = call_func_at_runtime_with_args(
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     out = normalize_as_list(f(args))
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]                             ^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 531, in wrapper
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return compiled_fn(runtime_args)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 729, in inner_fn
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     outs = compiled_fn(args)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/utils.py", line 108, in g
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return f(*args)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/dynamo/npugraph_ex/npu_fx_compiler.py", line 507, in __call__
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     gm_result = self.run_kernel(*args, **kwargs)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "<string>", line 1909, in kernel
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/dynamo/npugraph_ex/_acl_concrete_graph/acl_graph.py", line 823, in __call__
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return self.fx_run_eagerly(*args, **kwargs)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/dynamo/npugraph_ex/_acl_concrete_graph/acl_graph.py", line 894, in fx_run_eagerly
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return self.fx_forward(*args, **kwargs)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "<string>", line 51, in forward
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_ops.py", line 819, in __call__
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return self._op(*args, **kwargs)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/model_executor/layers/fused_moe/runner/moe_runner.py", line 134, in _moe_forward_shared
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return layer.runner._forward_impl(
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 327, in _forward_impl
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return self.forward_impl(
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 315, in forward_impl
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     result = layer.shared_forward_impl(hidden_states, router_logits)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 828, in shared_forward_impl
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     fused_moe_results = self.forward_impl(
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]                         ^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 662, in forward_impl
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     fused_experts_results: FusedExpertsResult = self.quant_method.apply(
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/quantization/method_adapters.py", line 270, in apply
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     return self.quant_method.apply(
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/quantization/methods/w8a8_dynamic.py", line 324, in apply
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     final_hidden_states = moe_comm_method.fused_experts(
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/moe_comm_method.py", line 153, in fused_experts
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     token_dispatch_output = self.token_dispatcher.token_dispatch(token_dispatch_input=token_dispatch_input)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/zbal_moe_comm.py", line 304, in token_dispatch
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     recv_x, recv_topk_idx, handle_dict, recv_x_scales = self._adapter.dispatch(
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]                                                         ^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/zbal_moe_adapter.py", line 242, in dispatch
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     ) = self.buffer.dispatch(
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]         ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/zbal/zbal_buffer.py", line 316, in dispatch
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     ) = self.runtime.intranode_dispatch(
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962] RuntimeError: operator():../torch_npu/csrc/aten/common/LocalScalarDenseNpu.cpp:23 NPU function error: c10_npu::acl::AclrtSynchronizeStreamWithTimeout(copy_stream), error code is 107027
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962] [ERROR] 2026-07-20-17:35:02 (PID:957915, Device:0, RankID:-1) ERR00100 PTA call acl api failed.
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962] EE9999: Inner Error!
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962] EE9999[PID: 957915] 2026-07-20-17:35:02.633.719 (EE9999):  Not allow to synchronize captured-stream, stream_id=35.[FUNC:StreamSynchronize][FILE:api_error.cc][LINE:1016]
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]         TraceBack (most recent call last):
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]        rtStreamSynchronizeWithTimeout execution failed, reason=stream is captured[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]        synchronize stream with timeout failed, runtime result = 107027[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962] During handling of the above exception, another exception occurred:
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4439, in _torch_cuda_wrapper
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     yield
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4366, in capture_model
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     with _torch_cuda_wrapper(), _replace_gpu_model_runner_function_wrapper(parent_module_name):
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 158, in __exit__
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     self.gen.throw(typ, value, traceback)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4468, in _replace_gpu_model_runner_function_wrapper
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     raise RuntimeError(f"NPUModelRunner failed, error is {e}")
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962] RuntimeError: NPUModelRunner failed, error is operator():../torch_npu/csrc/aten/common/LocalScalarDenseNpu.cpp:23 NPU function error: c10_npu::acl::AclrtSynchronizeStreamWithTimeout(copy_stream), error code is 107027
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962] [ERROR] 2026-07-20-17:35:02 (PID:957915, Device:0, RankID:-1) ERR00100 PTA call acl api failed.
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962] EE9999: Inner Error!
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962] EE9999[PID: 957915] 2026-07-20-17:35:02.633.719 (EE9999):  Not allow to synchronize captured-stream, stream_id=35.[FUNC:StreamSynchronize][FILE:api_error.cc][LINE:1016]
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]         TraceBack (most recent call last):
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]        rtStreamSynchronizeWithTimeout execution failed, reason=stream is captured[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]        synchronize stream with timeout failed, runtime result = 107027[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962] During handling of the above exception, another exception occurred:
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     output = func(*args, **kwargs)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 578, in compile_or_warm_up_model
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     npugraph_memory_bytes = self.model_runner.capture_model()
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4366, in capture_model
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     with _torch_cuda_wrapper(), _replace_gpu_model_runner_function_wrapper(parent_module_name):
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 158, in __exit__
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     self.gen.throw(typ, value, traceback)
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4448, in _torch_cuda_wrapper
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962]     raise RuntimeError(f"NPUModelRunner init failed, error is {e}")
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962] RuntimeError: NPUModelRunner init failed, error is NPUModelRunner failed, error is operator():../torch_npu/csrc/aten/common/LocalScalarDenseNpu.cpp:23 NPU function error: c10_npu::acl::AclrtSynchronizeStreamWithTimeout(copy_stream), error code is 107027
-(Worker_DP6_EP6 pid=957915) ERROR 07-20 17:35:03 [multiproc_executor.py:962] [ERROR] 2026-07-20-17:35:02 (PID:957915, Device:0, RankID:-1) ERR00100 PTA call acl api failed.
-
-
-tail error log]
-/root/ascend/log/debug/plog/plog-957918_20260720173230861.log:3:[ERROR] RUNTIME(957918,):2026-07-20-17:35:02.632.637 [api_error.cc:1016]957918 StreamSynchronize:Not allow to synchronize captured-stream, stream_id=35.
-/root/ascend/log/debug/plog/plog-957918_20260720173230861.log:4:[ERROR] RUNTIME(957918,):2026-07-20-17:35:02.632.669 [api_c_stream.cc:183]957918 rtStreamSynchronizeWithTimeout:ErrCode=107027, desc=[stream is captured], InnerCode=0x7030019
-/root/ascend/log/debug/plog/plog-957918_20260720173230861.log:5:[ERROR] RUNTIME(957918,):2026-07-20-17:35:02.632.674 [error_message_manage.cc:65]957918 FuncErrorReason:rtStreamSynchronizeWithTimeout execution failed, reason=stream is captured
-/root/ascend/log/debug/plog/plog-957918_20260720173230861.log:6:[ERROR] ASCENDCL(957918,):2026-07-20-17:35:02.632.878 [stream.cpp:167]957918 aclrtSynchronizeStreamWithTimeoutImpl:synchronize stream with timeout failed, runtime result = 107027
-/root/ascend/log/debug/plog/plog-957916_20260720173231302.log:1:[ERROR] APP(957916,python):2026-07-20-17:32:31.253.116 957916 parseExpandableSegments:zbal_pytorch_c10_dma.cpp:926: "[PTA]:" NPU function error: [ShmemAllocator Currently do not support detail error log]
-/root/ascend/log/debug/plog/plog-957916_20260720173231302.log:3:[ERROR] RUNTIME(957916,):2026-07-20-17:35:02.633.309 [api_error.cc:1016]957916 StreamSynchronize:Not allow to synchronize captured-stream, stream_id=35.
-/root/ascend/log/debug/plog/plog-957916_20260720173231302.log:4:[ERROR] RUNTIME(957916,):2026-07-20-17:35:02.633.340 [api_c_stream.cc:183]957916 rtStreamSynchronizeWithTimeout:ErrCode=107027, desc=[stream is captured], InnerCode=0x7030019
-/root/ascend/log/debug/plog/plog-957916_20260720173231302.log:5:[ERROR] RUNTIME(957916,):2026-07-20-17:35:02.633.345 [error_message_manage.cc:65]957916 FuncErrorReason:rtStreamSynchronizeWithTimeout execution failed, reason=stream is captured
-/root/ascend/log/debug/plog/plog-957916_20260720173231302.log:6:[ERROR] ASCENDCL(957916,):2026-07-20-17:35:02.633.548 [stream.cpp:167]957916 aclrtSynchronizeStreamWithTimeoutImpl:synchronize stream with timeout failed, runtime result = 107027
-/root/ascend/log/debug/plog/plog-957917_20260720173230261.log:1:[ERROR] APP(957917,python):2026-07-20-17:32:30.097.272 957917 parseExpandableSegments:zbal_pytorch_c10_dma.cpp:926: "[PTA]:" NPU function error: [ShmemAllocator Currently do not support detail error log]
-/root/ascend/log/debug/plog/plog-957917_20260720173230261.log:3:[ERROR] RUNTIME(957917,):2026-07-20-17:35:02.634.200 [api_error.cc:1016]957917 StreamSynchronize:Not allow to synchronize captured-stream, stream_id=35.
-/root/ascend/log/debug/plog/plog-957917_20260720173230261.log:4:[ERROR] RUNTIME(957917,):2026-07-20-17:35:02.634.233 [api_c_stream.cc:183]957917 rtStreamSynchronizeWithTimeout:ErrCode=107027, desc=[stream is captured], InnerCode=0x7030019
-/root/ascend/log/debug/plog/plog-957917_20260720173230261.log:5:[ERROR] RUNTIME(957917,):2026-07-20-17:35:02.634.239 [error_message_manage.cc:65]957917 FuncErrorReason:rtStreamSynchronizeWithTimeout execution failed, reason=stream is captured
-/root/ascend/log/debug/plog/plog-957917_20260720173230261.log:6:[ERROR] ASCENDCL(957917,):2026-07-20-17:35:02.634.547 [stream.cpp:167]957917 aclrtSynchronizeStreamWithTimeoutImpl:synchronize stream with timeout failed, runtime result = 107027
-/root/ascend/log/debug/plog/plog-957914_20260720173232275.log:1:[ERROR] APP(957914,python):2026-07-20-17:32:32.105.453 957914 parseExpandableSegments:zbal_pytorch_c10_dma.cpp:926: "[PTA]:" NPU function error: [ShmemAllocator Currently do not support detail error log]
-/root/ascend/log/debug/plog/plog-957914_20260720173232275.log:3:[ERROR] RUNTIME(957914,):2026-07-20-17:35:02.634.916 [api_error.cc:1016]957914 StreamSynchronize:Not allow to synchronize captured-stream, stream_id=35.
-/root/ascend/log/debug/plog/plog-957914_20260720173232275.log:4:[ERROR] RUNTIME(957914,):2026-07-20-17:35:02.634.942 [api_c_stream.cc:183]957914 rtStreamSynchronizeWithTimeout:ErrCode=107027, desc=[stream is captured], InnerCode=0x7030019
-/root/ascend/log/debug/plog/plog-957914_20260720173232275.log:5:[ERROR] RUNTIME(957914,):2026-07-20-17:35:02.634.947 [error_message_manage.cc:65]957914 FuncErrorReason:rtStreamSynchronizeWithTimeout execution failed, reason=stream is captured
-/root/ascend/log/debug/plog/plog-957914_20260720173232275.log:6:[ERROR] ASCENDCL(957914,):2026-07-20-17:35:02.635.219 [stream.cpp:167]957914 aclrtSynchronizeStreamWithTimeoutImpl:synchronize stream with timeout failed, runtime result = 107027
-/root/ascend/log/debug/plog/plog-957915_20260720173231103.log:1:[ERROR] APP(957915,python):2026-07-20-17:32:30.930.149 957915 parseExpandableSegments:zbal_pytorch_c10_dma.cpp:926: "[PTA]:" NPU function error: [ShmemAllocator Currently do not support detail error log]
-/root/ascend/log/debug/plog/plog-957915_20260720173231103.log:3:[ERROR] RUNTIME(957915,):2026-07-20-17:35:02.633.710 [api_error.cc:1016]957915 StreamSynchronize:Not allow to synchronize captured-stream, stream_id=35.
-/root/ascend/log/debug/plog/plog-957915_20260720173231103.log:4:[ERROR] RUNTIME(957915,):2026-07-20-17:35:02.633.734 [api_c_stream.cc:183]957915 rtStreamSynchronizeWithTimeout:ErrCode=107027, desc=[stream is captured], InnerCode=0x7030019
-/root/ascend/log/debug/plog/plog-957915_20260720173231103.log:5:[ERROR] RUNTIME(957915,):2026-07-20-17:35:02.633.738 [error_message_manage.cc:65]957915 FuncErrorReason:rtStreamSynchronizeWithTimeout execution failed, reason=stream is captured
-/root/ascend/log/debug/plog/plog-957915_20260720173231103.log:6:[ERROR] ASCENDCL(957915,):2026-07-20-17:35:02.633.931 [stream.cpp:167]957915 aclrtSynchronizeStreamWithTimeoutImpl:synchronize stream with timeout failed, runtime result = 107027
-/root/ascend/log/debug/plog/plog-957913_20260720173231050.log:1:[ERROR] APP(957913,python):2026-07-20-17:32:31.002.356 957913 parseExpandableSegments:zbal_pytorch_c10_dma.cpp:926: "[PTA]:" NPU function error: [ShmemAllocator Currently do not support detail error log]
-/root/ascend/log/debug/plog/plog-957913_20260720173231050.log:3:[ERROR] RUNTIME(957913,):2026-07-20-17:35:02.635.181 [api_error.cc:1016]957913 StreamSynchronize:Not allow to synchronize captured-stream, stream_id=35.
-/root/ascend/log/debug/plog/plog-957913_20260720173231050.log:4:[ERROR] RUNTIME(957913,):2026-07-20-17:35:02.635.209 [api_c_stream.cc:183]957913 rtStreamSynchronizeWithTimeout:ErrCode=107027, desc=[stream is captured], InnerCode=0x7030019
-/root/ascend/log/debug/plog/plog-957913_20260720173231050.log:5:[ERROR] RUNTIME(957913,):2026-07-20-17:35:02.635.214 [error_message_manage.cc:65]957913 FuncErrorReason:rtStreamSynchronizeWithTimeout execution failed, reason=stream is captured
-/root/ascend/log/debug/plog/plog-957913_20260720173231050.log:6:[ERROR] ASCENDCL(957913,):2026-07-20-17:35:02.635.437 [stream.cpp:167]957913 aclrtSynchronizeStreamWithTimeoutImpl:synchronize stream with timeout failed, runtime result = 107027
-/root/ascend/log/debug/plog/plog-957919_20260720173230251.log:1:[ERROR] APP(957919,python):2026-07-20-17:32:30.087.603 957919 parseExpandableSegments:zbal_pytorch_c10_dma.cpp:926: "[PTA]:" NPU function error: [ShmemAllocator Currently do not support detail error log]
-/root/ascend/log/debug/plog/plog-957919_20260720173230251.log:3:[ERROR] RUNTIME(957919,):2026-07-20-17:35:02.635.205 [api_error.cc:1016]957919 StreamSynchronize:Not allow to synchronize captured-stream, stream_id=35.
-/root/ascend/log/debug/plog/plog-957919_20260720173230251.log:4:[ERROR] RUNTIME(957919,):2026-07-20-17:35:02.635.229 [api_c_stream.cc:183]957919 rtStreamSynchronizeWithTimeout:ErrCode=107027, desc=[stream is captured], InnerCode=0x7030019
-/root/ascend/log/debug/plog/plog-957919_20260720173230251.log:5:[ERROR] RUNTIME(957919,):2026-07-20-17:35:02.635.233 [error_message_manage.cc:65]957919 FuncErrorReason:rtStreamSynchronizeWithTimeout execution failed, reason=stream is captured
-/root/ascend/log/debug/plog/plog-957919_20260720173230251.log:6:[ERROR] ASCENDCL(957919,):2026-07-20-17:35:02.635.437 [stream.cpp:167]957919 aclrtSynchronizeStreamWithTimeoutImpl:synchronize stream with timeout failed, runtime result = 107027
-/root/ascend/log/debug/plog/plog-957912_20260720173229799.log:1:[ERROR] APP(957912,python):2026-07-20-17:32:29.769.908 957912 parseExpandableSegments:zbal_pytorch_c10_dma.cpp:926: "[PTA]:" NPU function error: [ShmemAllocator Currently do not support detail error log]
-/root/ascend/log/debug/plog/plog-957912_20260720173229799.log:3:[ERROR] RUNTIME(957912,):2026-07-20-17:35:02.640.061 [api_error.cc:1016]957912 StreamSynchronize:Not allow to synchronize captured-stream, stream_id=35.
-/root/ascend/log/debug/plog/plog-957912_20260720173229799.log:4:[ERROR] RUNTIME(957912,):2026-07-20-17:35:02.640.095 [api_c_stream.cc:183]957912 rtStreamSynchronizeWithTimeout:ErrCode=107027, desc=[stream is captured], InnerCode=0x7030019
-/root/ascend/log/debug/plog/plog-957912_20260720173229799.log:5:[ERROR] RUNTIME(957912,):2026-07-20-17:35:02.640.099 [error_message_manage.cc:65]957912 FuncErrorReason:rtStreamSynchronizeWithTimeout execution failed, reason=stream is captured
-/root/ascend/log/debug/plog/plog-957912_20260720173229799.log:6:[ERROR] ASCENDCL(957912,):2026-07-20-17:35:02.640.387 [stream.cpp:167]957912 aclrtSynchronizeStreamWithTimeoutImpl:synchronize stream with timeout failed, runtime result = 107027
-
+(Worker_DP1_EP1 pid=964188) INFO 07-20 19:34:14 [decorators.py:668] saved AOT compiled function to /root/.cache/vllm/torch_compile_cache/torch_aot_compile/8f746087f538893a7f4811ebf8c8a6d83a88afc421160fb59852ce27d787fd16/rank_0_1/model
+(Worker_DP1_EP1 pid=964188) INFO 07-20 19:34:14 [monitor.py:53] torch.compile took 1.06 s in total
+(Worker_DP5_EP5 pid=964183) INFO 07-20 19:34:14 [monitor.py:81] Initial profiling/warmup run took 0.09 s
+(Worker_DP2_EP2 pid=964186) INFO 07-20 19:34:14 [monitor.py:81] Initial profiling/warmup run took 0.09 s
+(Worker_DP1_EP1 pid=964188) INFO 07-20 19:34:14 [monitor.py:81] Initial profiling/warmup run took 0.07 s
+(Worker_DP7_EP7 pid=964187) INFO 07-20 19:34:14 [monitor.py:81] Initial profiling/warmup run took 0.09 s
+(Worker_DP6_EP6 pid=964184) INFO 07-20 19:34:14 [monitor.py:81] Initial profiling/warmup run took 0.10 s
+(Worker_DP4_EP4 pid=964189) INFO 07-20 19:34:14 [monitor.py:81] Initial profiling/warmup run took 0.08 s
+(Worker_DP3_EP3 pid=964185) INFO 07-20 19:34:14 [monitor.py:81] Initial profiling/warmup run took 0.10 s
+(Worker_DP0_EP0 pid=964190) INFO 07-20 19:34:14 [monitor.py:81] Initial profiling/warmup run took 0.07 s
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/11 [00:21<?, ?it/s]
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] WorkerProc hit an exception.
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4466, in _replace_gpu_model_runner_function_wrapper
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     yield
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4367, in capture_model
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return GPUModelRunner.capture_model(self)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6102, in capture_model
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     self._capture_cudagraphs(
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6217, in _capture_cudagraphs
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     self._warmup_and_capture(
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6163, in _warmup_and_capture
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     self._dummy_run(
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 3300, in _dummy_run
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     outputs = self._model_forward(
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]               ^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2546, in _model_forward
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     hidden_states = run_model()
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                     ^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self._call_impl(*args, **kwargs)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return forward_call(*args, **kwargs)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/models/deepseek_v4.py", line 1109, in forward
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     hidden_states = self.model(input_ids, positions, intermediate_tensors, inputs_embeds)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/compilation/decorators.py", line 480, in __call__
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self.aot_compiled_fn(self, *args, **kwargs)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_dynamo/aot_compile.py", line 124, in __call__
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self.fn(*args, **kwargs)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/models/deepseek_v4.py", line 946, in forward
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     def forward(
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/compilation/caching.py", line 215, in __call__
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self.optimized_call(*args, **kwargs)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "<string>", line 5, in execution_fn
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/compilation/acl_graph.py", line 159, in __call__
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     output = self.runnable(*args, **kwargs)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/compilation/piecewise_backend.py", line 380, in __call__
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return range_entry.runnable(*args)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_inductor/compile_fx.py", line 2865, in wrapper
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return pytree.tree_unflatten(compiled_fn(*args, **kwargs), spec)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/aot_autograd.py", line 1148, in forward
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return compiled_fn(full_args)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 357, in runtime_wrapper
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     all_outs = call_func_at_runtime_with_args(
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     out = normalize_as_list(f(args))
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                             ^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 531, in wrapper
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return compiled_fn(runtime_args)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 729, in inner_fn
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     outs = compiled_fn(args)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/utils.py", line 108, in g
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return f(*args)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/dynamo/npugraph_ex/npu_fx_compiler.py", line 507, in __call__
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     gm_result = self.run_kernel(*args, **kwargs)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "<string>", line 1909, in kernel
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/dynamo/npugraph_ex/_acl_concrete_graph/acl_graph.py", line 823, in __call__
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self.fx_run_eagerly(*args, **kwargs)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/dynamo/npugraph_ex/_acl_concrete_graph/acl_graph.py", line 894, in fx_run_eagerly
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self.fx_forward(*args, **kwargs)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "<string>", line 51, in forward
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_ops.py", line 819, in __call__
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self._op(*args, **kwargs)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/model_executor/layers/fused_moe/runner/moe_runner.py", line 134, in _moe_forward_shared
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return layer.runner._forward_impl(
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 327, in _forward_impl
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self.forward_impl(
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 315, in forward_impl
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     result = layer.shared_forward_impl(hidden_states, router_logits)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 828, in shared_forward_impl
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     fused_moe_results = self.forward_impl(
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                         ^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 662, in forward_impl
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     fused_experts_results: FusedExpertsResult = self.quant_method.apply(
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/quantization/method_adapters.py", line 270, in apply
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self.quant_method.apply(
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/quantization/methods/w8a8_dynamic.py", line 324, in apply
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     final_hidden_states = moe_comm_method.fused_experts(
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/moe_comm_method.py", line 153, in fused_experts
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     token_dispatch_output = self.token_dispatcher.token_dispatch(token_dispatch_input=token_dispatch_input)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/zbal_moe_comm.py", line 304, in token_dispatch
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     recv_x, recv_topk_idx, handle_dict, recv_x_scales = self._adapter.dispatch(
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                                                         ^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/zbal_moe_adapter.py", line 242, in dispatch
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     ) = self.buffer.dispatch(
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]         ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/zbal/zbal_buffer.py", line 316, in dispatch
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     ) = self.runtime.intranode_dispatch(
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] RuntimeError: operator():../torch_npu/csrc/aten/common/LocalScalarDenseNpu.cpp:23 NPU function error: c10_npu::acl::AclrtSynchronizeStreamWithTimeout(copy_stream), error code is 107027
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] [ERROR] 2026-07-20-19:34:14 (PID:964187, Device:0, RankID:-1) ERR00100 PTA call acl api failed.
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] EE9999: Inner Error!
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] EE9999[PID: 964187] 2026-07-20-19:34:14.512.478 (EE9999):  Not allow to synchronize captured-stream, stream_id=37.[FUNC:StreamSynchronize][FILE:api_error.cc][LINE:1016]
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]         TraceBack (most recent call last):
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]        rtStreamSynchronizeWithTimeout execution failed, reason=stream is captured[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]        synchronize stream with timeout failed, runtime result = 107027[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] During handling of the above exception, another exception occurred:
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4439, in _torch_cuda_wrapper
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     yield
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4366, in capture_model
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     with _torch_cuda_wrapper(), _replace_gpu_model_runner_function_wrapper(parent_module_name):
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 158, in __exit__
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     self.gen.throw(typ, value, traceback)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4468, in _replace_gpu_model_runner_function_wrapper
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     raise RuntimeError(f"NPUModelRunner failed, error is {e}")
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] RuntimeError: NPUModelRunner failed, error is operator():../torch_npu/csrc/aten/common/LocalScalarDenseNpu.cpp:23 NPU function error: c10_npu::acl::AclrtSynchronizeStreamWithTimeout(copy_stream), error code is 107027
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] [ERROR] 2026-07-20-19:34:14 (PID:964187, Device:0, RankID:-1) ERR00100 PTA call acl api failed.
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] EE9999: Inner Error!
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] EE9999[PID: 964187] 2026-07-20-19:34:14.512.478 (EE9999):  Not allow to synchronize captured-stream, stream_id=37.[FUNC:StreamSynchronize][FILE:api_error.cc][LINE:1016]
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]         TraceBack (most recent call last):
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]        rtStreamSynchronizeWithTimeout execution failed, reason=stream is captured[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]        synchronize stream with timeout failed, runtime result = 107027[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] During handling of the above exception, another exception occurred:
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     output = func(*args, **kwargs)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 578, in compile_or_warm_up_model
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     npugraph_memory_bytes = self.model_runner.capture_model()
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4366, in capture_model
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     with _torch_cuda_wrapper(), _replace_gpu_model_runner_function_wrapper(parent_module_name):
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 158, in __exit__
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     self.gen.throw(typ, value, traceback)
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4448, in _torch_cuda_wrapper
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     raise RuntimeError(f"NPUModelRunner init failed, error is {e}")
+(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] RuntimeError: NPUModelRunner init failed, error is NPUModelRunner failed, error is operator():../torch_npu/csrc/aten/common/LocalScalarDenseNpu.cpp:23 NPU function error: c10_npu::acl::AclrtSynchronizeStream
