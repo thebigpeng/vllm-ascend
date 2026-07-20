@@ -558,6 +558,21 @@ class NPUWorker(WorkerBase):
             logger.info("Compile and warming up model for size %d", size)
             self.model_runner._dummy_run(size)
 
+        # Pre-construct the ZBAL MoE adapter (and its C++ Buffer) BEFORE
+        # ACL graph capture begins. By this point ``zbal_init`` has already
+        # carved the GVA heap (in initialize_from_config), so the Buffer's
+        # RDMA memory will be allocated from the correct pool. Constructing
+        # it eagerly here — rather than lazily inside the first captured
+        # forward — guarantees that allocator ops are NOT captured into
+        # the graph and that the low-latency buffer is pre-cleaned.
+        if is_zbal_enabled() and envs_ascend.VLLM_ASCEND_ZBAL_MOE_ENABLE:
+            from vllm_ascend.ascend_forward_context import MoECommType
+            from vllm_ascend.ops.fused_moe.moe_comm_method import get_moe_comm_method
+
+            zbal_comm = get_moe_comm_method(MoECommType.ZBAL)
+            if zbal_comm is not None and hasattr(zbal_comm, "ensure_adapter_constructed"):
+                zbal_comm.ensure_adapter_constructed()
+
         npugraph_memory_bytes = 0
         if not self.model_config.enforce_eager:
             npugraph_memory_bytes = self.model_runner.capture_model()

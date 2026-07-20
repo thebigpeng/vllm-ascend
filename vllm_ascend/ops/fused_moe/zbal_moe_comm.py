@@ -119,6 +119,47 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         self.ep_rank_id = get_ep_group().rank_in_group
         self.ep_world_size = get_ep_group().world_size
 
+    def ensure_adapter_constructed(self) -> None:
+        """Explicitly construct the ZBALMoEAdapter (and its C++ Buffer) if it
+        has not been constructed yet.
+
+        This is intended to be called AFTER ``zbal_init`` (which carves the
+        GVA heap) and BEFORE ACL graph capture begins. Calling it eagerly at
+        that point guarantees:
+
+        1. The Buffer's RDMA memory is allocated from the correct GVA pool
+           (not from DMA VMM, which would happen if construction occurred
+           before ``zbal_init``).
+        2. The first ACL graph capture does not implicitly trigger lazy
+           construction inside ``torch.npu.graph()``, which could capture
+           allocator ops into the graph and corrupt replay.
+        3. The low-latency buffer is pre-cleaned so the first captured
+           forward sees a zero-initialized RDMA region.
+
+        After this call, ``self._adapter`` is guaranteed to be non-None.
+        Subsequent ``token_dispatch`` calls reuse the constructed adapter.
+        """
+        if self._adapter is not None:
+            return
+        self._adapter = ZBALMoEAdapter(
+            group=self.device_group,
+            num_experts=self.num_experts,
+            hidden_size=self.hidden_size,
+            low_latency_mode=self.low_latency_mode,
+        )
+        if self.low_latency_mode:
+            self._adapter.clean_low_latency_buffer(
+                self.low_latency_num_max_tokens_per_rank,
+                self.hidden_size,
+                self.num_experts,
+            )
+            self._needs_clean_before_low_latency = False
+        logger.info(
+            "[TokenDispatcherWithZBAL] Pre-constructed ZBALMoEAdapter "
+            "(low_latency=%s, cap=%d) before graph capture.",
+            self.low_latency_mode, self.low_latency_num_max_tokens_per_rank,
+        )
+
     def token_dispatch(
         self,
         token_dispatch_input: MoETokenDispatchInput,
@@ -187,6 +228,28 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             and actual_tokens <= self.low_latency_num_max_tokens_per_rank
         )
         if prefer_low_latency and not use_low_latency:
+            # The normal (non-low-latency) dispatch path uses dynamic layout
+            # computation and returns tensors whose shapes depend on the
+            # actual per-expert token distribution. This is NOT capturable
+            # by ACL graph: replay would reuse the captured shapes instead
+            # of the new batch's shapes, producing wrong results or crashes.
+            # During graph capture we must therefore raise instead of fall
+            # back, so the user can fix the config (raise the cap or shrink
+            # the capture batch size) rather than getting a silent corrupt
+            # graph.
+            if torch.npu.is_current_stream_capturing():
+                raise RuntimeError(
+                    f"[TokenDispatcherWithZBAL] Batch size {actual_tokens} "
+                    f"exceeds low_latency cap "
+                    f"{self.low_latency_num_max_tokens_per_rank} during "
+                    f"ACL graph capture. The normal dispatch fallback is "
+                    f"not graph-safe (dynamic shapes). Please either: "
+                    f"(1) increase "
+                    f"VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK "
+                    f"to >= {actual_tokens}, or (2) reduce "
+                    f"cudagraph_capture_sizes / max_num_seqs so captured "
+                    f"batch sizes fit within the cap."
+                )
             logger.warning(
                 "[TokenDispatcherWithZBAL] Batch %d exceeds low_latency cap "
                 "%d; falling back to normal dispatch for this forward. "
@@ -439,6 +502,14 @@ class ZBALCommImpl(MoECommMethod):
             num_local_experts=self.moe_config.num_local_experts,
             hidden_size=self._hidden_size,
         )
+
+    def ensure_adapter_constructed(self) -> None:
+        """Pre-construct the ZBAL Buffer before ACL graph capture.
+
+        Delegates to :meth:`TokenDispatcherWithZBAL.ensure_adapter_constructed`.
+        Safe to call multiple times; no-op after the first call.
+        """
+        self.token_dispatcher.ensure_adapter_constructed()
 
     def _get_prepare_finalize(self) -> PrepareAndFinalize:
         # ZBAL's ProcessGroup requires all_gather tensors to have identical

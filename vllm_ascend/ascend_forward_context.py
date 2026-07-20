@@ -9,6 +9,7 @@ import vllm.envs as envs_vllm
 from vllm.config import CUDAGraphMode, VllmConfig
 from vllm.distributed import get_dp_group, get_ep_group, get_tensor_model_parallel_world_size
 from vllm.forward_context import BatchDescriptor, get_forward_context, set_forward_context
+from vllm.logger import logger
 import vllm_ascend.envs as envs_ascend
 from vllm_ascend.ascend_config import get_ascend_config
 from vllm_ascend.utils import (
@@ -94,7 +95,9 @@ def set_ascend_forward_context(
         from vllm_ascend.ops.fused_moe.moe_comm_method import get_moe_comm_method
 
         max_num_tokens = int(num_tokens_across_dp.max().item()) if num_tokens_across_dp is not None else num_tokens
-        moe_comm_type = select_moe_comm_method(max_num_tokens, vllm_config, is_draft_model)
+        moe_comm_type = select_moe_comm_method(
+            max_num_tokens, vllm_config, is_draft_model, in_profile_run=in_profile_run
+        )
 
         forward_context.moe_comm_type = moe_comm_type
         forward_context.moe_comm_method = get_moe_comm_method(moe_comm_type)
@@ -231,7 +234,12 @@ def get_mc2_mask():
     return _reserved_mc2_mask
 
 
-def select_moe_comm_method(num_tokens: int, vllm_config: VllmConfig, is_draft_model=False) -> MoECommType | None:
+def select_moe_comm_method(
+    num_tokens: int,
+    vllm_config: VllmConfig,
+    is_draft_model=False,
+    in_profile_run: bool = False,
+) -> MoECommType | None:
     """Select the MoE communication method according to parallel settings,
     device generation, token count, and quantization.
 
@@ -251,6 +259,12 @@ def select_moe_comm_method(num_tokens: int, vllm_config: VllmConfig, is_draft_mo
         num_tokens (int): The number of tokens in the current batch.
         vllm_config (VllmConfig): Runtime configuration for the model.
         is_draft_model (bool): Whether the model runs in MTP mode (disables fused MC2).
+        in_profile_run (bool): Whether we are inside profile_run. When True,
+            ZBAL is skipped because the ZBAL Buffer depends on the GVA heap
+            carved by ``zbal_init``, which runs AFTER profile_run. Falling
+            back to ALLTOALL here prevents constructing a Buffer with an
+            uncarved GVA heap, which would later cause ``send/recv buffer
+            is nullptr`` during ACL graph capture.
 
     Raises:
         ValueError: If the soc version is unsupported.
@@ -281,6 +295,20 @@ def select_moe_comm_method(num_tokens: int, vllm_config: VllmConfig, is_draft_mo
             and vllm_config.parallel_config.enable_expert_parallel
             and get_ep_group().world_size > 1
         ):
+            # During profile_run the ZBAL GVA heap has not been carved yet
+            # (lazy_init_zbal_gva_mem runs later, in initialize_from_config).
+            # Constructing ZBALMoEAdapter / Buffer here would allocate the
+            # RDMA buffer from the wrong pool (or fail silently), which
+            # later surfaces as ``send/recv buffer is nullptr`` during ACL
+            # graph capture. Fall back to ALLTOALL for the profiling forward
+            # only; subsequent forwards use the real ZBAL path.
+            if in_profile_run:
+                logger.info_once(
+                    "Skipping ZBAL MoE during profile_run (GVA heap not "
+                    "carved yet); falling back to ALLTOALL.",
+                    scope="local",
+                )
+                return MoECommType.ALLTOALL
             return MoECommType.ZBAL
 
     if not vllm_config.parallel_config.enable_expert_parallel or get_ep_group().world_size == 1:
