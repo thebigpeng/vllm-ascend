@@ -1,176 +1,412 @@
-(Worker_DP1_EP1 pid=964188) INFO 07-20 19:34:14 [decorators.py:668] saved AOT compiled function to /root/.cache/vllm/torch_compile_cache/torch_aot_compile/8f746087f538893a7f4811ebf8c8a6d83a88afc421160fb59852ce27d787fd16/rank_0_1/model
-(Worker_DP1_EP1 pid=964188) INFO 07-20 19:34:14 [monitor.py:53] torch.compile took 1.06 s in total
-(Worker_DP5_EP5 pid=964183) INFO 07-20 19:34:14 [monitor.py:81] Initial profiling/warmup run took 0.09 s
-(Worker_DP2_EP2 pid=964186) INFO 07-20 19:34:14 [monitor.py:81] Initial profiling/warmup run took 0.09 s
-(Worker_DP1_EP1 pid=964188) INFO 07-20 19:34:14 [monitor.py:81] Initial profiling/warmup run took 0.07 s
-(Worker_DP7_EP7 pid=964187) INFO 07-20 19:34:14 [monitor.py:81] Initial profiling/warmup run took 0.09 s
-(Worker_DP6_EP6 pid=964184) INFO 07-20 19:34:14 [monitor.py:81] Initial profiling/warmup run took 0.10 s
-(Worker_DP4_EP4 pid=964189) INFO 07-20 19:34:14 [monitor.py:81] Initial profiling/warmup run took 0.08 s
-(Worker_DP3_EP3 pid=964185) INFO 07-20 19:34:14 [monitor.py:81] Initial profiling/warmup run took 0.10 s
-(Worker_DP0_EP0 pid=964190) INFO 07-20 19:34:14 [monitor.py:81] Initial profiling/warmup run took 0.07 s
-Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/11 [00:21<?, ?it/s]
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] WorkerProc hit an exception.
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4466, in _replace_gpu_model_runner_function_wrapper
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     yield
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4367, in capture_model
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return GPUModelRunner.capture_model(self)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return func(*args, **kwargs)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6102, in capture_model
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     self._capture_cudagraphs(
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6217, in _capture_cudagraphs
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     self._warmup_and_capture(
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6163, in _warmup_and_capture
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     self._dummy_run(
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return func(*args, **kwargs)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 3300, in _dummy_run
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     outputs = self._model_forward(
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]               ^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2546, in _model_forward
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     hidden_states = run_model()
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                     ^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self._call_impl(*args, **kwargs)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return forward_call(*args, **kwargs)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/models/deepseek_v4.py", line 1109, in forward
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     hidden_states = self.model(input_ids, positions, intermediate_tensors, inputs_embeds)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/compilation/decorators.py", line 480, in __call__
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self.aot_compiled_fn(self, *args, **kwargs)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_dynamo/aot_compile.py", line 124, in __call__
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self.fn(*args, **kwargs)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/models/deepseek_v4.py", line 946, in forward
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     def forward(
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/compilation/caching.py", line 215, in __call__
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self.optimized_call(*args, **kwargs)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "<string>", line 5, in execution_fn
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/compilation/acl_graph.py", line 159, in __call__
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     output = self.runnable(*args, **kwargs)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/compilation/piecewise_backend.py", line 380, in __call__
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return range_entry.runnable(*args)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_inductor/compile_fx.py", line 2865, in wrapper
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return pytree.tree_unflatten(compiled_fn(*args, **kwargs), spec)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/aot_autograd.py", line 1148, in forward
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return compiled_fn(full_args)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 357, in runtime_wrapper
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     all_outs = call_func_at_runtime_with_args(
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     out = normalize_as_list(f(args))
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                             ^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 531, in wrapper
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return compiled_fn(runtime_args)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 729, in inner_fn
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     outs = compiled_fn(args)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/utils.py", line 108, in g
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return f(*args)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/dynamo/npugraph_ex/npu_fx_compiler.py", line 507, in __call__
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     gm_result = self.run_kernel(*args, **kwargs)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "<string>", line 1909, in kernel
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/dynamo/npugraph_ex/_acl_concrete_graph/acl_graph.py", line 823, in __call__
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self.fx_run_eagerly(*args, **kwargs)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/dynamo/npugraph_ex/_acl_concrete_graph/acl_graph.py", line 894, in fx_run_eagerly
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self.fx_forward(*args, **kwargs)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "<string>", line 51, in forward
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_ops.py", line 819, in __call__
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self._op(*args, **kwargs)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/model_executor/layers/fused_moe/runner/moe_runner.py", line 134, in _moe_forward_shared
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return layer.runner._forward_impl(
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 327, in _forward_impl
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self.forward_impl(
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 315, in forward_impl
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     result = layer.shared_forward_impl(hidden_states, router_logits)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 828, in shared_forward_impl
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     fused_moe_results = self.forward_impl(
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                         ^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 662, in forward_impl
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     fused_experts_results: FusedExpertsResult = self.quant_method.apply(
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/quantization/method_adapters.py", line 270, in apply
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     return self.quant_method.apply(
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/quantization/methods/w8a8_dynamic.py", line 324, in apply
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     final_hidden_states = moe_comm_method.fused_experts(
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/moe_comm_method.py", line 153, in fused_experts
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     token_dispatch_output = self.token_dispatcher.token_dispatch(token_dispatch_input=token_dispatch_input)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/zbal_moe_comm.py", line 304, in token_dispatch
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     recv_x, recv_topk_idx, handle_dict, recv_x_scales = self._adapter.dispatch(
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                                                         ^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/zbal_moe_adapter.py", line 242, in dispatch
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     ) = self.buffer.dispatch(
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]         ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/zbal/zbal_buffer.py", line 316, in dispatch
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     ) = self.runtime.intranode_dispatch(
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] RuntimeError: operator():../torch_npu/csrc/aten/common/LocalScalarDenseNpu.cpp:23 NPU function error: c10_npu::acl::AclrtSynchronizeStreamWithTimeout(copy_stream), error code is 107027
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] [ERROR] 2026-07-20-19:34:14 (PID:964187, Device:0, RankID:-1) ERR00100 PTA call acl api failed.
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] EE9999: Inner Error!
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] EE9999[PID: 964187] 2026-07-20-19:34:14.512.478 (EE9999):  Not allow to synchronize captured-stream, stream_id=37.[FUNC:StreamSynchronize][FILE:api_error.cc][LINE:1016]
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]         TraceBack (most recent call last):
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]        rtStreamSynchronizeWithTimeout execution failed, reason=stream is captured[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]        synchronize stream with timeout failed, runtime result = 107027[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] During handling of the above exception, another exception occurred:
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4439, in _torch_cuda_wrapper
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     yield
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4366, in capture_model
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     with _torch_cuda_wrapper(), _replace_gpu_model_runner_function_wrapper(parent_module_name):
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 158, in __exit__
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     self.gen.throw(typ, value, traceback)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4468, in _replace_gpu_model_runner_function_wrapper
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     raise RuntimeError(f"NPUModelRunner failed, error is {e}")
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] RuntimeError: NPUModelRunner failed, error is operator():../torch_npu/csrc/aten/common/LocalScalarDenseNpu.cpp:23 NPU function error: c10_npu::acl::AclrtSynchronizeStreamWithTimeout(copy_stream), error code is 107027
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] [ERROR] 2026-07-20-19:34:14 (PID:964187, Device:0, RankID:-1) ERR00100 PTA call acl api failed.
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] EE9999: Inner Error!
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] EE9999[PID: 964187] 2026-07-20-19:34:14.512.478 (EE9999):  Not allow to synchronize captured-stream, stream_id=37.[FUNC:StreamSynchronize][FILE:api_error.cc][LINE:1016]
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]         TraceBack (most recent call last):
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]        rtStreamSynchronizeWithTimeout execution failed, reason=stream is captured[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]        synchronize stream with timeout failed, runtime result = 107027[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] During handling of the above exception, another exception occurred:
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     output = func(*args, **kwargs)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 578, in compile_or_warm_up_model
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     npugraph_memory_bytes = self.model_runner.capture_model()
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4366, in capture_model
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     with _torch_cuda_wrapper(), _replace_gpu_model_runner_function_wrapper(parent_module_name):
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 158, in __exit__
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     self.gen.throw(typ, value, traceback)
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4448, in _torch_cuda_wrapper
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962]     raise RuntimeError(f"NPUModelRunner init failed, error is {e}")
-(Worker_DP7_EP7 pid=964187) ERROR 07-20 19:34:15 [multiproc_executor.py:962] RuntimeError: NPUModelRunner init failed, error is NPUModelRunner failed, error is operator():../torch_npu/csrc/aten/common/LocalScalarDenseNpu.cpp:23 NPU function error: c10_npu::acl::AclrtSynchronizeStream
+APIServer pid=1064) INFO:     Started server process [1064]
+(APIServer pid=1064) INFO:     Waiting for application startup.
+(APIServer pid=1064) INFO:     Application startup complete.
+(Worker_DP1_EP1 pid=1503) INFO 07-20 22:39:33 [acl_graph.py:199] Replaying aclgraph
+(Worker_DP7_EP7 pid=1500) INFO 07-20 22:39:33 [acl_graph.py:199] Replaying aclgraph
+(Worker_DP3_EP3 pid=1499) INFO 07-20 22:39:33 [acl_graph.py:199] Replaying aclgraph
+(Worker_DP4_EP4 pid=1501) INFO 07-20 22:39:33 [acl_graph.py:199] Replaying aclgraph
+(Worker_DP2_EP2 pid=1505) INFO 07-20 22:39:33 [acl_graph.py:199] Replaying aclgraph
+(Worker_DP6_EP6 pid=1502) INFO 07-20 22:39:33 [acl_graph.py:199] Replaying aclgraph
+(Worker_DP5_EP5 pid=1504) INFO 07-20 22:39:33 [acl_graph.py:199] Replaying aclgraph
+(Worker_DP0_EP0 pid=1506) INFO 07-20 22:39:33 [acl_graph.py:199] Replaying aclgraph
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962] WorkerProc hit an exception.
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     output = func(*args, **kwargs)
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 820, in execute_dummy_batch
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     self.model_runner._dummy_run(num_tokens=self.model_runner.decode_token_per_req, uniform_decode=True)
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 3300, in _dummy_run
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     outputs = self._model_forward(
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]               ^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2546, in _model_forward
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     hidden_states = run_model()
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]                     ^^^^^^^^^^^
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/compilation/acl_graph.py", line 212, in __call__
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     torch.npu.current_stream().synchronize()
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/npu/streams.py", line 85, in synchronize
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     super(Stream, self).synchronize()
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962] RuntimeError: synchronize:../torch_npu/csrc/core/npu/NPUStream.cpp:361 NPU function error: c10_npu::acl::AclrtSynchronizeStreamWithTimeout(stream()), error code is 507018
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962] [ERROR] 2026-07-20-22:39:34 (PID:1506, Device:0, RankID:-1) ERR00100 PTA call acl api failed
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962] E39999: Inner Error!
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962] E39999[PID: 1506] 2026-07-20-22:39:34.215.886 (E39999):  The error from device(chipId:0, dieId:0), serial number is 1, an exception occurred during AICPU execution, stream_id:46, task_id:3175, errcode:1, msg:execute kernel param invalid.[FUNC:ProcessStarsAicpuErrorInfo][FILE:device_error_proc.cc][LINE:1644]
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]         TraceBack (most recent call last):
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]        Kernel task happen error, retCode=0x2a, [aicpu exception].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]        Aicpu kernel execute failed, device_id=0, stream_id=46, task_id=3175, soName=8786079630598814386.so, funcName=RunCpuKernel, kernelName=SparseAttnSharedkvMetadata, errorCode=0x2a.[FUNC:PrintAicpuErrorInfo][FILE:davinci_kernel_task.cc][LINE:1435]
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]        rtStreamSynchronizeWithTimeout execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]        synchronize stream with timeout failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     output = func(*args, **kwargs)
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 820, in execute_dummy_batch
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     self.model_runner._dummy_run(num_tokens=self.model_runner.decode_token_per_req, uniform_decode=True)
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 3300, in _dummy_run
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     outputs = self._model_forward(
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]               ^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2546, in _model_forward
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     hidden_states = run_model()
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]                     ^^^^^^^^^^^
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/compilation/acl_graph.py", line 212, in __call__
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     torch.npu.current_stream().synchronize()
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/npu/streams.py", line 85, in synchronize
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     super(Stream, self).synchronize()
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962] RuntimeError: synchronize:../torch_npu/csrc/core/npu/NPUStream.cpp:361 NPU function error: c10_npu::acl::AclrtSynchronizeStreamWithTimeout(stream()), error code is 507018
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962] [ERROR] 2026-07-20-22:39:34 (PID:1506, Device:0, RankID:-1) ERR00100 PTA call acl api failed
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962] E39999: Inner Error!
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962] E39999[PID: 1506] 2026-07-20-22:39:34.215.886 (E39999):  The error from device(chipId:0, dieId:0), serial number is 1, an exception occurred during AICPU execution, stream_id:46, task_id:3175, errcode:1, msg:execute kernel param invalid.[FUNC:ProcessStarsAicpuErrorInfo][FILE:device_error_proc.cc][LINE:1644]
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]         TraceBack (most recent call last):
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]        Kernel task happen error, retCode=0x2a, [aicpu exception].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]        Aicpu kernel execute failed, device_id=0, stream_id=46, task_id=3175, soName=8786079630598814386.so, funcName=RunCpuKernel, kernelName=SparseAttnSharedkvMetadata, errorCode=0x2a.[FUNC:PrintAicpuErrorInfo][FILE:davinci_kernel_task.cc][LINE:1435]
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]        rtStreamSynchronizeWithTimeout execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]        synchronize stream with timeout failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]
+(Worker_DP0_EP0 pid=1506) ERROR 07-20 22:39:34 [multiproc_executor.py:962]
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138] EngineCore encountered a fatal error.
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138] Traceback (most recent call last):
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/engine/core.py", line 1129, in run_engine_core
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]     engine_core.run_busy_loop()
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/engine/core.py", line 1758, in run_busy_loop
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]     self.execute_dummy_batch()
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/engine/core.py", line 732, in execute_dummy_batch
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]     self.model_executor.execute_dummy_batch()
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 331, in execute_dummy_batch
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]     self.collective_rpc("execute_dummy_batch", unique_reply_rank=self.output_rank)
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 403, in collective_rpc
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]     return future if non_block else future.result()
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]                                     ^^^^^^^^^^^^^^^
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 90, in result
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]     return super().result()
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]            ^^^^^^^^^^^^^^^^
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/concurrent/futures/_base.py", line 449, in result
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]     return self.__get_result()
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]            ^^^^^^^^^^^^^^^^^^^
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]     raise self._exception
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 94, in _wait_for_response
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]     response = self.aggregate(self.get_response())
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]                               ^^^^^^^^^^^^^^^^^^^
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 390, in get_response
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]     raise RuntimeError(
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138] RuntimeError: Worker failed with error 'synchronize:../torch_npu/csrc/core/npu/NPUStream.cpp:361 NPU function error: c10_npu::acl::AclrtSynchronizeStreamWithTimeout(stream()), error code is 507018
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138] [ERROR] 2026-07-20-22:39:34 (PID:1506, Device:0, RankID:-1) ERR00100 PTA call acl api failed
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138] [Error]: The aicpu execution is abnormal.
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]         Rectify the fault based on the error information in the ascend log.
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138] E39999: Inner Error!
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138] E39999[PID: 1506] 2026-07-20-22:39:34.215.886 (E39999):  The error from device(chipId:0, dieId:0), serial number is 1, an exception occurred during AICPU execution, stream_id:46, task_id:3175, errcode:1, msg:execute kernel param invalid.[FUNC:ProcessStarsAicpuErrorInfo][FILE:device_error_proc.cc][LINE:1644]
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]         TraceBack (most recent call last):
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]        Kernel task happen error, retCode=0x2a, [aicpu exception].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]        Aicpu kernel execute failed, device_id=0, stream_id=46, task_id=3175, soName=8786079630598814386.so, funcName=RunCpuKernel, kernelName=SparseAttnSharedkvMetadata, errorCode=0x2a.[FUNC:PrintAicpuErrorInfo][FILE:davinci_kernel_task.cc][LINE:1435]
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]        rtStreamSynchronizeWithTimeout execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138]        synchronize stream with timeout failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(EngineCore_DP0 pid=1146) ERROR 07-20 22:39:34 [core.py:1138] ', please check the stack trace above for the root cause
+(Worker_DP0_EP0 pid=1506) INFO 07-20 22:39:34 [multiproc_executor.py:775] Parent process exited, terminating worker queues
+(Worker_DP0_EP0 pid=1506) INFO 07-20 22:39:34 [multiproc_executor.py:872] WorkerProc shutting down.
+(APIServer pid=1064) ERROR 07-20 22:39:34 [async_llm.py:704] AsyncLLM output_handler failed.
+(APIServer pid=1064) ERROR 07-20 22:39:34 [async_llm.py:704] Traceback (most recent call last):
+(APIServer pid=1064) ERROR 07-20 22:39:34 [async_llm.py:704]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/engine/async_llm.py", line 660, in output_handler
+(APIServer pid=1064) ERROR 07-20 22:39:34 [async_llm.py:704]     outputs = await engine_core.get_output_async()
+(APIServer pid=1064) ERROR 07-20 22:39:34 [async_llm.py:704]               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=1064) ERROR 07-20 22:39:34 [async_llm.py:704]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/engine/core_client.py", line 998, in get_output_async
+(APIServer pid=1064) ERROR 07-20 22:39:34 [async_llm.py:704]     raise self._format_exception(outputs) from None
+(APIServer pid=1064) ERROR 07-20 22:39:34 [async_llm.py:704] vllm.v1.engine.exceptions.EngineDeadError: EngineCore encountered an issue. See stack trace (above) for the root cause.
+(APIServer pid=1064) INFO:     80.5.17.34:56138 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=1064) INFO:     80.5.17.34:56148 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=1064) INFO:     80.5.17.34:56160 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=1064) INFO:     Shutting down
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962] WorkerProc hit an exception.
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     output = func(*args, **kwargs)
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 820, in execute_dummy_batch
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     self.model_runner._dummy_run(num_tokens=self.model_runner.decode_token_per_req, uniform_decode=True)
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 3310, in _dummy_run
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     self.drafter.dummy_run(
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/spec_decode/llm_base_proposer.py", line 423, in dummy_run
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     ) = self.runner._sync_metadata_across_dp(num_tokens, is_draft_model=True)
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 595, in _sync_metadata_across_dp
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     dist.all_reduce(packed_tensor, group=get_dp_group().cpu_group)
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/distributed/c10d_logger.py", line 83, in wrapper
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py", line 3014, in all_reduce
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     work.wait()
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962] RuntimeError: [/pytorch/third_party/gloo/gloo/transport/tcp/pair.cc:547] Connection closed by peer [80.5.17.37]:15509
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     output = func(*args, **kwargs)
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 820, in execute_dummy_batch
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     self.model_runner._dummy_run(num_tokens=self.model_runner.decode_token_per_req, uniform_decode=True)
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 3310, in _dummy_run
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     self.drafter.dummy_run(
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/spec_decode/llm_base_proposer.py", line 423, in dummy_run
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     ) = self.runner._sync_metadata_across_dp(num_tokens, is_draft_model=True)
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 595, in _sync_metadata_across_dp
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     dist.all_reduce(packed_tensor, group=get_dp_group().cpu_group)
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/distributed/c10d_logger.py", line 83, in wrapper
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py", line 3014, in all_reduce
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]     work.wait()
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962] RuntimeError: [/pytorch/third_party/gloo/gloo/transport/tcp/pair.cc:547] Connection closed by peer [80.5.17.37]:15509
+(Worker_DP1_EP1 pid=1503) ERROR 07-20 22:39:34 [multiproc_executor.py:962]
+(EngineCore_DP1 pid=1183) ERROR 07-20 22:39:34 [core.py:1138] EngineCore encountered a fatal error.
+
+
+
+
+root@ceph1:/home/p00801009/vllm-ascend/vllm_test# grep -rn "ERROR" /root/ascend/log/
+/root/ascend/log/debug/plog/plog-1501_20260720223533479.log:1:[ERROR] APP(1501,python):2026-07-20-22:35:33.429.851 1501 parseExpandableSegments:zbal_pytorch_c10_dma.cpp:926: "[PTA]:" NPU function error: [ShmemAllocator Currently do not support detail error log]
+/root/ascend/log/debug/plog/plog-1505_20260720223533865.log:1:[ERROR] APP(1505,python):2026-07-20-22:35:33.779.994 1505 parseExpandableSegments:zbal_pytorch_c10_dma.cpp:926: "[PTA]:" NPU function error: [ShmemAllocator Currently do not support detail error log]
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:1:[ERROR] APP(1506,python):2026-07-20-22:35:33.975.081 1506 parseExpandableSegments:zbal_pytorch_c10_dma.cpp:926: "[PTA]:" NPU function error: [ShmemAllocator Currently do not support detail error log]
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:3:[ERROR] RUNTIME(1506,):2026-07-20-22:39:34.214.029 [stars_engine.cc:1548]1902 ProcLogicCqReport:Task run failed, device_id=0, stream_id=46, task_id=3175, sqe_type=1(aicpu), errType=0x1(task exception), sqSwStatus=0x1
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:4:[ERROR] RUNTIME(1506,):2026-07-20-22:39:34.215.870 [device_error_proc.cc:1644]1902 ProcessStarsAicpuErrorInfo:The error from device(chipId:0, dieId:0), serial number is 1, an exception occurred during AICPU execution, stream_id:46, task_id:3175, errcode:1, msg:execute kernel param invalid.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:5:[ERROR] RUNTIME(1506,):2026-07-20-22:39:34.215.905 [davinci_task.cc:209]1902 SetStarsResultForDavinciTask:AICPU Kernel task happen error, retCode=0x2a.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:6:[ERROR] RUNTIME(1506,):2026-07-20-22:39:34.221.583 [davinci_kernel_task.cc:1729]1902 PreCheckTaskErr:Kernel task happen error, retCode=0x2a, [aicpu exception].
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:7:[ERROR] RUNTIME(1506,):2026-07-20-22:39:34.221.600 [davinci_kernel_task.cc:1435]1902 PrintAicpuErrorInfo:Aicpu kernel execute failed, device_id=0, stream_id=46, task_id=3175, soName=8786079630598814386.so, funcName=RunCpuKernel, kernelName=SparseAttnSharedkvMetadata, errorCode=0x2a.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:8:[ERROR] RUNTIME(1506,):2026-07-20-22:39:34.221.612 [davinci_kernel_task.cc:1445]1902 PrintAicpuErrorInfo:Aicpu kernel execute failed, device_id=0, stream_id=46, task_id=3175, fault op_name=.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:9:[ERROR] RUNTIME(1506,):2026-07-20-22:39:34.222.700 [stream.cc:1472]1902 GetError:Stream Synchronize failed, stream_id=46, retCode=0x2a, [aicpu exception].
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:10:[ERROR] RUNTIME(1506,):2026-07-20-22:39:34.222.703 [stream.cc:1475]1902 GetError:AICPU Kernel task happen error, retCode=0x2a.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:11:[ERROR] RUNTIME(1506,):2026-07-20-22:39:34.222.709 [stream.cc:1475]1902 GetError:Aicpu kernel execute failed, device_id=0, stream_id=46, task_id=3175, fault op_name=.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:12:[ERROR] RUNTIME(1506,):2026-07-20-22:39:34.222.714 [stream.cc:3697]1902 EnterFailureAbort:stream_id=46 enter failure abort.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:13:[ERROR] RUNTIME(1506,):2026-07-20-22:39:34.222.731 [stars_engine.cc:1439]1902 StarsResumeRtsq:stop scheduling in abort failure mode: stream_id=46, sq_id=3, sq_head=1127, task_id=3175, taskType=1.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:14:[ERROR] RUNTIME(1506,):2026-07-20-22:39:34.222.799 [stream.cc:1613]1506 SynchronizeExecutedTask:context is abort, status=0x715002a.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:15:[ERROR] RUNTIME(1506,):2026-07-20-22:39:34.222.804 [stream.cc:1667]1506 SynchronizeImpl:failed, stream_id=46, error=0x715002a
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:16:[ERROR] RUNTIME(1506,):2026-07-20-22:39:34.222.808 [api_error.cc:1029]1506 StreamSynchronize:Stream synchronize failed, stream_id=46, timeout=-1ms.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:17:[ERROR] RUNTIME(1506,):2026-07-20-22:39:34.222.815 [api_c_stream.cc:183]1506 rtStreamSynchronizeWithTimeout:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:18:[ERROR] RUNTIME(1506,):2026-07-20-22:39:34.222.819 [error_message_manage.cc:65]1506 FuncErrorReason:rtStreamSynchronizeWithTimeout execution failed, reason=aicpu exception
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:19:[ERROR] ASCENDCL(1506,):2026-07-20-22:39:34.222.984 [stream.cpp:167]1506 aclrtSynchronizeStreamWithTimeoutImpl:synchronize stream with timeout failed, runtime result = 507018
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:20:[ERROR] RUNTIME(1506,):2026-07-20-22:39:35.795.797 [context.cc:708]1506 Synchronize:context is abort, status=0x715002a.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:21:[ERROR] RUNTIME(1506,):2026-07-20-22:39:35.795.811 [api_error.cc:2698]1506 DeviceSynchronize:Device synchronize failed.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:22:[ERROR] RUNTIME(1506,):2026-07-20-22:39:35.795.828 [api_c_device.cc:245]1506 rtDeviceSynchronizeWithTimeout:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:23:[ERROR] RUNTIME(1506,):2026-07-20-22:39:35.795.834 [error_message_manage.cc:65]1506 FuncErrorReason:rtDeviceSynchronizeWithTimeout execution failed, reason=aicpu exception
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:24:[ERROR] ASCENDCL(1506,):2026-07-20-22:39:35.796.023 [device.cpp:198]1506 aclrtSynchronizeDeviceWithTimeoutImpl:wait for compute device to finish failed, runtime result = 507018.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:25:[ERROR] APP(1506,):2026-07-20-22:39:35.796.299 1506 THPModule_npu_shutdown_synchronize:InitNpuBindings.cpp:126: "[PTA]:"NPU shutdown synchronize device failed.""
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:26:[ERROR] RUNTIME(1506,):2026-07-20-22:39:35.796.373 [api_impl.cc:2284]1506 EventQueryStatus:context is abort, status=0x715002a.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:27:[ERROR] RUNTIME(1506,):2026-07-20-22:39:35.796.378 [api_c.cc:802]1506 rtEventQueryStatus:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:28:[ERROR] RUNTIME(1506,):2026-07-20-22:39:35.796.382 [error_message_manage.cc:65]1506 FuncErrorReason:rtEventQueryStatus execution failed, reason=aicpu exception
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:29:[ERROR] ASCENDCL(1506,):2026-07-20-22:39:35.796.547 [event.cpp:157]1506 aclrtQueryEventStatusImpl:[Query][Status]query event recorded status failed, runtime result = 507018
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:30:[ERROR] APP(1506,):2026-07-20-22:39:35.797.286 aclAppLog call vsnprintf_s failed
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:31:[ERROR] RUNTIME(1506,):2026-07-20-22:39:35.797.465 [context.cc:708]1506 Synchronize:context is abort, status=0x715002a.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:32:[ERROR] RUNTIME(1506,):2026-07-20-22:39:35.797.471 [api_error.cc:2698]1506 DeviceSynchronize:Device synchronize failed.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:33:[ERROR] RUNTIME(1506,):2026-07-20-22:39:35.797.477 [api_c_device.cc:245]1506 rtDeviceSynchronizeWithTimeout:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:34:[ERROR] RUNTIME(1506,):2026-07-20-22:39:35.797.481 [error_message_manage.cc:65]1506 FuncErrorReason:rtDeviceSynchronizeWithTimeout execution failed, reason=aicpu exception
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:35:[ERROR] ASCENDCL(1506,):2026-07-20-22:39:35.797.635 [device.cpp:198]1506 aclrtSynchronizeDeviceWithTimeoutImpl:wait for compute device to finish failed, runtime result = 507018.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:36:[ERROR] RUNTIME(1506,):2026-07-20-22:39:35.797.929 [context.cc:708]1506 Synchronize:context is abort, status=0x715002a.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:37:[ERROR] RUNTIME(1506,):2026-07-20-22:39:35.797.935 [api_error.cc:2698]1506 DeviceSynchronize:Device synchronize failed.
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:38:[ERROR] RUNTIME(1506,):2026-07-20-22:39:35.797.939 [api_c_device.cc:245]1506 rtDeviceSynchronizeWithTimeout:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:39:[ERROR] RUNTIME(1506,):2026-07-20-22:39:35.797.943 [error_message_manage.cc:65]1506 FuncErrorReason:rtDeviceSynchronizeWithTimeout execution failed, reason=aicpu exception
+/root/ascend/log/debug/plog/plog-1506_20260720223534092.log:40:[ERROR] ASCENDCL(1506,):2026-07-20-22:39:35.798.064 [device.cpp:198]1506 aclrtSynchronizeDeviceWithTimeoutImpl:wait for compute device to finish failed, runtime result = 507018.
+/root/ascend/log/debug/plog/plog-1502_20260720223533008.log:1:[ERROR] APP(1502,python):2026-07-20-22:35:32.997.956 1502 parseExpandableSegments:zbal_pytorch_c10_dma.cpp:926: "[PTA]:" NPU function error: [ShmemAllocator Currently do not support detail error log]
+/root/ascend/log/debug/plog/plog-1504_20260720223533264.log:1:[ERROR] APP(1504,python):2026-07-20-22:35:33.257.742 1504 parseExpandableSegments:zbal_pytorch_c10_dma.cpp:926: "[PTA]:" NPU function error: [ShmemAllocator Currently do not support detail error log]
+/root/ascend/log/debug/plog/plog-1499_20260720223533204.log:1:[ERROR] APP(1499,python):2026-07-20-22:35:33.028.505 1499 parseExpandableSegments:zbal_pytorch_c10_dma.cpp:926: "[PTA]:" NPU function error: [ShmemAllocator Currently do not support detail error log]
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:1:[ERROR] APP(1500,python):2026-07-20-22:35:32.997.960 1500 parseExpandableSegments:zbal_pytorch_c10_dma.cpp:926: "[PTA]:" NPU function error: [ShmemAllocator Currently do not support detail error log]
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:3:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.064.170 [stars_engine.cc:1548]1863 ProcLogicCqReport:Task run failed, device_id=7, stream_id=46, task_id=3280, sqe_type=7(notify wait), errType=0x20(sq sw status error), sqSwStatus=0x1029002e
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:4:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.065.189 [device_error_core_proc.cc:619]1863 AddExceptionRegInfo:add error register: core_id=3, stream_id=92, task_id=46
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:5:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.065.198 [device_error_core_proc.cc:645]1863 PrintCoreInfo:The error from device(chipId:3, dieId:1), serial number is 1, there is an exception of fftsplus aivector error, core id is 3, error code = 0, dump info: pc start: 0x124e0074535c, current: 0x124e00749b30, vec error info: 0xf10044b675, mte error info: 0xf030317bc, ifu error info: 0x3ac1695d212c0, ccu error info: 0x843c3c1c00003b, cube error info: 0, biu error info: 0, aic error mask: 0x6500020bd00028c, para base: 0x12c106beb080.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:6:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.065.244 [device_error_core_proc.cc:658]1863 PrintCoreInfo:The extend info: errcode:(0, 0, 0) errorStr: timeout or trap error. fixp_error0 info: 0x30317bc, fixp_error1 info: 0xf, fsmId:0, tslot:1, thread:0, ctxid:0, blk:42, sublk:0, subErrType:4.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:7:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.065.252 [device_error_core_proc.cc:732]1863 ProcessStarsCoreErrorInfo:devId=7, streamId=92, taskId=46, MTE errorCode=0.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:8:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.726 [model_execute_task_info.cc:560]1863 ReportErrorInfoForModelExecuteTask:model execute error, retCode=0x91, [the model stream execute failed].
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:9:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.757 [model_execute_task_info.cc:525]1863 PrintErrorInfoForModelExecuteTask:stream_id=46, task_id=3279, sqVirtualAddr=0, head equal tail flag=0.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:10:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.760 [model_execute_task_info.cc:490]1863 PrintErrorModelExecuteTaskFuncCall:funcCallSvmMem=0x124e00da4000, funCallMemSize=480.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:11:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.800 [model_execute_task_info.cc:505]1863 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 00000113 000000db 092710db 00da41c0 0000025b 0000125b 00000002 000002db
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:12:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.803 [model_execute_task_info.cc:505]1863 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 000012db 00000006 00329073 004177e3 00311193 00308233 00023183 0000025b
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:13:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.805 [model_execute_task_info.cc:505]1863 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 1383125b a0004880 000000db 000090db 00000001 0000b073 00322027 0000025b
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:14:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.808 [model_execute_task_info.cc:505]1863 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 1383125b a0004880 00023203 000000db 000090db 00000001 0000a073 00020093
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:15:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.810 [model_execute_task_info.cc:505]1863 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 7ff0f093 0030c0b3 000002db 000012db 00000000 00329073 226087fb 02025213
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:16:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.812 [model_execute_task_info.cc:505]1863 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 00f27213 000000db 000010db 00000000 00309073 226207fb 000000db 000010db
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:17:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.814 [model_execute_task_info.cc:505]1863 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 00000006 00309073 00021763 00319293 0000025b 0960125b 40000000 00520233
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:18:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.816 [model_execute_task_info.cc:505]1863 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 00023203 000002db 000012db 00000006 00329073 00020263 01023083 01f09093
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:19:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.818 [model_execute_task_info.cc:505]1863 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 03f0d093 000002db 000012db 00000005 00329073 000081e3 01023283 03029293
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:20:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.820 [model_execute_task_info.cc:505]1863 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 0302d293 00823083 03009093 0300d093 0050c0b3 000002db 000012db 00000006
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:21:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.822 [model_execute_task_info.cc:505]1863 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 00329073 000094e3 00022a27 0001c22b 00311293 00110113 0000025b 0927125b
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:22:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.826 [model_execute_task_info.cc:505]1863 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 00da41d0 005202b3 0002b203 00023283 00128293 00521027 0001d2ab 0000025b
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:23:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.828 [model_execute_task_info.cc:505]1863 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 0000125b 00000000 00321073 000000e3 000002db 096012db 4022a000 0042a027
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:24:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.831 [model_execute_task_info.cc:505]1863 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 00000000 000002db 096012db 4022a000 0012a427 00000000 00000000 00000013
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:25:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.833 [model_execute_task_info.cc:533]1863 PrintErrorInfoForModelExecuteTask:model execute task failed, device_id=7, model stream_id=46, model task_id=3279, flip_num=0, model_id=40, first_task_id=0
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:26:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.836 [model_execute_task_info.cc:570]1863 ReportErrorInfoForModelExecuteTask:Real fault task, device_id=7, stream_id=92, task_id=46, type=0[KERNEL_AICORE].
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:27:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.881 [davinci_kernel_task.cc:1525]1863 GetArgsInfo:[AIC_INFO] args(0 to 17) after execute:0x3fffffb9000, 0x3fffffb9000, 0x141340100000, 0x141486a04a00, 0x141486a01200, 0x141488400000, 0x141508400200, 0x141548800000, 0x141486a03800, 0x141486a01400, 0x141486a10e00, 0x141486a13000, 0x10000000007, 0x100000000002, 0x6, 0x345, 0x800000008, 0x12c0c08dd000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:28:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.888 [davinci_kernel_task.cc:1529]1863 GetArgsInfo:tilingKey = 15, print 1 Times totalLen=(18*8), argsSize=144, schemMode=0, blockDim=48
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:29:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.896 [davinci_kernel_task.cc:1609]1863 PrintErrorInfoForDavinciTask:[AIC_INFO] after execute:args print end
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:30:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.911 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[0]=0x00000007.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:31:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.913 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[1]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:32:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.915 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[2]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:33:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.917 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[3]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:34:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.919 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[4]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:35:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.921 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[5]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:36:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.922 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[6]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:37:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.924 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[7]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:38:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.926 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[8]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:39:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.928 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[9]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:40:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.930 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[10]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:41:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.932 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[11]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:42:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.934 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[12]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:43:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.935 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[13]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:44:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.937 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[14]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:45:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.940 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[15]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:46:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.942 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[16]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:47:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.944 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[17]=0x00000004.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:48:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.945 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[18]=0x00010000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:49:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.947 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[19]=0x00300030.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:50:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.949 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[20]=0x06beb080.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:51:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.951 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[21]=0x009012c1.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:52:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.953 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[22]=0x06beb080.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:53:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.955 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[23]=0x009012c1.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:54:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.957 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[24]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:55:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.958 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[25]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:56:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.960 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[26]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:57:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.962 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[27]=0x0074535c.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:58:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.963 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[28]=0x124e124e.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:59:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.965 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[29]=0x0074535c.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:60:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.967 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[30]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:61:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.969 [davinci_kernel_task.cc:1489]1863 GetMixCtxInfo:The DavinciTask Mix context-buf[31]=0000000000.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:62:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.072.972 [davinci_kernel_task.cc:1614]1863 PrintErrorInfoForDavinciTask:[AIC_INFO] after execute:mixCtx print end
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:63:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.073.410 [davinci_kernel_task.cc:1639]1863 PrintErrorInfoForDavinciTask:[DFX_INFO]Aicore kernel execute failed, device_id=7, stream_id=92, report_stream_id=46, task_id=46, flip_num=0, fault kernel_name=dispatch_low_latency_15, fault kernel info ext=none, program id=3, hash=1323298367061207570.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:64:[ERROR] IDEDD(1500,):2026-07-20-22:48:44.073.744 [dump_args.cpp:330][tid:1863] No exception dfx info, dfxAddr[(nil)]|dfxSize[0].
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:65:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.074.475 [stream.cc:1472]1863 GetError:Stream Synchronize failed, stream_id=46, retCode=0x91, [the model stream execute failed].
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:66:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.074.478 [stream.cc:1475]1863 GetError:[AIC_INFO] after execute:args print end
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:67:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.074.489 [stream.cc:1475]1863 GetError:[AIC_INFO] after execute:mixCtx print end
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:68:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.074.498 [stream.cc:1475]1863 GetError:[DFX_INFO]Aicore kernel execute failed, device_id=7, stream_id=92, report_stream_id=46, task_id=46, flip_num=0, fault kernel_name=dispatch_low_latency_15, fault kernel info ext=none, program id=3, hash=1323298367061207570.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:69:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.074.502 [stream.cc:3697]1863 EnterFailureAbort:stream_id=46 enter failure abort.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:70:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.074.513 [stream.cc:1613]1500 SynchronizeExecutedTask:context is abort, status=0x7150050.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:71:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.074.519 [stream.cc:1667]1500 SynchronizeImpl:failed, stream_id=46, error=0x7150050
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:72:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.074.521 [stars_engine.cc:1439]1863 StarsResumeRtsq:stop scheduling in abort failure mode: stream_id=46, sq_id=3, sq_head=1232, task_id=3280, taskType=14.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:73:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.074.523 [context.cc:569]1500 SyncStreamsWithTimeout:Synchronize stream fail, stream_id=46, errorCode=0x7150050.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:74:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.074.547 [api_error.cc:2698]1500 DeviceSynchronize:Device synchronize failed.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:75:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.074.556 [api_c_device.cc:245]1500 rtDeviceSynchronizeWithTimeout:ErrCode=507011, desc=[the model stream execute failed], InnerCode=0x7150050
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:76:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.074.565 [error_message_manage.cc:65]1500 FuncErrorReason:rtDeviceSynchronizeWithTimeout execution failed, reason=the model stream execute failed
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:77:[ERROR] ASCENDCL(1500,):2026-07-20-22:48:44.074.712 [device.cpp:198]1500 aclrtSynchronizeDeviceWithTimeoutImpl:wait for compute device to finish failed, runtime result = 507011.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:78:[ERROR] APP(1500,):2026-07-20-22:48:44.075.099 1500 THPModule_npu_shutdown_synchronize:InitNpuBindings.cpp:126: "[PTA]:"NPU shutdown synchronize device failed.""
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:79:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.075.269 [api_impl.cc:2284]1500 EventQueryStatus:context is abort, status=0x7150050.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:80:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.075.274 [api_c.cc:802]1500 rtEventQueryStatus:ErrCode=507011, desc=[the model stream execute failed], InnerCode=0x7150050
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:81:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.075.277 [error_message_manage.cc:65]1500 FuncErrorReason:rtEventQueryStatus execution failed, reason=the model stream execute failed
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:82:[ERROR] ASCENDCL(1500,):2026-07-20-22:48:44.075.401 [event.cpp:157]1500 aclrtQueryEventStatusImpl:[Query][Status]query event recorded status failed, runtime result = 507011
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:83:[ERROR] APP(1500,):2026-07-20-22:48:44.076.416 aclAppLog call vsnprintf_s failed
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:84:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.076.585 [context.cc:708]1500 Synchronize:context is abort, status=0x7150050.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:85:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.076.590 [api_error.cc:2698]1500 DeviceSynchronize:Device synchronize failed.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:86:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.076.594 [api_c_device.cc:245]1500 rtDeviceSynchronizeWithTimeout:ErrCode=507011, desc=[the model stream execute failed], InnerCode=0x7150050
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:87:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.076.597 [error_message_manage.cc:65]1500 FuncErrorReason:rtDeviceSynchronizeWithTimeout execution failed, reason=the model stream execute failed
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:88:[ERROR] ASCENDCL(1500,):2026-07-20-22:48:44.076.730 [device.cpp:198]1500 aclrtSynchronizeDeviceWithTimeoutImpl:wait for compute device to finish failed, runtime result = 507011.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:89:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.076.993 [context.cc:708]1500 Synchronize:context is abort, status=0x7150050.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:90:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.076.997 [api_error.cc:2698]1500 DeviceSynchronize:Device synchronize failed.
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:91:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.077.001 [api_c_device.cc:245]1500 rtDeviceSynchronizeWithTimeout:ErrCode=507011, desc=[the model stream execute failed], InnerCode=0x7150050
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:92:[ERROR] RUNTIME(1500,):2026-07-20-22:48:44.077.004 [error_message_manage.cc:65]1500 FuncErrorReason:rtDeviceSynchronizeWithTimeout execution failed, reason=the model stream execute failed
+/root/ascend/log/debug/plog/plog-1500_20260720223533169.log:93:[ERROR] ASCENDCL(1500,):2026-07-20-22:48:44.077.114 [device.cpp:198]1500 aclrtSynchronizeDeviceWithTimeoutImpl:wait for compute device to finish failed, runtime result = 507011.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:1:[ERROR] APP(1503,python):2026-07-20-22:35:33.684.821 1503 parseExpandableSegments:zbal_pytorch_c10_dma.cpp:926: "[PTA]:" NPU function error: [ShmemAllocator Currently do not support detail error log]
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:3:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.065.791 [stars_engine.cc:1548]1899 ProcLogicCqReport:Task run failed, device_id=1, stream_id=46, task_id=3280, sqe_type=7(notify wait), errType=0x20(sq sw status error), sqSwStatus=0x1029002e
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:4:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.066.637 [device_error_core_proc.cc:619]1899 AddExceptionRegInfo:add error register: core_id=0, stream_id=92, task_id=46
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:5:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.066.646 [device_error_core_proc.cc:645]1899 PrintCoreInfo:The error from device(chipId:0, dieId:1), serial number is 1, there is an exception of fftsplus aivector error, core id is 0, error code = 0, dump info: pc start: 0x12420074535c, current: 0x124200749b30, vec error info: 0xd21be7dd38, mte error info: 0xfdf92f2f3, ifu error info: 0x489f67e80cfc0, ccu error info: 0x28292cbd1c00003b, cube error info: 0, biu error info: 0, aic error mask: 0x6500020bd00028c, para base: 0x12c106beb080.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:6:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.066.690 [device_error_core_proc.cc:658]1899 PrintCoreInfo:The extend info: errcode:(0, 0, 0) errorStr: timeout or trap error. fixp_error0 info: 0xf92f2f3, fixp_error1 info: 0xf, fsmId:0, tslot:3, thread:0, ctxid:0, blk:44, sublk:0, subErrType:4.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:7:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.066.698 [device_error_core_proc.cc:732]1899 ProcessStarsCoreErrorInfo:devId=1, streamId=92, taskId=46, MTE errorCode=0.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:8:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.450 [model_execute_task_info.cc:560]1899 ReportErrorInfoForModelExecuteTask:model execute error, retCode=0x91, [the model stream execute failed].
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:9:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.478 [model_execute_task_info.cc:525]1899 PrintErrorInfoForModelExecuteTask:stream_id=46, task_id=3279, sqVirtualAddr=0, head equal tail flag=0.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:10:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.481 [model_execute_task_info.cc:490]1899 PrintErrorModelExecuteTaskFuncCall:funcCallSvmMem=0x124200da4000, funCallMemSize=480.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:11:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.517 [model_execute_task_info.cc:505]1899 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 00000113 000000db 092110db 00da41c0 0000025b 0000125b 00000002 000002db
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:12:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.520 [model_execute_task_info.cc:505]1899 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 000012db 00000006 00329073 004177e3 00311193 00308233 00023183 0000025b
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:13:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.522 [model_execute_task_info.cc:505]1899 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 1083125b a0004880 000000db 000090db 00000001 0000b073 00322027 0000025b
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:14:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.525 [model_execute_task_info.cc:505]1899 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 1083125b a0004880 00023203 000000db 000090db 00000001 0000a073 00020093
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:15:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.527 [model_execute_task_info.cc:505]1899 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 7ff0f093 0030c0b3 000002db 000012db 00000000 00329073 226087fb 02025213
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:16:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.529 [model_execute_task_info.cc:505]1899 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 00f27213 000000db 000010db 00000000 00309073 226207fb 000000db 000010db
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:17:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.531 [model_execute_task_info.cc:505]1899 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 00000006 00309073 00021763 00319293 0000025b 0960125b 40000000 00520233
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:18:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.533 [model_execute_task_info.cc:505]1899 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 00023203 000002db 000012db 00000006 00329073 00020263 01023083 01f09093
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:19:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.536 [model_execute_task_info.cc:505]1899 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 03f0d093 000002db 000012db 00000005 00329073 000081e3 01023283 03029293
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:20:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.538 [model_execute_task_info.cc:505]1899 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 0302d293 00823083 03009093 0300d093 0050c0b3 000002db 000012db 00000006
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:21:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.540 [model_execute_task_info.cc:505]1899 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 00329073 000094e3 00022a27 0001c22b 00311293 00110113 0000025b 0921125b
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:22:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.544 [model_execute_task_info.cc:505]1899 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 00da41d0 005202b3 0002b203 00023283 00128293 00521027 0001d2ab 0000025b
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:23:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.546 [model_execute_task_info.cc:505]1899 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 0000125b 00000000 00321073 000000e3 000002db 096012db 4022a000 0042a027
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:24:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.548 [model_execute_task_info.cc:505]1899 PrintErrorModelExecuteTaskFuncCall:FuncCall data : 00000000 000002db 096012db 4022a000 0012a427 00000000 00000000 00000013
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:25:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.551 [model_execute_task_info.cc:533]1899 PrintErrorInfoForModelExecuteTask:model execute task failed, device_id=1, model stream_id=46, model task_id=3279, flip_num=0, model_id=40, first_task_id=0
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:26:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.554 [model_execute_task_info.cc:570]1899 ReportErrorInfoForModelExecuteTask:Real fault task, device_id=1, stream_id=92, task_id=46, type=0[KERNEL_AICORE].
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:27:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.599 [davinci_kernel_task.cc:1525]1899 GetArgsInfo:[AIC_INFO] args(0 to 17) after execute:0x3fffffb9000, 0x3fffffb9000, 0x1402c0100000, 0x140406a04a00, 0x140406a01200, 0x140408400000, 0x140488400200, 0x1404c8800000, 0x140406a03800, 0x140406a01400, 0x140406a10e00, 0x140406a13000, 0x10000000001, 0x100000000002, 0x6, 0x345, 0x800000008, 0x12c0c08dd000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:28:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.605 [davinci_kernel_task.cc:1529]1899 GetArgsInfo:tilingKey = 15, print 1 Times totalLen=(18*8), argsSize=144, schemMode=0, blockDim=48
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:29:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.612 [davinci_kernel_task.cc:1609]1899 PrintErrorInfoForDavinciTask:[AIC_INFO] after execute:args print end
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:30:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.627 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[0]=0x00000007.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:31:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.629 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[1]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:32:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.631 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[2]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:33:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.633 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[3]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:34:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.635 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[4]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:35:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.637 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[5]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:36:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.639 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[6]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:37:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.641 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[7]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:38:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.642 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[8]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:39:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.644 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[9]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:40:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.646 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[10]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:41:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.648 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[11]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:42:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.650 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[12]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:43:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.651 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[13]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:44:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.653 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[14]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:45:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.656 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[15]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:46:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.658 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[16]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:47:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.660 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[17]=0x00000004.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:48:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.661 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[18]=0x00010000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:49:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.663 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[19]=0x00300030.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:50:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.665 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[20]=0x06beb080.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:51:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.667 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[21]=0x009012c1.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:52:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.669 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[22]=0x06beb080.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:53:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.670 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[23]=0x009012c1.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:54:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.672 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[24]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:55:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.674 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[25]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:56:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.676 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[26]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:57:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.677 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[27]=0x0074535c.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:58:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.679 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[28]=0x12421242.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:59:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.681 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[29]=0x0074535c.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:60:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.683 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[30]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:61:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.685 [davinci_kernel_task.cc:1489]1899 GetMixCtxInfo:The DavinciTask Mix context-buf[31]=0000000000.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:62:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.074.687 [davinci_kernel_task.cc:1614]1899 PrintErrorInfoForDavinciTask:[AIC_INFO] after execute:mixCtx print end
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:63:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.075.049 [davinci_kernel_task.cc:1639]1899 PrintErrorInfoForDavinciTask:[DFX_INFO]Aicore kernel execute failed, device_id=1, stream_id=92, report_stream_id=46, task_id=46, flip_num=0, fault kernel_name=dispatch_low_latency_15, fault kernel info ext=none, program id=3, hash=1323298367061207570.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:64:[ERROR] IDEDD(1503,):2026-07-20-22:48:44.075.128 [dump_args.cpp:330][tid:1899] No exception dfx info, dfxAddr[(nil)]|dfxSize[0].
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:65:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.075.692 [stream.cc:1472]1899 GetError:Stream Synchronize failed, stream_id=46, retCode=0x91, [the model stream execute failed].
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:66:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.075.696 [stream.cc:1475]1899 GetError:[AIC_INFO] after execute:args print end
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:67:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.075.706 [stream.cc:1475]1899 GetError:[AIC_INFO] after execute:mixCtx print end
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:68:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.075.711 [stream.cc:1475]1899 GetError:[DFX_INFO]Aicore kernel execute failed, device_id=1, stream_id=92, report_stream_id=46, task_id=46, flip_num=0, fault kernel_name=dispatch_low_latency_15, fault kernel info ext=none, program id=3, hash=1323298367061207570.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:69:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.075.715 [stream.cc:3697]1899 EnterFailureAbort:stream_id=46 enter failure abort.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:70:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.075.729 [stream.cc:1613]1503 SynchronizeExecutedTask:context is abort, status=0x7150050.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:71:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.075.735 [stream.cc:1667]1503 SynchronizeImpl:failed, stream_id=46, error=0x7150050
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:72:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.075.736 [stars_engine.cc:1439]1899 StarsResumeRtsq:stop scheduling in abort failure mode: stream_id=46, sq_id=3, sq_head=1232, task_id=3280, taskType=14.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:73:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.075.739 [context.cc:569]1503 SyncStreamsWithTimeout:Synchronize stream fail, stream_id=46, errorCode=0x7150050.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:74:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.075.767 [api_error.cc:2698]1503 DeviceSynchronize:Device synchronize failed.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:75:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.075.778 [api_c_device.cc:245]1503 rtDeviceSynchronizeWithTimeout:ErrCode=507011, desc=[the model stream execute failed], InnerCode=0x7150050
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:76:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.075.784 [error_message_manage.cc:65]1503 FuncErrorReason:rtDeviceSynchronizeWithTimeout execution failed, reason=the model stream execute failed
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:77:[ERROR] ASCENDCL(1503,):2026-07-20-22:48:44.075.956 [device.cpp:198]1503 aclrtSynchronizeDeviceWithTimeoutImpl:wait for compute device to finish failed, runtime result = 507011.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:78:[ERROR] APP(1503,):2026-07-20-22:48:44.076.399 1503 THPModule_npu_shutdown_synchronize:InitNpuBindings.cpp:126: "[PTA]:"NPU shutdown synchronize device failed.""
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:79:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.076.563 [api_impl.cc:2284]1503 EventQueryStatus:context is abort, status=0x7150050.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:80:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.076.568 [api_c.cc:802]1503 rtEventQueryStatus:ErrCode=507011, desc=[the model stream execute failed], InnerCode=0x7150050
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:81:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.076.571 [error_message_manage.cc:65]1503 FuncErrorReason:rtEventQueryStatus execution failed, reason=the model stream execute failed
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:82:[ERROR] ASCENDCL(1503,):2026-07-20-22:48:44.076.698 [event.cpp:157]1503 aclrtQueryEventStatusImpl:[Query][Status]query event recorded status failed, runtime result = 507011
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:83:[ERROR] APP(1503,):2026-07-20-22:48:44.077.669 aclAppLog call vsnprintf_s failed
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:84:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.077.831 [context.cc:708]1503 Synchronize:context is abort, status=0x7150050.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:85:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.077.835 [api_error.cc:2698]1503 DeviceSynchronize:Device synchronize failed.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:86:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.077.840 [api_c_device.cc:245]1503 rtDeviceSynchronizeWithTimeout:ErrCode=507011, desc=[the model stream execute failed], InnerCode=0x7150050
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:87:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.077.843 [error_message_manage.cc:65]1503 FuncErrorReason:rtDeviceSynchronizeWithTimeout execution failed, reason=the model stream execute failed
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:88:[ERROR] ASCENDCL(1503,):2026-07-20-22:48:44.077.970 [device.cpp:198]1503 aclrtSynchronizeDeviceWithTimeoutImpl:wait for compute device to finish failed, runtime result = 507011.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:89:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.078.240 [context.cc:708]1503 Synchronize:context is abort, status=0x7150050.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:90:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.078.245 [api_error.cc:2698]1503 DeviceSynchronize:Device synchronize failed.
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:91:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.078.249 [api_c_device.cc:245]1503 rtDeviceSynchronizeWithTimeout:ErrCode=507011, desc=[the model stream execute failed], InnerCode=0x7150050
+/root/ascend/log/debug/plog/plog-1503_20260720223533816.log:92:[ERROR] RUNTIME(1503,):2026-07-20-22:48:44.078.251 [error_message_manage.cc:65]1503 FuncErrorReason:rtDeviceSynchronizeWithTimeout execution failed, reason=the model stream execute fai
