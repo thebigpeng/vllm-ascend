@@ -156,7 +156,7 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             recv_x, recv_count, handle_dict, event = self._adapter.low_latency_dispatch(
                 x=hidden_states,
                 topk_idx=topk_idx,
-                num_max_tokens_per_rank=2048,
+                num_max_tokens_per_rank=num_max_tokens_per_rank,
                 use_fp8=False,
             )
             # low_latency_dispatch returns recv_count with shape
