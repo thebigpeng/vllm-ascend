@@ -136,7 +136,35 @@ def lazy_init_zbal_gva_mem(
         logger.error("[ZBAL] zbal lazy init failed!")
         return -1
 
+    _init_world_group_communicator()
+
     return res
+
+
+def _init_world_group_communicator() -> None:
+    """Explicitly create the zbal world group communicator.
+
+    The world group's ProcessGroupZBAL is constructed during
+    ``init_process_group(backend='zbal')`` BEFORE ``zbal_init()`` bootstraps
+    zbal, so ``PrepareCommunicator`` skips ``initCommunicator()`` at that
+    point. The communicator is normally created lazily when the first
+    collective op is routed to ``zbalGroup_``. However, when
+    ``ZBAL_HCCL_OP`` redirects ALL ops to HCCL, no op ever reaches
+    ``zbalGroup_``, leaving the world group uncreated. Sub-group
+    communicators (e.g. MoE dispatch/combine) then fail with
+    "world group not created".
+
+    Calling this after bootstrap ensures the world group exists
+    regardless of which ops ``ZBAL_HCCL_OP`` redirects.
+    """
+    try:
+        world_group = dist.group.WORLD
+        backend = world_group._get_backend(torch.device("npu"))
+        if hasattr(backend, "init_zbal_comm_meta"):
+            backend.init_zbal_comm_meta()
+            logger.info("[ZBAL] world group communicator initialized")
+    except Exception as e:
+        logger.warning("[ZBAL] failed to init world group communicator: %s", e)
 
 
 def _get_available_gpu_memory_gb(
