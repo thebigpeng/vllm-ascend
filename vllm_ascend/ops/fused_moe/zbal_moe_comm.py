@@ -198,18 +198,20 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         # Use standard or low-latency dispatch based on the decision above.
         recv_x_scales = None
         if use_low_latency:
-            # If the previous forward fell back to normal dispatch, the
-            # low-latency buffer's zero-initialized region was overwritten.
-            # ZBAL's low-latency kernels require that region to be zero, so
-            # we must clean it before issuing the next low-latency dispatch.
-            # See ZBAL Buffer.clean_low_latency_buffer docs.
-            if self._needs_clean_before_low_latency:
-                self._adapter.clean_low_latency_buffer(
-                    self.low_latency_num_max_tokens_per_rank,
-                    self.hidden_size,
-                    self.num_experts,
-                )
-                self._needs_clean_before_low_latency = False
+            # Always clean the low-latency buffer before dispatch.
+            # The zero-initialized region is required by ZBAL's low-latency
+            # kernels, and a prior normal dispatch (e.g. during prefill in
+            # eager mode) may have overwritten it. We clean unconditionally
+            # instead of checking _needs_clean_before_low_latency because
+            # ACL graph capture bakes Python conditionals at capture time —
+            # a flag toggled by eager prefill would not be reflected in the
+            # captured decode graph, leading to MTE errors on replay.
+            self._adapter.clean_low_latency_buffer(
+                self.low_latency_num_max_tokens_per_rank,
+                self.hidden_size,
+                self.num_experts,
+            )
+            self._needs_clean_before_low_latency = False
 
             # Always pass the static cap as `num_max_tokens_per_rank`, NEVER
             # `hidden_states.shape[0]`. The C++ runtime uses this value to
@@ -225,29 +227,40 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             # low_latency_dispatch returns recv_count with shape
             # [num_local_experts], which is the per-expert token count
             # needed by npu_grouped_matmul as group_list.
+            # NOTE: Keep recv_count as a device tensor for ACL graph
+            # compatibility. Calling .tolist() triggers a synchronous D2H
+            # copy (aclrtMemcpy) which is forbidden on captured streams.
+            # The Python list is not needed: token_combine only uses
+            # topk_ids/topk_weights/handle, and the MLP group_list is
+            # the device tensor below.
             group_list = recv_count.to(torch.int64)
-            num_recv_tokens_per_expert_list = recv_count.tolist()
+            num_recv_tokens_per_expert_list = []
         else:
-            # Pass topk_weights so zbal can forward them to receiving ranks.
-            # In standard mode, the handle stores these weights for combine.
+            # Normal dispatch path — graph-compatible via num_worst_tokens.
+            # When num_worst_tokens > 0, the C++ runtime pre-allocates the
+            # receive buffer with the worst-case size and skips all D2H
+            # syncs (total_recv_token.item<int>() and
+            # recv_tokens_per_expert.to(at::kCPU)). The per-expert token
+            # count is returned as a device tensor in handle[5]
+            # (recv_tokens_per_expert) instead of a Python list.
+            #
+            # Worst case: every token's topk experts are all local.
+            # num_worst_tokens = num_tokens * topk guarantees the
+            # pre-allocated buffer can hold any routing outcome.
+            topk = topk_ids.shape[1]
+            num_worst_tokens = actual_tokens * topk
             recv_x, recv_topk_idx, handle_dict, recv_x_scales = self._adapter.dispatch(
                 x=hidden_states,
                 topk_idx=topk_idx,
                 topk_weights=combine_weights,
+                num_worst_tokens=num_worst_tokens,
             )
-            # Build group_list for MLP computation.
-            # npu_grouped_matmul requires int64 group_list.
-            num_recv_tokens_per_expert_list = handle_dict.get(
-                "num_recv_tokens_per_expert_list", []
-            )
-            if num_recv_tokens_per_expert_list:
-                group_list = torch.tensor(
-                    num_recv_tokens_per_expert_list,
-                    dtype=torch.int64,
-                    device=hidden_states.device,
-                )
-            else:
-                group_list = torch.zeros(1, dtype=torch.int64, device=hidden_states.device)
+            # Graph-compatible: use device tensor from handle instead of
+            # Python list. handle[5] is recv_tokens_per_expert with shape
+            # [num_local_experts] and dtype int64 — exactly what
+            # npu_grouped_matmul expects as group_list (count mode).
+            group_list = handle_dict["handle"][5]
+            num_recv_tokens_per_expert_list = []
 
         combine_metadata = MoEZBALCombineMetadata(
             topk_ids=topk_ids,
