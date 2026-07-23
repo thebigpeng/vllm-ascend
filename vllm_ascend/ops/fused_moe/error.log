@@ -1,167 +1,139 @@
-(APIServer pid=429022) INFO 07-21 22:54:23 [loggers.py:271] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
-(APIServer pid=429022) INFO:     80.5.17.34:55494 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:55508 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:55520 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:35364 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:35366 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:35378 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:35382 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:35398 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:35408 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:35410 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:35424 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:35428 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:35438 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:35450 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:35466 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:35470 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:35476 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=429022) INFO:     80.5.17.34:35478 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-terminate called after throwing an instance of 'c10::Error'
-terminate called after throwing an instance of 'c10::Error'
-terminate called after throwing an instance of 'c10::Error'
-terminate called after throwing an instance of 'c10::Error'
-  what():  npuSynchronizeDevice:../torch_npu/csrc/core/npu/NPUStream.cpp:576 NPU function error: AclrtSynchronizeDeviceWithTimeout, error code is 507015
-[ERROR] 2026-07-21-22:54:54 (PID:429287, Device:0, RankID:-1) ERR00100 PTA call acl api failed
-[Error]: The aicore execution is abnormal.
-        Rectify the fault based on the error information in the ascend log.
-EZ9999: Inner Error!
-EZ9999[PID: 429287] 2026-07-21-22:54:54.023.631 (EZ9999):  The error from device(chipId:0, dieId:0), serial number is 2, there is an exception of fftsplus aivector error, core id is 1, error code = 0, dump info: pc start: 0x12400074535c, current: 0x124000747f2c, vec error info: 0x5215d50ba4, mte error info: 0xe3000000d5, ifu error info: 0x20ff000e8f280, ccu error info: 0x6668adae0f8000c2, cube error info: 0, biu error info: 0, aic error mask: 0x6500020bd00028c, para base: 0x12c100080080.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:645]
-        TraceBack (most recent call last):
-       The extend info: errcode:(0, 0x200000000000000, 0) errorStr: The MPU address access is invalid. fixp_error0 info: 0xd5, fixp_error1 info: 0xe3, fsmId:1, tslot:2, thread:0, ctxid:0, blk:47, sublk:0, subErrType:4.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:658]
-       Kernel task happen error, retCode=0x26, [aicore exception].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
-       rtDeviceSynchronizeWithTimeout execution failed, reason=aicore exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-       wait for compute device to finish failed, runtime result = 507015.[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
 
-Exception raised from npuSynchronizeDevice at ../torch_npu/csrc/core/npu/NPUStream.cpp:576 (most recent call first):
-frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xffff7fea5978 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libc10.so)
-frame #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0xc4 (0xffff7fe49adc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libc10.so)
-frame #2: c10_npu::npuSynchronizeDevice(bool) + 0xebc (0xffff47aaa4ac in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #3: zbal::sma::device::DeviceSMACachingAllocator::malloc(int, unsigned long, void*, unsigned char) + 0xad0 (0xfffea8825140 in /usr/local/python3.11.10/lib/python3.11/site-packages/zbal/zbal.cpython-311-aarch64-linux-gnu.so)
-frame #4: zbal::sma::SecondaryMemoryAllocator::Allocate(void**, int, unsigned long, void*) + 0x4c (0xfffea881370c in /usr/local/python3.11.10/lib/python3.11/site-packages/zbal/zbal.cpython-311-aarch64-linux-gnu.so)
-frame #5: sma_malloc + 0x88 (0xfffea88137c8 in /usr/local/python3.11.10/lib/python3.11/site-packages/zbal/zbal.cpython-311-aarch64-linux-gnu.so)
-frame #6: <unknown function> + 0x3b047d4 (0xffff4a8f47d4 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #7: <unknown function> + 0x3b05384 (0xffff4a8f5384 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #8: <unknown function> + 0xb09874 (0xffff478f9874 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #9: at_npu::native::OpPreparation::apply_tensor_without_format(c10::ArrayRef<long>, c10::TensorOptions const&) + 0xf0 (0xffff4a86bad4 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #10: <unknown function> + 0x156c3f8 (0xffff4835c3f8 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #11: <unknown function> + 0x157c4b8 (0xffff4836c4b8 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #12: <unknown function> + 0x36e764c (0xffff4a4d764c in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #13: <unknown function> + 0x578628 (0xffff47368628 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #14: <unknown function> + 0x62ee44 (0xffff4741ee44 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #15: <unknown function> + 0x62992cc (0xffff85e092cc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
-frame #16: <unknown function> + 0xdc09a0 (0xffff8b0409a0 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #17: <unknown function> + 0xdc0f30 (0xffff8b040f30 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #18: torch::jit::_get_operation_for_overload_or_packet(std::vector<std::shared_ptr<torch::jit::Operator>, std::allocator<std::shared_ptr<torch::jit::Operator> > > const&, c10::Symbol, pybind11::args const&, pybind11::kwargs const&, bool, std::optional<c10::DispatchKey>) + 0x3c (0xffff8b0411fc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #19: <unknown function> + 0xc9df18 (0xffff8af1df18 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #20: <unknown function> + 0x5c7064 (0xffff8a847064 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-<omitting python frames>
-frame #34: <unknown function> + 0xca932c (0xffff8af2932c in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #35: <unknown function> + 0x1053894 (0xffff8b2d3894 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #36: <unknown function> + 0x62992cc (0xffff85e092cc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
-frame #37: <unknown function> + 0xdc09a0 (0xffff8b0409a0 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #38: <unknown function> + 0xdc0f30 (0xffff8b040f30 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #39: torch::jit::_get_operation_for_overload_or_packet(std::vector<std::shared_ptr<torch::jit::Operator>, std::allocator<std::shared_ptr<torch::jit::Operator> > > const&, c10::Symbol, pybind11::args const&, pybind11::kwargs const&, bool, std::optional<c10::DispatchKey>) + 0x3c (0xffff8b0411fc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #40: <unknown function> + 0xc9df18 (0xffff8af1df18 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #41: <unknown function> + 0x5c7064 (0xffff8a847064 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-
-  what():  npuSynchronizeDevice:../torch_npu/csrc/core/npu/NPUStream.cpp:576 NPU function error: AclrtSynchronizeDeviceWithTimeout, error code is 507015
-[ERROR] 2026-07-21-22:54:54 (PID:429431, Device:1, RankID:-1) ERR00100 PTA call acl api failed
-[Error]: The aicore execution is abnormal.
-        Rectify the fault based on the error information in the ascend log.
-EZ9999: Inner Error!
-EZ9999[PID: 429431] 2026-07-21-22:54:54.024.030 (EZ9999):  The error from device(chipId:0, dieId:1), serial number is 2, there is an exception of fftsplus aivector error, core id is 27, error code = 0, dump info: pc start: 0x12420074535c, current: 0x124200747f2c, vec error info: 0xef03b94e6c, mte error info: 0xe3000000d5, ifu error info: 0x7b8006498c080, ccu error info: 0xde60e3d10f8000c2, cube error info: 0, biu error info: 0, aic error mask: 0x6500020bd00028c, para base: 0x12c100380080.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:645]
-        TraceBack (most recent call last):
-       The extend info: errcode:(0, 0x200000000000000, 0) errorStr: The MPU address access is invalid. fixp_error0 info: 0xd5, fixp_error1 info: 0xe3, fsmId:1, tslot:0, thread:0, ctxid:0, blk:47, sublk:0, subErrType:4.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:658]
-       Kernel task happen error, retCode=0x26, [aicore exception].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
-       rtDeviceSynchronizeWithTimeout execution failed, reason=aicore exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-       wait for compute device to finish failed, runtime result = 507015.[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-
-Exception raised from npuSynchronizeDevice at ../torch_npu/csrc/core/npu/NPUStream.cpp:576 (most recent call first):
-frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xffff7beb5978 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libc10.so)
-frame #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0xc4 (0xffff7be59adc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libc10.so)
-frame #2: c10_npu::npuSynchronizeDevice(bool) + 0xebc (0xffff43ada4ac in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #3: zbal::sma::device::DeviceSMACachingAllocator::malloc(int, unsigned long, void*, unsigned char) + 0xad0 (0xfffea4875140 in /usr/local/python3.11.10/lib/python3.11/site-packages/zbal/zbal.cpython-311-aarch64-linux-gnu.so)
-frame #4: zbal::sma::SecondaryMemoryAllocator::Allocate(void**, int, unsigned long, void*) + 0x4c (0xfffea486370c in /usr/local/python3.11.10/lib/python3.11/site-packages/zbal/zbal.cpython-311-aarch64-linux-gnu.so)
-frame #5: sma_malloc + 0x88 (0xfffea48637c8 in /usr/local/python3.11.10/lib/python3.11/site-packages/zbal/zbal.cpython-311-aarch64-linux-gnu.so)
-frame #6: <unknown function> + 0x3b047d4 (0xffff469247d4 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #7: <unknown function> + 0x3b05384 (0xffff46925384 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #8: <unknown function> + 0xb09874 (0xffff43929874 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #9: at_npu::native::OpPreparation::apply_tensor_without_format(c10::ArrayRef<long>, c10::TensorOptions const&) + 0xf0 (0xffff4689bad4 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #10: <unknown function> + 0x156c3f8 (0xffff4438c3f8 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #11: <unknown function> + 0x157c4b8 (0xffff4439c4b8 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #12: <unknown function> + 0x36e764c (0xffff4650764c in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #13: <unknown function> + 0x578628 (0xffff43398628 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #14: <unknown function> + 0x62ee44 (0xffff4344ee44 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #15: <unknown function> + 0x62992cc (0xffff81e192cc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
-frame #16: <unknown function> + 0xdc09a0 (0xffff870509a0 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #17: <unknown function> + 0xdc0f30 (0xffff87050f30 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #18: torch::jit::_get_operation_for_overload_or_packet(std::vector<std::shared_ptr<torch::jit::Operator>, std::allocator<std::shared_ptr<torch::jit::Operator> > > const&, c10::Symbol, pybind11::args const&, pybind11::kwargs const&, bool, std::optional<c10::DispatchKey>) + 0x3c (0xffff870511fc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #19: <unknown function> + 0xc9df18 (0xffff86f2df18 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #20: <unknown function> + 0x5c7064 (0xffff86857064 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-<omitting python frames>
-frame #34: <unknown function> + 0xca932c (0xffff86f3932c in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #35: <unknown function> + 0x1053894 (0xffff872e3894 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #36: <unknown function> + 0x62992cc (0xffff81e192cc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
-frame #37: <unknown function> + 0xdc09a0 (0xffff870509a0 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #38: <unknown function> + 0xdc0f30 (0xffff87050f30 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #39: torch::jit::_get_operation_for_overload_or_packet(std::vector<std::shared_ptr<torch::jit::Operator>, std::allocator<std::shared_ptr<torch::jit::Operator> > > const&, c10::Symbol, pybind11::args const&, pybind11::kwargs const&, bool, std::optional<c10::DispatchKey>) + 0x3c (0xffff870511fc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #40: <unknown function> + 0xc9df18 (0xffff86f2df18 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #41: <unknown function> + 0x5c7064 (0xffff86857064 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-
-  what():    what():  npuSynchronizeDevice:../torch_npu/csrc/core/npu/NPUStream.cpp:576 NPU function error: AclrtSynchronizeDeviceWithTimeout, error code is 507015
-[ERROR] 2026-07-21-22:54:54 (PID:429871, Device:3, RankID:-1) ERR00100 PTA call acl api failed
-[Error]: The aicore execution is abnormal.
-        Rectify the fault based on the error information in the ascend log.
-EZ9999: Inner Error!
-EZ9999[PID: 429871] 2026-07-21-22:54:54.025.342 (EZ9999):  The error from device(chipId:1, dieId:1), serial number is 2, there is an exception of fftsplus aivector error, core id is 30, error code = 0, dump info: pc start: 0x12460074535c, current: 0x124600747f2c, vec error info: 0x7b08f7a72f, mte error info: 0x3606000070, ifu error info: 0x75e48fe008b80, ccu error info: 0x54d045600f8000c2, cube error info: 0, biu error info: 0, aic error mask: 0x6500020bd00028c, para base: 0x12c100140080.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:645]
-        TraceBack (most recent call last):
-       The extend info: errcode:(0, 0x200000000000000, 0) errorStr: The MPU address access is invalid. fixp_error0 info: 0x6000070, fixp_error1 info: 0x36, fsmId:0, tslot:1, thread:0, ctxid:0, blk:47, sublk:0, subErrType:4.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:658]
-       Kernel task happen error, retCode=0x26, [aicore exception].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
-       rtDeviceSynchronizeWithTimeout execution failed, reason=aicore exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-       wait for compute device to finish failed, runtime result = 507015.[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-
-Exception raised from npuSynchronizeDevice at ../torch_npu/csrc/core/npu/NPUStream.cpp:576 (most recent call first):
-frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xffff74585978 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libc10.so)
-frame #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0xc4 (0xffff74529adc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libc10.so)
-frame #2: c10_npu::npuSynchronizeDevice(bool) + 0xebc (0xffff3c17a4ac in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #3: zbal::sma::device::DeviceSMACachingAllocator::malloc(int, unsigned long, void*, unsigned char) + 0xad0 (0xfffe9cf45140 in /usr/local/python3.11.10/lib/python3.11/site-packages/zbal/zbal.cpython-311-aarch64-linux-gnu.so)
-frame #4: zbal::sma::SecondaryMemoryAllocator::Allocate(void**, int, unsigned long, void*) + 0x4c (0xfffe9cf3370c in /usr/local/python3.11.10/lib/python3.11/site-packages/zbal/zbal.cpython-311-aarch64-linux-gnu.so)
-frame #5: sma_malloc + 0x88 (0xfffe9cf337c8 in /usr/local/python3.11.10/lib/python3.11/site-packages/zbal/zbal.cpython-311-aarch64-linux-gnu.so)
-frame #6: <unknown function> + 0x3b047d4 (0xffff3efc47d4 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #7: <unknown function> + 0x3b05384 (0xffff3efc5384 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #8: <unknown function> + 0xb09874 (0xffff3bfc9874 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #9: at_npu::native::OpPreparation::apply_tensor_without_format(c10::ArrayRef<long>, c10::TensorOptions const&) + 0xf0 (0xffff3ef3bad4 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #10: <unknown function> + 0x156c3f8 (0xffff3ca2c3f8 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #11: <unknown function> + 0x157c4b8 (0xffff3ca3c4b8 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #12: <unknown function> + 0x36e764c (0xffff3eba764c in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #13: <unknown function> + 0x578628 (0xffff3ba38628 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #14: <unknown function> + 0x62ee44 (0xffff3baeee44 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #15: <unknown function> + 0x62992cc (0xffff7a4e92cc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
-frame #16: <unknown function> + 0xdc09a0 (0xffff7f7209a0 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #17: <unknown function> + 0xdc0f30 (0xffff7f720f30 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #18: torch::jit::_get_operation_for_overload_or_packet(std::vector<std::shared_ptr<torch::jit::Operator>, std::allocator<std::shared_ptr<torch::jit::Operator> > > const&, c10::Symbol, pybind11::args const&, pybind11::kwargs const&, bool, std::optional<c10::DispatchKey>) + 0x3c (0xffff7f7211fc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #19: <unknown function> + 0xc9df18 (0xffff7f5fdf18 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #20: <unknown function> + 0x5c7064 (0xffff7ef27064 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-<omitting python frames>
-frame #34: <unknown function> + 0xca932c (0xffff7f60932c in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #35: <unknown function> + 0x1053894 (0xffff7f9b3894 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #36: <unknown function> + 0x62992cc (0xffff7a4e92cc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so)
-frame #37: <unknown function> + 0xdc09a0 (0xffff7f7209a0 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #38: <unknown function> + 0xdc0f30 (0xffff7f720f30 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #39: torch::jit::_get_operation_for_overload_or_packet(std::vector<std::shared_ptr<torch::jit::Operator>, std::allocator<std::shared_ptr<torch::jit::Operator> > > const&, c10::Symbol, pybind11::args const&, pybind11::kwargs const&, bool, std::optional<c10::DispatchKey>) + 0x3c (0xffff7f7211fc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #40: <unknown function> + 0xc9df18 (0xffff7f5fdf18 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-frame #41: <unknown function> + 0x5c7064 (0xffff7ef27064 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libtorch_python.so)
-npuSynchronizeDevice:../torch_npu/csrc/core/npu/NPUStream.cpp:576 NPU function error: AclrtSynchronizeDeviceWithTimeout, error code is 507015
-[ERROR] 2026-07-21-22:54:54 (PID:429652, Device:2, RankID:-1) ERR00100 PTA call acl api failed
-[Error]: The aicore execution is abnormal.
-        Rectify the fault based on the error information in the ascend log.
-EZ9999: Inner Error!
-EZ9999[PID: 429652] 2026-07-21-22:54:54.025.049 (EZ9999):  The error from device(chipId:1, dieId:0), serial number is 3, there is an exception of fftsplus aivector error, core id is 39, error code = 0, dump info: pc start: 0x12440074535c, current: 0x124400747f2c, vec error info: 0x6b06bbcc30, mte error info: 0x100302055e, ifu error info: 0x49a020edae740, ccu error info: 0xd91900c40f8000c2, cube error info: 0, biu error info: 0, aic error mask: 0x6500020bd00028c, para base: 0x12c100280080.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:645]
-        TraceBack (most recent call last):
-       The extend info: errcode:(0, 0x200000000000000, 0) errorStr: The MPU address access is invalid. fixp_error0 info: 0x302055e, fixp_error1 info: 0x10, fsmId:1, tslot:4, thread:0, ctxid:0, blk:47, sublk:0, subErrType:4.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:658]
-       Kernel task happen error, retCode=0x26, [aicore exception].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
-       rtDeviceSynchronizeWithTimeout execution failed, reason=aicore exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-       wait for compute device to finish failed, runtime result = 507015.[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-
-Exception raised from npuSynchronizeDevice at ../torch_npu/csrc/core/npu/NPUStream.cpp:576 (most recent call first):
+Capturing CUDA graphs (decode, FULL):   0%|          | 0/17 [00:26<?, ?it/s]
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962] WorkerProc hit an exception.
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4466, in _replace_gpu_model_runner_function_wrapper
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     yield
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4367, in capture_model
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return GPUModelRunner.capture_model(self)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6102, in capture_model
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     self._capture_cudagraphs(
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6217, in _capture_cudagraphs
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     self._warmup_and_capture(
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6163, in _warmup_and_capture
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     self._dummy_run(
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 3300, in _dummy_run
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     outputs = self._model_forward(
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]               ^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2546, in _model_forward
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     hidden_states = run_model()
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]                     ^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/compilation/acl_graph.py", line 159, in __call__
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     output = self.runnable(*args, **kwargs)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return self._call_impl(*args, **kwargs)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return forward_call(*args, **kwargs)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/models/deepseek_v4.py", line 1109, in forward
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     hidden_states = self.model(input_ids, positions, intermediate_tensors, inputs_embeds)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/compilation/decorators.py", line 480, in __call__
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return self.aot_compiled_fn(self, *args, **kwargs)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_dynamo/aot_compile.py", line 124, in __call__
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return self.fn(*args, **kwargs)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/models/deepseek_v4.py", line 946, in forward
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     def forward(
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/compilation/caching.py", line 215, in __call__
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return self.optimized_call(*args, **kwargs)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "<string>", line 5, in execution_fn
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/compilation/piecewise_backend.py", line 380, in __call__
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return range_entry.runnable(*args)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_inductor/compile_fx.py", line 2865, in wrapper
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return pytree.tree_unflatten(compiled_fn(*args, **kwargs), spec)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/aot_autograd.py", line 1148, in forward
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return compiled_fn(full_args)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 357, in runtime_wrapper
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     all_outs = call_func_at_runtime_with_args(
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     out = normalize_as_list(f(args))
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]                             ^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 531, in wrapper
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return compiled_fn(runtime_args)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 729, in inner_fn
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     outs = compiled_fn(args)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/utils.py", line 108, in g
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return f(*args)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/dynamo/npugraph_ex/npu_fx_compiler.py", line 507, in __call__
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     gm_result = self.run_kernel(*args, **kwargs)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "<string>", line 1921, in kernel
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/dynamo/npugraph_ex/_acl_concrete_graph/acl_graph.py", line 823, in __call__
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return self.fx_run_eagerly(*args, **kwargs)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/dynamo/npugraph_ex/_acl_concrete_graph/acl_graph.py", line 894, in fx_run_eagerly
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return self.fx_forward(*args, **kwargs)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "<string>", line 61, in forward
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_ops.py", line 819, in __call__
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return self._op(*args, **kwargs)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/model_executor/layers/fused_moe/runner/moe_runner.py", line 134, in _moe_forward_shared
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return layer.runner._forward_impl(
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 327, in _forward_impl
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return self.forward_impl(
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 315, in forward_impl
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     result = layer.shared_forward_impl(hidden_states, router_logits)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 828, in shared_forward_impl
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     fused_moe_results = self.forward_impl(
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]                         ^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 662, in forward_impl
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     fused_experts_results: FusedExpertsResult = self.quant_method.apply(
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/quantization/method_adapters.py", line 270, in apply
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     return self.quant_method.apply(
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/quantization/methods/w8a8_dynamic.py", line 324, in apply
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     final_hidden_states = moe_comm_method.fused_experts(
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/moe_comm_method.py", line 153, in fused_experts
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     token_dispatch_output = self.token_dispatcher.token_dispatch(token_dispatch_input=token_dispatch_input)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/zbal_moe_comm.py", line 229, in token_dispatch
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     num_recv_tokens_per_expert_list = recv_count.tolist()
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]                                       ^^^^^^^^^^^^^^^^^^^
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962] RuntimeError: copy_between_host_and_device_opapi:../torch_npu/csrc/aten/ops/op_api/CopyKernelOpApi.cpp:55 NPU function error: aclrtMemcpy, error code is 107030
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962] [ERROR] 2026-07-23-14:15:52 (PID:193285, Device:3, RankID:-1) ERR00100 PTA call acl api failed.
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962] EE9999: Inner Error!
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962] EE9999[PID: 193285] 2026-07-23-14:15:52.579.515 (EE9999):  Not allow to synchronize captured-stream, stream_id=20.[FUNC:StreamSynchronize][FILE:api_error.cc][LINE:1016]
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]         TraceBack (most recent call last):
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]        rtStreamSynchronize execution failed, reason=stream is captured[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]        synchronize stream failed, runtime result = 107027[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]        rtMemcpy execution failed, reason=the current capture mode does not support this operation[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]        synchronized memcpy failed, kind = 2, runtime result = 107030[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962] During handling of the above exception, another exception occurred:
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4439, in _torch_cuda_wrapper
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     yield
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4366, in capture_model
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     with _torch_cuda_wrapper(), _replace_gpu_model_runner_function_wrapper(parent_module_name):
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 158, in __exit__
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     self.gen.throw(typ, value, traceback)
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4468, in _replace_gpu_model_runner_function_wrapper
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962]     raise RuntimeError(f"NPUModelRunner failed, error is {e}")
+(Worker_DP1_TP3_EP7 pid=193285) ERROR 07-23 14:15:53 [multiproc_executor.py:962] RuntimeError: NPUModelRunner failed, error is copy_between_host_and_device_opapi:../torch_npu/csrc/aten/ops/op_api/CopyKernelOpApi.cpp:55 NPU function error: aclrtMemcpy, error code is 107030
