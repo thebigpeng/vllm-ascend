@@ -161,18 +161,20 @@ class ACLGraphWrapper:
                 # When ZBAL low-latency MoE is enabled, FFTS-based
                 # low_latency dispatch/combine kernels inside the captured
                 # graph are collective operations requiring ALL EP ranks to
-                # execute in lockstep. Without this barrier, faster ranks
-                # enter graph capture and launch FFTS kernels (on the capture
-                # stream) while slower ranks are still finishing their eager
-                # warmup iterations (FFTS on the compute stream). The FFTS
-                # slot mismatch causes aicore timeout (507014) in
-                # combine_low_latency. The barrier is only placed before the
-                # FIRST capture for each batch descriptor (entry.aclgraph is
-                # None). On replay, FFTS kernels run identically across ranks.
+                # execute in lockstep. dist.barrier() alone is NOT enough:
+                # it only synchronizes CPU threads and does NOT wait for
+                # FFTS stream kernels. torch.npu.synchronize()
+                # (aclrtSynchronizeDevice) waits on ALL streams including
+                # FFTS, ensuring eager warmup kernels are fully drained
+                # before any rank enters torch.npu.graph() capture.
+                # Without this, torch.npu.graph().__enter__() → synchronize()
+                # deadlocks waiting for FFTS kernels that will never complete
+                # because peer ranks have already moved on to capture.
                 if (is_zbal_enabled()
                         and envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY
                         and dist.is_available()
                         and dist.is_initialized()):
+                    torch.npu.synchronize()
                     dist.barrier()
 
                 with torch.npu.graph(aclgraph, pool=self.graph_pool):

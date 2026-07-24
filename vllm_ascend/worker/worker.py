@@ -561,15 +561,17 @@ class NPUWorker(WorkerBase):
 
         # When ZBAL low-latency MoE is enabled, the FFTS-based low_latency
         # dispatch/combine kernels are collective operations that require ALL
-        # EP ranks to execute in lockstep. Without this barrier, faster ranks
-        # may enter graph capture (which launches FFTS kernels on the capture
-        # stream) while slower ranks are still finishing eager warmup (which
-        # launches FFTS kernels on the compute stream). The resulting FFTS
-        # slot mismatch causes aicore timeout (507014) in combine_low_latency.
-        # This barrier is only needed for low_latency mode; the normal ZBAL
-        # path uses HCCL which has built-in collective synchronization.
+        # EP ranks to execute in lockstep. dist.barrier() alone is NOT enough:
+        # it only synchronizes CPU threads (HCCL barrier) and does NOT wait
+        # for FFTS stream kernels to finish. Without a preceding
+        # torch.npu.synchronize() (aclrtSynchronizeDevice, which waits on ALL
+        # streams including FFTS), faster ranks may enter graph capture while
+        # their NPU stream still has pending FFTS kernels from the warmup
+        # dummy_run. This causes FFTS slot mismatch → aicore timeout (507014)
+        # in combine_low_latency.
         if (is_zbal_enabled() and envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY
                 and not self.model_config.enforce_eager):
+            torch.npu.synchronize()
             dist.barrier()
             logger.info(
                 "[ZBAL] All ranks synchronized before graph capture "
