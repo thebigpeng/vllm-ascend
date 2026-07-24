@@ -1,132 +1,274 @@
-(Worker_DP1_TP0_EP4 pid=15752) INFO:torch_npu.env:get env DEEP_NORMAL_MODE_USE_INT8_QUANT = 1
-Capturing CUDA graphs (decode, FULL):   0%|          | 0/17 [00:15<?, ?it/s]
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962] WorkerProc hit an exception.
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4466, in _replace_gpu_model_runner_function_wrapper
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     yield
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4367, in capture_model
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return GPUModelRunner.capture_model(self)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return func(*args, **kwargs)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6102, in capture_model
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     self._capture_cudagraphs(
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6217, in _capture_cudagraphs
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     self._warmup_and_capture(
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6152, in _warmup_and_capture
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     self._dummy_run(
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return func(*args, **kwargs)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 3300, in _dummy_run
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     outputs = self._model_forward(
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]               ^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2546, in _model_forward
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     hidden_states = run_model()
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]                     ^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/compilation/acl_graph.py", line 122, in __call__
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return self.runnable(*args, **kwargs)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return self._call_impl(*args, **kwargs)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return forward_call(*args, **kwargs)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/models/deepseek_v4.py", line 1109, in forward
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     hidden_states = self.model(input_ids, positions, intermediate_tensors, inputs_embeds)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/compilation/decorators.py", line 533, in __call__
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     output = self.aot_compiled_fn(self, *args, **kwargs)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_dynamo/aot_compile.py", line 124, in __call__
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return self.fn(*args, **kwargs)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/models/deepseek_v4.py", line 946, in forward
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     def forward(
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/compilation/caching.py", line 215, in __call__
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return self.optimized_call(*args, **kwargs)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "<string>", line 5, in execution_fn
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/compilation/piecewise_backend.py", line 380, in __call__
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return range_entry.runnable(*args)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_inductor/compile_fx.py", line 2865, in wrapper
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return pytree.tree_unflatten(compiled_fn(*args, **kwargs), spec)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/aot_autograd.py", line 1148, in forward
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return compiled_fn(full_args)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 357, in runtime_wrapper
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     all_outs = call_func_at_runtime_with_args(
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     out = normalize_as_list(f(args))
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]                             ^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 531, in wrapper
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return compiled_fn(runtime_args)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 729, in inner_fn
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     outs = compiled_fn(args)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/utils.py", line 108, in g
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return f(*args)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/dynamo/npugraph_ex/npu_fx_compiler.py", line 507, in __call__
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     gm_result = self.run_kernel(*args, **kwargs)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "<string>", line 1921, in kernel
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/dynamo/npugraph_ex/_acl_concrete_graph/acl_graph.py", line 823, in __call__
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return self.fx_run_eagerly(*args, **kwargs)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/dynamo/npugraph_ex/_acl_concrete_graph/acl_graph.py", line 894, in fx_run_eagerly
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return self.fx_forward(*args, **kwargs)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "<string>", line 61, in forward
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_ops.py", line 819, in __call__
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return self._op(*args, **kwargs)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/model_executor/layers/fused_moe/runner/moe_runner.py", line 134, in _moe_forward_shared
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return layer.runner._forward_impl(
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 327, in _forward_impl
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return self.forward_impl(
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 315, in forward_impl
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     result = layer.shared_forward_impl(hidden_states, router_logits)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 828, in shared_forward_impl
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     fused_moe_results = self.forward_impl(
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]                         ^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/fused_moe.py", line 662, in forward_impl
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     fused_experts_results: FusedExpertsResult = self.quant_method.apply(
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/quantization/method_adapters.py", line 270, in apply
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     return self.quant_method.apply(
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/quantization/methods/w8a8_dynamic.py", line 324, in apply
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     final_hidden_states = moe_comm_method.fused_experts(
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/moe_comm_method.py", line 153, in fused_experts
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     token_dispatch_output = self.token_dispatcher.token_dispatch(token_dispatch_input=token_dispatch_input)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/ops/fused_moe/zbal_moe_comm.py", line 262, in token_dispatch
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     group_list = handle_dict["handle"][5]
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]                  ~~~~~~~~~~~~~~~~~~~~~^^^
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962] IndexError: tuple index out of range
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962] During handling of the above exception, another exception occurred:
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4439, in _torch_cuda_wrapper
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     yield
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4366, in capture_model
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     with _torch_cuda_wrapper(), _replace_gpu_model_runner_function_wrapper(parent_module_name):
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 158, in __exit__
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     self.gen.throw(typ, value, traceback)
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4468, in _replace_gpu_model_runner_function_wrapper
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]     raise RuntimeError(f"NPUModelRunner failed, error is {e}")
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962] RuntimeError: NPUModelRunner failed, error is tuple index out of range
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962]
-(Worker_DP0_TP3_EP3 pid=16104) ERROR 07-24 10:20:14 [multiproc_executor.py:962] During handling of the above exception, another exception occurred:
+
+Capturing CUDA graphs (decode, FULL):   0%|          | 0/17 [00:00<?, ?it/s](Worker_DP0_TP0_EP0 pid=21632) INFO 07-24 10:35:56 [backends.py:1069] Using cache directory: /root/.cache/vllm/torch_compile_cache/27448216fc/rank_0_0/backbone for vLLM's torch.compile
+(Worker_DP0_TP0_EP0 pid=21632) INFO 07-24 10:35:56 [backends.py:1128] Dynamo bytecode transform time: 1.55 s
+(Worker_DP1_TP0_EP4 pid=21633) INFO 07-24 10:35:56 [backends.py:1069] Using cache directory: /root/.cache/vllm/torch_compile_cache/27448216fc/rank_0_1/backbone for vLLM's torch.compile
+(Worker_DP1_TP0_EP4 pid=21633) INFO 07-24 10:35:56 [backends.py:1128] Dynamo bytecode transform time: 1.57 s
+(Worker_DP0_TP2_EP2 pid=21850) INFO 07-24 10:35:57 [compiler_interface.py:207] enable_npugraph_ex is enabled, which will bring graph compilation optimization.
+(Worker_DP0_TP1_EP1 pid=21724) INFO 07-24 10:35:57 [compiler_interface.py:207] enable_npugraph_ex is enabled, which will bring graph compilation optimization.
+(Worker_DP1_TP0_EP4 pid=21633) INFO 07-24 10:35:57 [compiler_interface.py:207] enable_npugraph_ex is enabled, which will bring graph compilation optimization.
+(Worker_DP0_TP3_EP3 pid=21985) INFO 07-24 10:35:57 [compiler_interface.py:207] enable_npugraph_ex is enabled, which will bring graph compilation optimization.
+(Worker_DP0_TP0_EP0 pid=21632) INFO 07-24 10:35:57 [compiler_interface.py:207] enable_npugraph_ex is enabled, which will bring graph compilation optimization.
+(Worker_DP1_TP1_EP5 pid=21722) INFO 07-24 10:35:57 [compiler_interface.py:207] enable_npugraph_ex is enabled, which will bring graph compilation optimization.
+(Worker_DP1_TP2_EP6 pid=21848) INFO 07-24 10:35:57 [compiler_interface.py:207] enable_npugraph_ex is enabled, which will bring graph compilation optimization.
+(Worker_DP1_TP3_EP7 pid=21973) INFO 07-24 10:35:57 [compiler_interface.py:207] enable_npugraph_ex is enabled, which will bring graph compilation optimization.
+(Worker_DP0_TP0_EP0 pid=21632) INFO 07-24 10:36:09 [backends.py:391] Compiling a graph for compile range (1, 10240) takes 12.27 s
+(Worker_DP0_TP0_EP0 pid=21632) INFO 07-24 10:36:09 [decorators.py:305] Directly load AOT compilation from path /root/.cache/vllm/torch_compile_cache/torch_aot_compile/872d5ddb16e42714135fe33f45d24f062b203dcc5195189912abc696a4a2dad0/rank_0_0/model
+(Worker_DP0_TP0_EP0 pid=21632) INFO 07-24 10:36:09 [monitor.py:53] torch.compile took 14.78 s in total
+(Worker_DP0_TP2_EP2 pid=21850) INFO 07-24 10:36:09 [decorators.py:305] Directly load AOT compilation from path /root/.cache/vllm/torch_compile_cache/torch_aot_compile/872d5ddb16e42714135fe33f45d24f062b203dcc5195189912abc696a4a2dad0/rank_2_0/model
+(Worker_DP0_TP1_EP1 pid=21724) INFO 07-24 10:36:09 [decorators.py:305] Directly load AOT compilation from path /root/.cache/vllm/torch_compile_cache/torch_aot_compile/872d5ddb16e42714135fe33f45d24f062b203dcc5195189912abc696a4a2dad0/rank_1_0/model
+(Worker_DP1_TP0_EP4 pid=21633) INFO 07-24 10:36:10 [backends.py:391] Compiling a graph for compile range (1, 10240) takes 12.50 s
+(Worker_DP1_TP0_EP4 pid=21633) INFO 07-24 10:36:10 [decorators.py:305] Directly load AOT compilation from path /root/.cache/vllm/torch_compile_cache/torch_aot_compile/872d5ddb16e42714135fe33f45d24f062b203dcc5195189912abc696a4a2dad0/rank_0_1/model
+(Worker_DP1_TP0_EP4 pid=21633) INFO 07-24 10:36:10 [monitor.py:53] torch.compile took 14.98 s in total
+(Worker_DP1_TP2_EP6 pid=21848) INFO 07-24 10:36:10 [decorators.py:305] Directly load AOT compilation from path /root/.cache/vllm/torch_compile_cache/torch_aot_compile/872d5ddb16e42714135fe33f45d24f062b203dcc5195189912abc696a4a2dad0/rank_2_1/model
+INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=0, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(Worker_DP0_TP2_EP2 pid=21850) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=2, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(Worker_DP1_TP1_EP5 pid=21722) INFO 07-24 10:36:10 [decorators.py:305] Directly load AOT compilation from path /root/.cache/vllm/torch_compile_cache/torch_aot_compile/872d5ddb16e42714135fe33f45d24f062b203dcc5195189912abc696a4a2dad0/rank_1_1/model
+(Worker_DP0_TP1_EP1 pid=21724) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=1, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(Worker_DP0_TP3_EP3 pid=21985) INFO 07-24 10:36:10 [decorators.py:305] Directly load AOT compilation from path /root/.cache/vllm/torch_compile_cache/torch_aot_compile/872d5ddb16e42714135fe33f45d24f062b203dcc5195189912abc696a4a2dad0/rank_3_0/model
+(Worker_DP1_TP0_EP4 pid=21633) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=4, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(Worker_DP1_TP2_EP6 pid=21848) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=6, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(Worker_DP1_TP1_EP5 pid=21722) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=5, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(Worker_DP0_TP3_EP3 pid=21985) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=3, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(Worker_DP1_TP3_EP7 pid=21973) INFO 07-24 10:36:10 [decorators.py:305] Directly load AOT compilation from path /root/.cache/vllm/torch_compile_cache/torch_aot_compile/872d5ddb16e42714135fe33f45d24f062b203dcc5195189912abc696a4a2dad0/rank_3_1/model
+(Worker_DP1_TP3_EP7 pid=21973) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=7, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+[init] rank:4, group_name: zbal_0:7:1
+[init] rank:2, group_name: zbal_0:7:1
+[init] rank:1, group_name: zbal_0:7:1
+[init] rank:6, group_name: zbal_0:7:1
+[init] rank:3, group_name: zbal_0:7:1
+[init] rank:7, group_name: zbal_0:7:1
+[init] rank:5, group_name: zbal_0:7:1
+[init] rank:0, group_name: zbal_0:7:1
+(Worker_DP1_TP0_EP4 pid=21633) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
+(Worker_DP0_TP2_EP2 pid=21850) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
+(Worker_DP1_TP3_EP7 pid=21973) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
+(Worker_DP0_TP1_EP1 pid=21724) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
+(Worker_DP1_TP2_EP6 pid=21848) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
+(Worker_DP0_TP3_EP3 pid=21985) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
+(Worker_DP1_TP1_EP5 pid=21722) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
+(Worker_DP0_TP0_EP0 pid=21632) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
+(Worker_DP1_TP0_EP4 pid=21633) INFO:torch_npu.env:get env DEEP_NORMAL_MODE_USE_INT8_QUANT = 1
+(Worker_DP1_TP3_EP7 pid=21973) INFO:torch_npu.env:get env DEEP_NORMAL_MODE_USE_INT8_QUANT = 1
+(Worker_DP0_TP2_EP2 pid=21850) INFO:torch_npu.env:get env DEEP_NORMAL_MODE_USE_INT8_QUANT = 1
+(Worker_DP0_TP1_EP1 pid=21724) INFO:torch_npu.env:get env DEEP_NORMAL_MODE_USE_INT8_QUANT = 1
+(Worker_DP0_TP3_EP3 pid=21985) INFO:torch_npu.env:get env DEEP_NORMAL_MODE_USE_INT8_QUANT = 1
+(Worker_DP1_TP2_EP6 pid=21848) INFO:torch_npu.env:get env DEEP_NORMAL_MODE_USE_INT8_QUANT = 1
+(Worker_DP1_TP1_EP5 pid=21722) INFO:torch_npu.env:get env DEEP_NORMAL_MODE_USE_INT8_QUANT = 1
+(Worker_DP0_TP0_EP0 pid=21632) INFO:torch_npu.env:get env DEEP_NORMAL_MODE_USE_INT8_QUANT = 1
+(Worker_DP1_TP0_EP4 pid=21633) INFO 07-24 10:36:11 [monitor.py:81] Initial profiling/warmup run took 1.26 s
+(Worker_DP0_TP0_EP0 pid=21632) INFO 07-24 10:36:11 [monitor.py:81] Initial profiling/warmup run took 1.47 s
+[rank0]:[E724 10:36:16.246766560 OpParamMaker.cpp:355] call aclnnInplacePartialRotaryMul failed, detail:[PID: 21632] 2026-07-24-10:36:16.778.647 AclNN_Runtime_Error(EZ9903): Assert ((NnopbaseExecutorLaunchKernel(executor, stream, numBlocks)) == 0) failed
+        Solution: In this scenario, collect the plog when the fault occurs and locate the fault based on the plog.
+        TraceBack (most recent call last):
+        The error from device(chipId:0, dieId:0), serial number is 1, there is an exception of fftsplus aicore error, core id is 2, error code = 0x800000, dump info: pc start: 0x12d5d99db000, current: 0x12d5d99dc85c, vec error info: 0, mte error info: 0x7503000086, ifu error info: 0xdb95fc302980, ccu error info: 0x91906b642123603, cube error info: 0, biu error info: 0, aic error mask: 0x6500020bd00028c, para base: 0x12c100077080.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:645]
+        The extend info: errcode:(0x800000, 0, 0) errorStr: The DDR address of the MTE instruction is out of range. fixp_error0 info: 0x3000086, fixp_error1 info: 0x75, fsmId:0, tslot:5, thread:0, ctxid:0, blk:16, sublk:0, subErrType:4.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:658]
+        Kernel task happen error, retCode=0x26, [aicore exception].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
+        Failed to submit kernel task, retCode=0x7150026.[FUNC:LaunchKernelSubmit][FILE:context.cc][LINE:1223]
+        kernel launch submit failed.[FUNC:LaunchKernel][FILE:context.cc][LINE:1671]
+        rtsLaunchKernelWithHostArgs execution failed, reason=aicore exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+        rtsLaunchKernelWithHostArgs failed, runtime result = 507015.[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+        Check aclrtLaunchKernelWithHostArgs( funcHandle, numBlocks, stream, &cfg, executor->argsExt.args, executor->argsExt.argsSize, rtsHostPlaceHolder.data(), rtsHostPlaceHolder.size()) failed
+        Assert ((NnopbaseExecutorLaunchKernel(executor, stream, numBlocks)) == 0) failed
+        Check NnopbaseExecutorKernelLaunch(executor, stream) failed
+        Check NnopbaseRunWithWorkspace(executor, stream, workspace, workspaceSize) failed
+
+Exception raised from operator() at /home/p00801009/vllm-ascend/csrc/torch_binding.cpp:1751 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xffff92705978 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libc10.so)
+frame #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0xc4 (0xffff926a9adc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libc10.so)
+frame #2: <unknown function> + 0x5efa4 (0xfffeb452efa4 in /home/p00801009/vllm-ascend/vllm_ascend/vllm_ascend_C.cpython-311-aarch64-linux-gnu.so)
+frame #3: <unknown function> + 0x3a2bbd4 (0xffff5d15bbd4 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
+frame #4: <unknown function> + 0xca80f0 (0xffff5a3d80f0 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
+frame #5: <unknown function> + 0xca8ccc (0xffff5a3d8ccc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
+frame #6: <unknown function> + 0xca6be8 (0xffff5a3d6be8 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
+frame #7: <unknown function> + 0x289da4 (0xffff59669da4 in /usr/local/Ascend/cann-9.0.0/lib64/libhccl.so)
+frame #8: <unknown function> + 0x8595c (0xffff9f08595c in /lib/aarch64-linux-gnu/libc.so.6)
+frame #9: <unknown function> + 0xebb4c (0xffff9f0ebb4c in /lib/aarch64-linux-gnu/libc.so.6)
+
+Capturing CUDA graphs (decode, FULL):   0%|          | 0/17 [00:21<?, ?it/s]
+[rank3]:[E724 10:36:16.306930470 OpParamMaker.cpp:355] call aclnnInplacePartialRotaryMul failed, detail:[PID: 21985] 2026-07-24-10:36:16.838.730 AclNN_Runtime_Error(EZ9903): Assert ((NnopbaseExecutorLaunchKernel(executor, stream, numBlocks)) == 0) failed
+        Solution: In this scenario, collect the plog when the fault occurs and locate the fault based on the plog.
+        TraceBack (most recent call last):
+        The error from device(chipId:1, dieId:1), serial number is 1, there is an exception of fftsplus aicore error, core id is 2, error code = 0x800000, dump info: pc start: 0x12d5d99db000, current: 0x12d5d99dc85c, vec error info: 0, mte error info: 0x7503000086, ifu error info: 0x453b93c0f3e00, ccu error info: 0x9cd3ed9140045ed4, cube error info: 0, biu error info: 0, aic error mask: 0x6500020bd00028c, para base: 0x12c100077080.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:645]
+        The extend info: errcode:(0x800000, 0, 0) errorStr: The DDR address of the MTE instruction is out of range. fixp_error0 info: 0x3000086, fixp_error1 info: 0x75, fsmId:1, tslot:6, thread:0, ctxid:0, blk:2, sublk:0, subErrType:4.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:658]
+        Kernel task happen error, retCode=0x26, [aicore exception].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
+        Failed to submit kernel task, retCode=0x7150026.[FUNC:LaunchKernelSubmit][FILE:context.cc][LINE:1223]
+        kernel launch submit failed.[FUNC:LaunchKernel][FILE:context.cc][LINE:1671]
+        rtsLaunchKernelWithHostArgs execution failed, reason=aicore exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+        rtsLaunchKernelWithHostArgs failed, runtime result = 507015.[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+        Check aclrtLaunchKernelWithHostArgs( funcHandle, numBlocks, stream, &cfg, executor->argsExt.args, executor->argsExt.argsSize, rtsHostPlaceHolder.data(), rtsHostPlaceHolder.size()) failed
+        Assert ((NnopbaseExecutorLaunchKernel(executor, stream, numBlocks)) == 0) failed
+        Check NnopbaseExecutorKernelLaunch(executor, stream) failed
+        Check NnopbaseRunWithWorkspace(executor, stream, workspace, workspaceSize) failed
+
+Exception raised from operator() at /home/p00801009/vllm-ascend/csrc/torch_binding.cpp:1751 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xffff7efd5978 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libc10.so)
+frame #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0xc4 (0xffff7ef79adc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libc10.so)
+frame #2: <unknown function> + 0x5efa4 (0xfffea0ebefa4 in /home/p00801009/vllm-ascend/vllm_ascend/vllm_ascend_C.cpython-311-aarch64-linux-gnu.so)
+frame #3: <unknown function> + 0x3a2bbd4 (0xffff49a2bbd4 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
+frame #4: <unknown function> + 0xca80f0 (0xffff46ca80f0 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
+frame #5: <unknown function> + 0xca8ccc (0xffff46ca8ccc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
+frame #6: <unknown function> + 0xca6be8 (0xffff46ca6be8 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
+frame #7: <unknown function> + 0x289da4 (0xffff45f39da4 in /usr/local/Ascend/cann-9.0.0/lib64/libhccl.so)
+frame #8: <unknown function> + 0x8595c (0xffff8b95595c in /lib/aarch64-linux-gnu/libc.so.6)
+frame #9: <unknown function> + 0xebb4c (0xffff8b9bbb4c in /lib/aarch64-linux-gnu/libc.so.6)
+
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962] WorkerProc hit an exception.
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4466, in _replace_gpu_model_runner_function_wrapper
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]     yield
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4367, in capture_model
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]     return GPUModelRunner.capture_model(self)
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6102, in capture_model
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]     self._capture_cudagraphs(
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6217, in _capture_cudagraphs
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]     self._warmup_and_capture(
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 6163, in _warmup_and_capture
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]     self._dummy_run(
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 3300, in _dummy_run
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]     outputs = self._model_forward(
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]               ^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2546, in _model_forward
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]     hidden_states = run_model()
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]                     ^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/compilation/acl_graph.py", line 157, in __call__
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]     with torch.npu.graph(aclgraph, pool=self.graph_pool):
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/npu/graphs.py", line 519, in __enter__
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]     torch.npu.synchronize()
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/npu/utils.py", line 72, in synchronize
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]     return torch_npu._C._npu_synchronize()
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962] RuntimeError: The Inner error is reported as above. The process exits for this inner error, and the current working operator name is aclnnInplacePartialRotaryMul.
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962] Since the operator is called asynchronously, the stacktrace may be inaccurate. If you want to get the accurate stacktrace, please set the environment variable ASCEND_LAUNCH_BLOCKING=1.
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962] Note: ASCEND_LAUNCH_BLOCKING=1 will force ops to run in synchronous mode, resulting in performance degradation. Please unset ASCEND_LAUNCH_BLOCKING in time after debugging.
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962] [ERROR] 2026-07-24-10:36:16 (PID:21632, Device:0, RankID:-1) ERR00100 PTA call acl api failed.
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962] During handling of the above exception, another exception occurred:
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4439, in _torch_cuda_wrapper
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]     yield
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4366, in capture_model
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]     with _torch_cuda_wrapper(), _replace_gpu_model_runner_function_wrapper(parent_module_name):
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 158, in __exit__
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]     self.gen.throw(typ, value, traceback)
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 4468, in _replace_gpu_model_runner_function_wrapper
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962]     raise RuntimeError(f"NPUModelRunner failed, error is {e}")
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962] RuntimeError: NPUModelRunner failed, error is The Inner error is reported as above. The process exits for this inner error, and the current working operator name is aclnnInplacePartialRotaryMul.
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962] Since the operator is called asynchronously, the stacktrace may be inaccurate. If you want to get the accurate stacktrace, please set the environment variable ASCEND_LAUNCH_BLOCKING=1.
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962] Note: ASCEND_LAUNCH_BLOCKING=1 will force ops to run in synchronous mode, resulting in performance degradation. Please unset ASCEND_LAUNCH_BLOCKING in time after debugging.
+(Worker_DP0_TP0_EP0 pid=21632) ERROR 07-24 10:36:17 [multiproc_executor.py:962] [ERROR] 2026-07-24-10:36:16 (PID:21632, Device:0, RankID:-1) ERR00100 PTA call acl api failed.
+
+
+
+5_20260724023612259195/schedule_tracer_ts_3.txt, strerr=No such file or directory.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:187:[ERROR] ATRACE(21985,):2026-07-24-10:36:15.293.363 [atrace_client_core.c:42](tid:22113) get event fd failed, event name=ts_3.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:188:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.421.463 [device_error_core_proc.cc:399]22121 CheckSmmuFault:Get isSmmuFault is 1.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:189:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.421.483 [device_error_core_proc.cc:619]22121 AddExceptionRegInfo:add error register: core_id=2, stream_id=39, task_id=573
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:190:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.421.490 [device_error_core_proc.cc:645]22121 PrintCoreInfo:The error from device(chipId:1, dieId:1), serial number is 1, there is an exception of fftsplus aicore error, core id is 2, error code = 0x800000, dump info: pc start: 0x12d5d99db000, current: 0x12d5d99dc85c, vec error info: 0, mte error info: 0x7503000086, ifu error info: 0x453b93c0f3e00, ccu error info: 0x9cd3ed9140045ed4, cube error info: 0, biu error info: 0, aic error mask: 0x6500020bd00028c, para base: 0x12c100077080.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:191:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.421.524 [device_error_core_proc.cc:658]22121 PrintCoreInfo:The extend info: errcode:(0x800000, 0, 0) errorStr: The DDR address of the MTE instruction is out of range. fixp_error0 info: 0x3000086, fixp_error1 info: 0x75, fsmId:1, tslot:6, thread:0, ctxid:0, blk:2, sublk:0, subErrType:4.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:192:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.421.531 [device_error_core_proc.cc:732]22121 ProcessStarsCoreErrorInfo:devId=3, streamId=39, taskId=573, MTE errorCode=0.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:193:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.421.544 [davinci_task.cc:213]22121 SetStarsResultForDavinciTask:AICORE Kernel task happen error, retCode=0x26.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:194:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.294 [davinci_kernel_task.cc:1729]22121 PreCheckTaskErr:Kernel task happen error, retCode=0x26, [aicore exception].
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:195:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.360 [davinci_kernel_task.cc:1525]22121 GetArgsInfo:[AIC_INFO] args(0 to 19) after execute:0x3fffffb9000, 0x1407f7d05600, 0x12d200000000, 0x12d170a00000, 0x1407f7dc5800, 0, 0x1407f7dd3600, 0x1407f6600000, 0x1407f7dd1e00, 0x1407f5000000, 0x12c1000770e0, 0, 0x1800000020, 0x100000001000, 0x80000000c0, 0x80000000100, 0, 0x4120000000000001, 0x2000000004, 0x1000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:196:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.371 [davinci_kernel_task.cc:1525]22121 GetArgsInfo:[AIC_INFO] args(20 to 39) after execute:0xc000000001, 0x100000001000, 0x8000001000, 0x100000000100, 0x10000000080, 0x1000000100, 0x100000004, 0x1, 0x100000000, 0x6000000000000, 0x20000, 0x100000001, 0x100000001, 0x200000010, 0, 0x200000002, 0x1, 0, 0, 0.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:197:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.374 [davinci_kernel_task.cc:1525]22121 GetArgsInfo:[AIC_INFO] args(40 to 47) after execute:0, 0, 0, 0, 0, 0xa5a5a5a50003c785, 0, 0.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:198:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.376 [davinci_kernel_task.cc:1529]22121 GetArgsInfo:tilingKey = 0, print 3 Times totalLen=(48*8), argsSize=384, schemMode=1, blockDim=24
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:199:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.383 [davinci_kernel_task.cc:1609]22121 PrintErrorInfoForDavinciTask:[AIC_INFO] after execute:args print end
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:200:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.400 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[0]=0x00000006.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:201:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.402 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[1]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:202:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.404 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[2]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:203:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.406 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[3]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:204:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.408 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[4]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:205:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.410 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[5]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:206:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.412 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[6]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:207:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.414 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[7]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:208:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.416 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[8]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:209:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.418 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[9]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:210:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.419 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[10]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:211:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.421 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[11]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:212:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.423 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[12]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:213:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.425 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[13]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:214:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.427 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[14]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:215:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.429 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[15]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:216:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.431 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[16]=0x00000432.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:217:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.433 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[17]=0x02020004.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:218:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.434 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[18]=0x00010000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:219:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.436 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[19]=0x00180018.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:220:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.438 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[20]=0x00077080.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:221:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.440 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[21]=0x018012c1.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:222:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.442 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[22]=0x00077080.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:223:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.444 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[23]=0x018012c1.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:224:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.446 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[24]=0xd99db000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:225:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.447 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[25]=0x12d512d5.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:226:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.449 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[26]=0xd99db000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:227:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.451 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[27]=0xd99dde50.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:228:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.453 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[28]=0x12d512d5.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:229:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.454 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[29]=0xd99dde50.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:230:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.456 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[30]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:231:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.458 [davinci_kernel_task.cc:1489]22121 GetMixCtxInfo:The DavinciTask Mix context-buf[31]=0000000000.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:232:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.461 [davinci_kernel_task.cc:1614]22121 PrintErrorInfoForDavinciTask:[AIC_INFO] after execute:mixCtx print end
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:233:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.426.532 [davinci_kernel_task.cc:1639]22121 PrintErrorInfoForDavinciTask:[DFX_INFO]Aicore kernel execute failed, device_id=3, stream_id=39, report_stream_id=39, task_id=573, flip_num=0, fault kernel_name=GroupedMatmulSwigluQuant_2d40d3cceaa71c6a5dee680a6edfb0f0_0, fault kernel info ext=none, program id=88, hash=9879833563996123244.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:234:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.657 [dump_args.cpp:1053][tid:22121] [AIC_INFO] args(0 to 20) after execute:0x3fffffb9000, 0x1407f7d05600, 0x12d200000000, 0x12d170a00000, 0x1407f7dc5800, 0, 0x1407f7dd3600, 0x1407f6600000, 0x1407f7dd1e00, 0x1407f5000000, 0x12c1000770e0, 0, 0x1800000020, 0x100000001000, 0x80000000c0, 0x80000000100, 0, 0x4120000000000001, 0x2000000004, 0x1000,
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:235:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.663 [dump_args.cpp:1053][tid:22121] [AIC_INFO] args(20 to 40) after execute:0xc000000001, 0x100000001000, 0x8000001000, 0x100000000100, 0x10000000080, 0x1000000100, 0x100000004, 0x1, 0x100000000, 0x6000000000000, 0x20000, 0x100000001, 0x100000001, 0x200000010, 0, 0x200000002, 0x1, 0, 0, 0,
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:236:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.667 [dump_args.cpp:1053][tid:22121] [AIC_INFO] args(40 to 48) after execute:0, 0, 0, 0, 0, 0xa5a5a5a50003c785, 0, 0,
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:237:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.669 [dump_args.cpp:902][tid:22121] [AIC_INFO] after execute:args print end
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:238:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.772 [dump_args.cpp:645][tid:22121] [Dump][Exception] args dump dfx info, addr:0x3fffffb9000, tensor type:11, pointer type:1, index: 0
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:239:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.786 [dump_args.cpp:1053][tid:22121] [Dump][Exception] begin to load normal tensor, index:1
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:240:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.789 [dump_args.cpp:419][tid:22121] [Dump][Exception] tensor type:2, pointer type:1
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:241:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.792 [dump_args.cpp:1053][tid:22121] [Dump][Exception] exception info dump args data, addr:0x1407f7d05600; size:786432 bytes
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:242:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.794 [dump_args.cpp:1053][tid:22121] [Dump][Exception] end to load normal tensor, index:1
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:243:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.804 [dump_args.cpp:1053][tid:22121] [Dump][Exception] begin to load normal tensor, index:2
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:244:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.806 [dump_args.cpp:419][tid:22121] [Dump][Exception] tensor type:2, pointer type:1
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:245:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.809 [dump_args.cpp:1053][tid:22121] [Dump][Exception] exception info dump args data, addr:0x12d200000000; size:536870912 bytes
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:246:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.811 [dump_args.cpp:1053][tid:22121] [Dump][Exception] end to load normal tensor, index:2
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:247:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.820 [dump_args.cpp:1053][tid:22121] [Dump][Exception] begin to load normal tensor, index:3
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:248:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.823 [dump_args.cpp:419][tid:22121] [Dump][Exception] tensor type:2, pointer type:1
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:249:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.825 [dump_args.cpp:1053][tid:22121] [Dump][Exception] exception info dump args data, addr:0x12d170a00000; size:524288 bytes
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:250:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.827 [dump_args.cpp:1053][tid:22121] [Dump][Exception] end to load normal tensor, index:3
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:251:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.835 [dump_args.cpp:1053][tid:22121] [Dump][Exception] begin to load normal tensor, index:4
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:252:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.837 [dump_args.cpp:419][tid:22121] [Dump][Exception] tensor type:2, pointer type:1
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:253:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.839 [dump_args.cpp:1053][tid:22121] [Dump][Exception] exception info dump args data, addr:0x1407f7dc5800; size:768 bytes
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:254:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.841 [dump_args.cpp:1053][tid:22121] [Dump][Exception] end to load normal tensor, index:4
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:255:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.848 [dump_args.cpp:1053][tid:22121] [Dump][Exception] begin to load normal tensor, index:5
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:256:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.851 [dump_args.cpp:419][tid:22121] [Dump][Exception] tensor type:2, pointer type:1
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:257:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.855 [dump_args.cpp:1053][tid:22121] [Dump][Exception] exception info dump args data, addr:0; size:0 bytes
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:258:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.857 [dump_args.cpp:1053][tid:22121] [Dump][Exception] end to load normal tensor, index:5
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:259:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.863 [dump_args.cpp:1053][tid:22121] [Dump][Exception] begin to load normal tensor, index:6
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:260:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.865 [dump_args.cpp:419][tid:22121] [Dump][Exception] tensor type:2, pointer type:1
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:261:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.867 [dump_args.cpp:1053][tid:22121] [Dump][Exception] exception info dump args data, addr:0x1407f7dd3600; size:256 bytes
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:262:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.869 [dump_args.cpp:1053][tid:22121] [Dump][Exception] end to load normal tensor, index:6
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:263:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.875 [dump_args.cpp:1053][tid:22121] [Dump][Exception] begin to load normal tensor, index:7
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:264:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.876 [dump_args.cpp:419][tid:22121] [Dump][Exception] tensor type:3, pointer type:1
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:265:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.878 [dump_args.cpp:1053][tid:22121] [Dump][Exception] exception info dump args data, addr:0x1407f6600000; size:393216 bytes
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:266:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.880 [dump_args.cpp:1053][tid:22121] [Dump][Exception] end to load normal tensor, index:7
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:267:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.885 [dump_args.cpp:1053][tid:22121] [Dump][Exception] begin to load normal tensor, index:8
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:268:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.887 [dump_args.cpp:419][tid:22121] [Dump][Exception] tensor type:3, pointer type:1
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:269:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.889 [dump_args.cpp:1053][tid:22121] [Dump][Exception] exception info dump args data, addr:0x1407f7dd1e00; size:768 bytes
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:270:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.891 [dump_args.cpp:1053][tid:22121] [Dump][Exception] end to load normal tensor, index:8
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:271:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.894 [dump_args.cpp:513][tid:22121] [Dump][Exception] begin to load workspace, index:9
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:272:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.896 [dump_args.cpp:1053][tid:22121] [Dump][Exception] exception info dump args data, addr:0x1407f5000000; size:19922944 bytes
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:273:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.898 [dump_args.cpp:533][tid:22121] [Dump][Exception] end to load workspace, index:9
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:274:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.901 [dump_args.cpp:586][tid:22121] [Dump][Exception] begin to load tiling data, index:10
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:275:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.905 [dump_args.cpp:1053][tid:22121] [Dump][Exception] exception info dump args data, addr:0x12c1000770e0; size:272 bytes
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:276:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.907 [dump_args.cpp:600][tid:22121] [Dump][Exception] end to load tiling data, index:10
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:277:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.992 [kernel_info_collector.cpp:386][tid:22121] Get error register information. coreNum=1
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:278:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.426.999 [kernel_info_collector.cpp:467][tid:22121] Find mix_aic entry function symbol. offset=00000000, size=00002e50, name=GroupedMatmulSwigluQuant_2d40d3cceaa71c6a5dee680a6edfb0f0_0_mix_aic
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:279:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.427.002 [kernel_info_collector.cpp:472][tid:22121] Find mix_aiv entry function symbol. offset=00002e50, size=00001e60, name=GroupedMatmulSwigluQuant_2d40d3cceaa71c6a5dee680a6edfb0f0_0_mix_aiv
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:280:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.427.008 [kernel_info_collector.cpp:479][tid:22121] It is Non-SuperKernel. functionCount=4, globalCount=5
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:281:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.838.036 [dump_args.cpp:1022][tid:22121] [Dump][Exception] dump exception to file, file: /home/p00801009/vllm-ascend/vllm_test/extra-info/data-dump/3/exception_info.39.573.20260724103616427
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:282:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.838.370 [stream.cc:1472]22121 GetError:Stream Synchronize failed, stream_id=39, retCode=0x26, [aicore exception].
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:283:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.838.375 [stream.cc:1475]22121 GetError:AICORE Kernel task happen error, retCode=0x26.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:284:[ERROR] IDEDD(21985,):2026-07-24-10:36:16.838.377 [kernel_info_collector.cpp:255][tid:26869] [Dump][Exception] dump host kernel to file, file: /home/p00801009/vllm-ascend/vllm_test/extra-info/data-dump/3/GroupedMatmulSwigluQuant_2d40d3cceaa71c6a5dee680a6edfb0f0_0_host.o
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:285:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.838.390 [stream.cc:1475]22121 GetError:[AIC_INFO] after execute:args print end
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:286:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.838.396 [stream.cc:1475]22121 GetError:[AIC_INFO] after execute:mixCtx print end
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:287:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.838.401 [stream.cc:1475]22121 GetError:[DFX_INFO]Aicore kernel execute failed, device_id=3, stream_id=39, report_stream_id=39, task_id=573, flip_num=0, fault kernel_name=GroupedMatmulSwigluQuant_2d40d3cceaa71c6a5dee680a6edfb0f0_0, fault kernel info ext=none, program id=88, hash=9879833563996123244.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:288:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.838.406 [stream.cc:3697]22121 EnterFailureAbort:stream_id=39 enter failure abort.
+/root/ascend/log/debug/plog/plog-21985_20260724103405765.log:289:[ERROR] RUNTIME(21985,):2026-07-24-10:36:16.838.436 [stars_engine.cc:1439]22121 StarsResumeRtsq:stop scheduling in abort failure mode: stream_id=39, sq_id=10, sq_head=573, task_id=573, taskType=0.
