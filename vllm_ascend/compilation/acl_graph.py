@@ -9,7 +9,6 @@ from typing import Any
 from unittest.mock import patch
 
 import torch
-import torch.distributed as dist
 import torch_npu
 import vllm.envs as envs
 from vllm.compilation.counter import compilation_counter
@@ -20,9 +19,7 @@ from vllm.forward_context import BatchDescriptor, get_forward_context
 from vllm.logger import logger
 from vllm.platforms import current_platform
 
-import vllm_ascend.envs as envs_ascend
 from vllm_ascend.ascend_forward_context import _EXTRA_CTX
-from vllm_ascend.distributed.zbal_utils import is_zbal_enabled
 
 from ..utils import weak_ref_tensors
 
@@ -157,25 +154,6 @@ class ACLGraphWrapper:
 
                 # mind-exploding: carefully manage the reference and memory.
                 forward_context.capturing = True
-
-                # When ZBAL low-latency MoE is enabled, FFTS-based
-                # low_latency dispatch/combine kernels inside the captured
-                # graph are collective operations requiring ALL EP ranks to
-                # execute in lockstep. dist.barrier() alone is NOT enough:
-                # it only synchronizes CPU threads and does NOT wait for
-                # FFTS stream kernels. torch.npu.synchronize()
-                # (aclrtSynchronizeDevice) waits on ALL streams including
-                # FFTS, ensuring eager warmup kernels are fully drained
-                # before any rank enters torch.npu.graph() capture.
-                # Without this, torch.npu.graph().__enter__() → synchronize()
-                # deadlocks waiting for FFTS kernels that will never complete
-                # because peer ranks have already moved on to capture.
-                if (is_zbal_enabled()
-                        and envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY
-                        and dist.is_available()
-                        and dist.is_initialized()):
-                    torch.npu.synchronize()
-                    dist.barrier()
 
                 with torch.npu.graph(aclgraph, pool=self.graph_pool):
                     # `output` is managed by pytorch's aclgraph pool

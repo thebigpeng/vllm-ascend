@@ -101,7 +101,6 @@ from vllm.v1.worker.ubatch_utils import (
 from vllm.v1.worker.utils import AttentionGroup
 
 # yapf: enable
-import vllm_ascend.envs as envs_ascend
 from vllm_ascend.ascend_config import get_ascend_config
 from vllm_ascend.attention.attention_v1 import AscendAttentionBackend, AscendAttentionState
 from vllm_ascend.attention.context_parallel.dsa_cp import AscendDSACPMetadataBuilder
@@ -111,7 +110,6 @@ from vllm_ascend.attention.utils import AscendCommonAttentionMetadata, using_pag
 
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm_ascend.distributed.zbal_utils import is_zbal_enabled
 from vllm_ascend.compilation.acl_graph import (
     ACLGraphWrapper,
     set_draft_graph_params,
@@ -4367,44 +4365,6 @@ class NPUModelRunner(GPUModelRunner):
         parent_module_name = _get_gpu_model_runner_module_name(self)
         with _torch_cuda_wrapper(), _replace_gpu_model_runner_function_wrapper(parent_module_name):
             return GPUModelRunner.capture_model(self)
-
-    def _warmup_and_capture(
-        self,
-        desc: BatchDescriptor,
-        cudagraph_runtime_mode: CUDAGraphMode,
-        profile_seq_lens: int | None = None,
-        allow_microbatching: bool = False,
-        num_warmups: int | None = None,
-    ):
-        """NPU override that adds cross-rank synchronization for ZBAL low_latency.
-
-        When ZBAL low_latency MoE is enabled, FFTS-based dispatch/combine
-        kernels are collective operations. The upstream ``_warmup_and_capture``
-        runs eager warmup iterations followed by graph capture, with no
-        cross-rank synchronization between batch descriptors. This causes
-        FFTS slot deadlock when ranks progress at different speeds across
-        the 17 batch descriptors in ``_capture_cudagraphs``.
-
-        We insert ``torch.npu.synchronize()`` (drains ALL streams including
-        FFTS) + ``dist.barrier()`` (cross-rank CPU sync) before the warmup
-        loop of each batch descriptor, ensuring all ranks start each
-        descriptor's warmup simultaneously with drained NPU streams.
-        """
-        if (is_zbal_enabled()
-                and envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY
-                and not self.model_config.enforce_eager
-                and dist.is_available()
-                and dist.is_initialized()):
-            torch.npu.synchronize()
-            dist.barrier()
-
-        return super()._warmup_and_capture(
-            desc,
-            cudagraph_runtime_mode=cudagraph_runtime_mode,
-            profile_seq_lens=profile_seq_lens,
-            allow_microbatching=allow_microbatching,
-            num_warmups=num_warmups,
-        )
 
     def _prepare_multimodal_fields(self):
         """

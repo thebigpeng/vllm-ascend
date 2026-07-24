@@ -32,6 +32,7 @@ from typing import Optional
 import torch
 import torch.nn as nn
 from vllm.distributed.parallel_state import get_ep_group
+from vllm.forward_context import get_forward_context
 from vllm.model_executor.layers.fused_moe import FusedMoEConfig
 from vllm_ascend.quantization.quant_type import QuantType
 import torch.distributed as dist
@@ -179,6 +180,31 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         # the cost of higher latency for that single forward.
         actual_tokens = hidden_states.shape[0]
         prefer_low_latency = self.low_latency_mode
+
+        # ACL Graph capture/replay incompatibility:
+        # combine_low_latency kernel lacks self-cleaning (no ResetMetaState,
+        # no STATE barrier) and relies on external clean_low_latency_buffer
+        # which uses Host-side AclrtMemset — an API that CANNOT be captured
+        # by ACL Graph. During graph capture/replay, the meta region is never
+        # cleaned, causing WaitSyncFlag spin-wait to read stale flags from
+        # the previous iteration → incorrect remoteBase calculation →
+        # address out-of-bounds → aicore timeout (507014).
+        # The normal dispatch/combine path has full self-cleaning
+        # (ResetMetaState + STATE barrier) and is graph-compatible.
+        # Therefore, during ACL Graph capture we force fallback to normal.
+        is_graph_capturing = getattr(
+            get_forward_context(), "capturing", False
+        )
+        if prefer_low_latency and is_graph_capturing:
+            prefer_low_latency = False
+            logger.info(
+                "[TokenDispatcherWithZBAL] ACL Graph capture detected; "
+                "falling back from low_latency to normal dispatch for "
+                "graph compatibility (combine_low_latency kernel relies "
+                "on Host-side clean_low_latency_buffer which cannot be "
+                "captured)."
+            )
+
         use_low_latency = (
             prefer_low_latency
             and actual_tokens <= self.low_latency_num_max_tokens_per_rank

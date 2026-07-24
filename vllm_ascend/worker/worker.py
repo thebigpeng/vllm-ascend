@@ -23,7 +23,6 @@ import logging
 from types import NoneType
 
 import torch
-import torch.distributed as dist
 import torch.nn as nn
 import torch_npu
 import vllm.envs as envs_vllm
@@ -558,25 +557,6 @@ class NPUWorker(WorkerBase):
         for size in sorted(warmup_sizes, reverse=True):
             logger.info("Compile and warming up model for size %d", size)
             self.model_runner._dummy_run(size)
-
-        # When ZBAL low-latency MoE is enabled, the FFTS-based low_latency
-        # dispatch/combine kernels are collective operations that require ALL
-        # EP ranks to execute in lockstep. dist.barrier() alone is NOT enough:
-        # it only synchronizes CPU threads (HCCL barrier) and does NOT wait
-        # for FFTS stream kernels to finish. Without a preceding
-        # torch.npu.synchronize() (aclrtSynchronizeDevice, which waits on ALL
-        # streams including FFTS), faster ranks may enter graph capture while
-        # their NPU stream still has pending FFTS kernels from the warmup
-        # dummy_run. This causes FFTS slot mismatch → aicore timeout (507014)
-        # in combine_low_latency.
-        if (is_zbal_enabled() and envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY
-                and not self.model_config.enforce_eager):
-            torch.npu.synchronize()
-            dist.barrier()
-            logger.info(
-                "[ZBAL] All ranks synchronized before graph capture "
-                "(low_latency mode)"
-            )
 
         npugraph_memory_bytes = 0
         if not self.model_config.enforce_eager:
