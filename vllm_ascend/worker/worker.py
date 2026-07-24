@@ -554,6 +554,21 @@ class NPUWorker(WorkerBase):
                 if not any(x in compile_range for x in all_sizes):
                     warmup_sizes.append(compile_range.end)
 
+        # When ZBAL low-latency MoE is enabled, set the graph-compilation
+        # flag so that TokenDispatcherWithZBAL falls back from low_latency
+        # to normal dispatch/combine during the entire compilation flow
+        # (warmup + capture). This avoids FFTS collective-op deadlock
+        # during warmup and combine_low_latency's graph-incompatibility
+        # during capture. See zbal_moe_comm.py for details.
+        from vllm_ascend.ops.fused_moe.zbal_moe_comm import set_in_graph_compilation
+        zbal_low_latency_graph_mode = (
+            is_zbal_enabled()
+            and envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY
+            and not self.model_config.enforce_eager
+        )
+        if zbal_low_latency_graph_mode:
+            set_in_graph_compilation(True)
+
         for size in sorted(warmup_sizes, reverse=True):
             logger.info("Compile and warming up model for size %d", size)
             self.model_runner._dummy_run(size)
@@ -561,6 +576,11 @@ class NPUWorker(WorkerBase):
         npugraph_memory_bytes = 0
         if not self.model_config.enforce_eager:
             npugraph_memory_bytes = self.model_runner.capture_model()
+
+        # Clear the graph-compilation flag so that subsequent eager forwards
+        # (online serving) can use the low_latency path normally.
+        if zbal_low_latency_graph_mode:
+            set_in_graph_compilation(False)
 
         # Suggest an optimal --kv-cache-memory value for future runs.
         # Only emitted when we ran full profiling (kv_cache_memory_bytes was not

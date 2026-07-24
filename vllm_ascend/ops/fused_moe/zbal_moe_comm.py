@@ -32,7 +32,6 @@ from typing import Optional
 import torch
 import torch.nn as nn
 from vllm.distributed.parallel_state import get_ep_group
-from vllm.forward_context import get_forward_context
 from vllm.model_executor.layers.fused_moe import FusedMoEConfig
 from vllm_ascend.quantization.quant_type import QuantType
 import torch.distributed as dist
@@ -54,6 +53,28 @@ from vllm_ascend.ops.fused_moe.zbal_moe_adapter import ZBALMoEAdapter
 
 
 logger = logging.getLogger(__name__)
+
+# Module-level flag indicating that graph compilation (warmup + capture) is
+# in progress. Set by NPUWorker.compile_or_warm_up_model() before the
+# warmup loop and cleared after capture_model() returns.
+#
+# Why we need this:
+#   combine_low_latency kernel lacks self-cleaning (no ResetMetaState, no
+#   STATE barrier) and relies on external clean_low_latency_buffer which
+#   uses Host-side AclrtMemset — an API that CANNOT be captured by ACL
+#   Graph. Moreover, the FFTS-based low_latency kernels are collective
+#   operations that can deadlock during warmup if ranks progress at
+#   different speeds, causing torch.npu.graph().__enter__()→synchronize()
+#   to hang. Therefore, during the entire graph compilation flow (both
+#   warmup iterations and the final capture), we force fallback to the
+#   normal dispatch/combine path which is graph-compatible.
+_in_graph_compilation: bool = False
+
+
+def set_in_graph_compilation(value: bool):
+    """Set the graph-compilation flag. Called by NPUWorker."""
+    global _in_graph_compilation
+    _in_graph_compilation = value
 
 
 @dataclass(frozen=True, slots=True)
@@ -181,28 +202,30 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         actual_tokens = hidden_states.shape[0]
         prefer_low_latency = self.low_latency_mode
 
-        # ACL Graph capture/replay incompatibility:
-        # combine_low_latency kernel lacks self-cleaning (no ResetMetaState,
-        # no STATE barrier) and relies on external clean_low_latency_buffer
-        # which uses Host-side AclrtMemset — an API that CANNOT be captured
-        # by ACL Graph. During graph capture/replay, the meta region is never
-        # cleaned, causing WaitSyncFlag spin-wait to read stale flags from
-        # the previous iteration → incorrect remoteBase calculation →
-        # address out-of-bounds → aicore timeout (507014).
-        # The normal dispatch/combine path has full self-cleaning
-        # (ResetMetaState + STATE barrier) and is graph-compatible.
-        # Therefore, during ACL Graph capture we force fallback to normal.
-        is_graph_capturing = getattr(
-            get_forward_context(), "capturing", False
-        )
-        if prefer_low_latency and is_graph_capturing:
+        # ACL Graph compilation incompatibility:
+        # During graph compilation (warmup + capture), we must NOT use the
+        # low_latency path. Two reasons:
+        #   1. combine_low_latency kernel lacks self-cleaning and relies on
+        #      Host-side clean_low_latency_buffer (AclrtMemset) which cannot
+        #      be captured by ACL Graph → stale meta flags → address OOB.
+        #   2. FFTS-based low_latency dispatch/combine are collective ops;
+        #      during warmup, ranks progress at different speeds across the
+        #      17 batch descriptors, causing FFTS slot deadlock → the
+        #      subsequent torch.npu.graph().__enter__()→synchronize() hangs.
+        # The normal dispatch/combine path has full self-cleaning and is
+        # graph-compatible. We check the module-level _in_graph_compilation
+        # flag (set by NPUWorker.compile_or_warm_up_model) because
+        # forward_context.capturing is only True during the final capture
+        # call, NOT during the preceding warmup iterations.
+        if prefer_low_latency and _in_graph_compilation:
             prefer_low_latency = False
             logger.info(
-                "[TokenDispatcherWithZBAL] ACL Graph capture detected; "
+                "[TokenDispatcherWithZBAL] Graph compilation in progress; "
                 "falling back from low_latency to normal dispatch for "
                 "graph compatibility (combine_low_latency kernel relies "
                 "on Host-side clean_low_latency_buffer which cannot be "
-                "captured)."
+                "captured, and FFTS collective ops can deadlock during "
+                "warmup)."
             )
 
         use_low_latency = (
