@@ -244,11 +244,16 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             # count is returned as a device tensor in handle[5]
             # (recv_tokens_per_expert) instead of a Python list.
             #
-            # Worst case: every token's topk experts are all local.
-            # num_worst_tokens = num_tokens * topk guarantees the
-            # pre-allocated buffer can hold any routing outcome.
+            # Worst case: ALL token-expert pairs from ALL ranks in the EP
+            # group could be routed to this rank's local experts. Each rank
+            # sends actual_tokens * topk pairs, so with ep_world_size ranks
+            # the maximum received count is ep_world_size * actual_tokens * topk.
+            # Using only actual_tokens * topk (local-only) causes the
+            # pre-allocated expandx_out buffer to be too small: the dispatch
+            # kernel writes past the end, corrupting recv_tokens_per_expert
+            # and causing MTE address-out-of-range in GroupedMatmulSwigluQuant.
             topk = topk_ids.shape[1]
-            num_worst_tokens = actual_tokens * topk
+            num_worst_tokens = actual_tokens * topk * self.ep_world_size
             recv_x, recv_topk_idx, handle_dict, recv_x_scales = self._adapter.dispatch(
                 x=hidden_states,
                 topk_idx=topk_idx,
