@@ -393,3 +393,31 @@ Note: ASCEND_LAUNCH_BLOCKING=1 will force ops to run in synchronous mode, result
 [ERROR] IDEDD(71178,):2026-07-24-13:25:08.155.134 [dump_args.cpp:1053][tid:71328] [Dump][Exception] end to load normal tensor, index:0
 [ERROR] IDEDD(71178,):2026-07-24-13:25:08.155.142 [dump_args.cpp:1053][tid:71328] [Dump][Exception] begin to load normal tensor, index:1
 
+Thread 82639 (idle): "MainThread"
+    synchronize (torch_npu/npu/utils.py:72)
+    __enter__ (torch_npu/npu/graphs.py:519)
+    __call__ (vllm_ascend/compilation/acl_graph.py:178)
+    _model_forward (vllm_ascend/worker/model_runner_v1.py:2546)
+    _dummy_run (vllm_ascend/worker/model_runner_v1.py:3300)
+    decorate_context (torch/utils/_contextlib.py:124)
+    _warmup_and_capture (vllm/v1/worker/gpu_model_runner.py:6163)
+    _capture_cudagraphs (vllm/v1/worker/gpu_model_runner.py:6217)
+    capture_model (vllm/v1/worker/gpu_model_runner.py:6102)
+    sync_wrapper (vllm/tracing/otel.py:178)
+    capture_model (vllm_ascend/worker/model_runner_v1.py:4367)
+    compile_or_warm_up_model (vllm_ascend/worker/worker.py:581)
+    worker_busy_loop (vllm/v1/executor/multiproc_executor.py:957)
+    worker_main (vllm/v1/executor/multiproc_executor.py:861)
+    run (multiprocessing/process.py:108)
+    _bootstrap (multiprocessing/process.py:314)
+    _main (multiprocessing/spawn.py:135)
+    spawn_main (multiprocessing/spawn.py:122)
+    <module> (<string>:1)
+Thread 82798 (idle)
+Thread 82797 (idle)
+Thread 82799 (idle)
+Thread 82800 (idle)
+Thread 82803 (idle): "Thread-1"
+    wait (threading.py:331)
+    wait (threading.py:629)
+    run (tqdm/_monitor.py:60)
