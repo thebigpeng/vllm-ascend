@@ -255,11 +255,12 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
                 topk_weights=combine_weights,
                 num_worst_tokens=num_worst_tokens,
             )
-            # Graph-compatible: use device tensor from handle instead of
-            # Python list. handle[5] is recv_tokens_per_expert with shape
-            # [num_local_experts] and dtype int64 — exactly what
-            # npu_grouped_matmul expects as group_list (count mode).
-            group_list = handle_dict["handle"][5]
+            # Graph-compatible: use the device tensor recv_tokens_per_expert
+            # (shape [num_local_experts], dtype int64) stored on the Buffer
+            # after dispatch, instead of the Python list which requires D2H
+            # sync. This is exactly what npu_grouped_matmul expects as
+            # group_list (count mode).
+            group_list = handle_dict["recv_tokens_per_expert"]
             num_recv_tokens_per_expert_list = []
 
         combine_metadata = MoEZBALCombineMetadata(

@@ -260,6 +260,10 @@ class ZBALMoEAdapter:
         if isinstance(recv_x, tuple):
             recv_x, recv_x_scales = recv_x
 
+        # recv_tokens_per_expert is a device tensor with shape
+        # [num_local_experts] and dtype int64, stored on the Buffer after
+        # dispatch. It is the graph-safe replacement for the Python list
+        # num_recv_tokens_per_expert_list (which requires D2H sync).
         handle_dict = {
             "handle": handle,
             "event": dispatch_event,
@@ -267,6 +271,7 @@ class ZBALMoEAdapter:
             "num_tokens_per_expert": num_tokens_per_expert,
             "num_tokens_per_rank": num_tokens_per_rank,
             "is_token_in_rank": is_token_in_rank,
+            "recv_tokens_per_expert": self.buffer._recv_tokens_per_expert,
         }
 
         logger.debug(
