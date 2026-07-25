@@ -1,353 +1,212 @@
-
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138] EngineCore encountered a fatal error.
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138] Traceback (most recent call last):
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 386, in get_response
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]     status, result = mq.dequeue(timeout=dequeue_timeout)
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/distributed/device_communicators/shm_broadcast.py", line 755, in dequeue
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]     with self.acquire_read(timeout, indefinite) as buf:
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 137, in __enter__
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]     return next(self.gen)
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]            ^^^^^^^^^^^^^^
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/distributed/device_communicators/shm_broadcast.py", line 674, in acquire_read
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]     self._spin_condition.wait(timeout_ms=read_timeout.timeout_ms())
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/distributed/device_communicators/shm_broadcast.py", line 631, in timeout_ms
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]     raise TimeoutError
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138] TimeoutError
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138] The above exception was the direct cause of the following exception:
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138] Traceback (most recent call last):
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/engine/core.py", line 1129, in run_engine_core
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]     engine_core.run_busy_loop()
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/engine/core.py", line 1747, in run_busy_loop
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]     executed = self._process_engine_step()
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/engine/core.py", line 1209, in _process_engine_step
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]     outputs, model_executed = self.step_fn()
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]                               ^^^^^^^^^^^^^^
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/engine/core.py", line 521, in step_with_batch_queue
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]     model_output = future.result()
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]                    ^^^^^^^^^^^^^^^
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 90, in result
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]     return super().result()
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]            ^^^^^^^^^^^^^^^^
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/concurrent/futures/_base.py", line 449, in result
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]     return self.__get_result()
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]            ^^^^^^^^^^^^^^^^^^^
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]     raise self._exception
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 94, in _wait_for_response
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]     response = self.aggregate(self.get_response())
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]                               ^^^^^^^^^^^^^^^^^^^
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 388, in get_response
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138]     raise TimeoutError(f"RPC call to {method} timed out.") from e
-(EngineCore_DP0 pid=9055) ERROR 07-25 16:31:49 [core.py:1138] TimeoutError: RPC call to sample_tokens timed out.
-(Worker_DP0_TP0_EP0 pid=9236) INFO 07-25 16:31:49 [multiproc_executor.py:775] Parent process exited, terminating worker queues
-(APIServer pid=8972) ERROR 07-25 16:31:49 [async_llm.py:704] AsyncLLM output_handler failed.
-(APIServer pid=8972) ERROR 07-25 16:31:49 [async_llm.py:704] Traceback (most recent call last):
-(APIServer pid=8972) ERROR 07-25 16:31:49 [async_llm.py:704]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/engine/async_llm.py", line 660, in output_handler
-(APIServer pid=8972) ERROR 07-25 16:31:49 [async_llm.py:704]     outputs = await engine_core.get_output_async()
-(APIServer pid=8972) ERROR 07-25 16:31:49 [async_llm.py:704]               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(APIServer pid=8972) ERROR 07-25 16:31:49 [async_llm.py:704]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/engine/core_client.py", line 998, in get_output_async
-(APIServer pid=8972) ERROR 07-25 16:31:49 [async_llm.py:704]     raise self._format_exception(outputs) from None
-(APIServer pid=8972) ERROR 07-25 16:31:49 [async_llm.py:704] vllm.v1.engine.exceptions.EngineDeadError: EngineCore encountered an issue. See stack trace (above) for the root cause.
-(APIServer pid=8972) INFO:     80.5.17.36:45556 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
-(APIServer pid=8972) INFO:     Shutting down
-(APIServer pid=8972) INFO:     Waiting for application shutdown.
-(APIServer pid=8972) INFO:     Application shutdown complete.
-(APIServer pid=8972) INFO:     Finished server process [8972]
-(EngineCore_DP1 pid=9093) INFO 07-25 16:31:50 [shm_broadcast.py:681] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
-(EngineCore_DP2 pid=9133) INFO 07-25 16:31:50 [shm_broadcast.py:681] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
-(EngineCore_DP3 pid=9173) INFO 07-25 16:31:50 [shm_broadcast.py:681] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
-(APIServer pid=8972) sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
-[rank0]:[E725 16:35:59.121957400 OpParamMaker.cpp:454] operator():../third_party/op-plugin/op_plugin/utils/op_api_common.h:192 NPU function error: call failed, error code is 507014
-[ERROR] 2026-07-25-16:35:59 (PID:9236, Device:0, RankID:-1) ERR00100 PTA call acl api failed
-[Error]: The aicore execution times out.
-        Rectify the fault based on the error information in the ascend log.
-[PID: 9236] 2026-07-25-16:35:59.510.173 AclNN_Runtime_Error(EZ9903): aclrtLaunchKernelWithHostArgs failed: 507014
-        Solution: In this scenario, collect the plog when the fault occurs and locate the fault based on the plog.
-        TraceBack (most recent call last):
-        The error from device(chipId:0, dieId:0), serial number is 3, there is an exception of fftsplus aivector error, core id is 0, error code = 0, dump info: pc start: 0x1240007415c8, current: 0x124000743594, vec error info: 0x7a18b03f3e, mte error info: 0xc3bbf5f44c, ifu error info: 0x4ceec6b3e3b40, ccu error info: 0x24003c8a22b36422, cube error info: 0, biu error info: 0, aic error mask: 0x6500020bd00028c, para base: 0x12c10c159080.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:645]
-        The extend info: errcode:(0, 0, 0) errorStr: timeout or trap error. fixp_error0 info: 0xbf5f44c, fixp_error1 info: 0xc3, fsmId:0, tslot:3, thread:0, ctxid:0, blk:43, sublk:0, subErrType:4.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:658]
-        Kernel task happen error, retCode=0x25, [aicore timeout].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
-        Failed to submit kernel task, retCode=0x7150025.[FUNC:LaunchKernelSubmit][FILE:context.cc][LINE:1223]
-        kernel launch submit failed.[FUNC:LaunchKernel][FILE:context.cc][LINE:1671]
-        rtsLaunchKernelWithHostArgs execution failed, reason=aicore timeout[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-        rtsLaunchKernelWithHostArgs failed, runtime result = 507014.[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-        aclrtLaunchKernelWithHostArgs failed: 507014
-        Kernel launch from cache failed.
-        OpExecCache run fail.
-
-Exception raised from operator() at ../third_party/op-plugin/op_plugin/utils/op_api_common.h:192 (most recent call first):
-frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xffffaee15978 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libc10.so)
-frame #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0xc4 (0xffffaedb9adc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libc10.so)
-frame #2: <unknown function> + 0xfb4f70 (0xffff76df4f70 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #3: <unknown function> + 0x3a263b4 (0xffff798663b4 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #4: <unknown function> + 0xca80f0 (0xffff76ae80f0 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #5: <unknown function> + 0xca8ccc (0xffff76ae8ccc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #6: <unknown function> + 0xca6be8 (0xffff76ae6be8 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #7: <unknown function> + 0x289da4 (0xffff75d79da4 in /usr/local/Ascend/cann-9.0.0/lib64/libhccl.so)
-frame #8: <unknown function> + 0x8595c (0xffffbb76595c in /lib/aarch64-linux-gnu/libc.so.6)
-frame #9: <unknown function> + 0xebb4c (0xffffbb7cbb4c in /lib/aarch64-linux-gnu/libc.so.6)
-
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] WorkerProc hit an exception.
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     output = func(*args, **kwargs)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     return func(*args, **kwargs)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 522, in sample_tokens
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     return self.model_runner.sample_tokens(grammar_output)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     return func(*args, **kwargs)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2224, in sample_tokens
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     propose_draft_token_ids(sampler_output.sampled_token_ids)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2178, in propose_draft_token_ids
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     self._draft_token_ids = self.propose_draft_token_ids(
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1627, in propose_draft_token_ids
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     draft_token_ids = self.drafter._propose(
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]                       ^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/spec_decode/llm_base_proposer.py", line 738, in _propose
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     attn_metadata = builder.build(0, common_attn_metadata, self.runner.get_model(), **extra_attn_metadata_args)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/dsa_v1.py", line 567, in build
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     prefill_metadata = self.build_prefill_metadata(common_prefix_len, common_attn_metadata)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/dsa_v1.py", line 710, in build_prefill_metadata
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     prefill_slot_mapping = self.slot_mapping[
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]                            ^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] RuntimeError: The Inner error is reported as above. The process exits for this inner error, and the current working operator name is aclnnAdd.
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] Since the operator is called asynchronously, the stacktrace may be inaccurate. If you want to get the accurate stacktrace, please set the environment variable ASCEND_LAUNCH_BLOCKING=1.
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] Note: ASCEND_LAUNCH_BLOCKING=1 will force ops to run in synchronous mode, resulting in performance degradation. Please unset ASCEND_LAUNCH_BLOCKING in time after debugging.
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] [ERROR] 2026-07-25-16:35:59 (PID:9236, Device:0, RankID:-1) ERR00100 PTA call acl api failed.
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     output = func(*args, **kwargs)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     return func(*args, **kwargs)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 522, in sample_tokens
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     return self.model_runner.sample_tokens(grammar_output)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     return func(*args, **kwargs)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2224, in sample_tokens
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     propose_draft_token_ids(sampler_output.sampled_token_ids)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2178, in propose_draft_token_ids
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     self._draft_token_ids = self.propose_draft_token_ids(
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1627, in propose_draft_token_ids
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     draft_token_ids = self.drafter._propose(
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]                       ^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/spec_decode/llm_base_proposer.py", line 738, in _propose
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     attn_metadata = builder.build(0, common_attn_metadata, self.runner.get_model(), **extra_attn_metadata_args)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/dsa_v1.py", line 567, in build
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     prefill_metadata = self.build_prefill_metadata(common_prefix_len, common_attn_metadata)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/dsa_v1.py", line 710, in build_prefill_metadata
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     prefill_slot_mapping = self.slot_mapping[
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]                            ^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] RuntimeError: The Inner error is reported as above. The process exits for this inner error, and the current working operator name is aclnnAdd.
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] Since the operator is called asynchronously, the stacktrace may be inaccurate. If you want to get the accurate stacktrace, please set the environment variable ASCEND_LAUNCH_BLOCKING=1.
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] Note: ASCEND_LAUNCH_BLOCKING=1 will force ops to run in synchronous mode, resulting in performance degradation. Please unset ASCEND_LAUNCH_BLOCKING in time after debugging.
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] [ERROR] 2026-07-25-16:35:59 (PID:9236, Device:0, RankID:-1) ERR00100 PTA call acl api failed.
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] WorkerProc hit an exception.
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     output = func(*args, **kwargs)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 337, in execute_model
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     return self.worker.execute_model(scheduler_output)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 490, in execute_model
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     output = self.model_runner.execute_model(scheduler_output, intermediate_tensors)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     return func(*args, **kwargs)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1746, in execute_model
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     with self.synchronize_input_prep():
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 137, in __enter__
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     return next(self.gen)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3494, in synchronize_input_prep
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     self.prepare_inputs_event.synchronize()
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/npu/streams.py", line 192, in synchronize
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     super(Event, self).synchronize()
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] RuntimeError: synchronize:../torch_npu/csrc/core/npu/NPUEvent.cpp:212 NPU function error: aclrtSynchronizeEvent(event_), error code is 507014
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] [ERROR] 2026-07-25-16:35:59 (PID:9236, Device:0, RankID:-1) ERR00100 PTA call acl api failed
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] [Error]: The aicore execution times out.
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] EE9999: Inner Error!
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] EE9999[PID: 9236] 2026-07-25-16:35:59.524.064 (EE9999):  rtEventSynchronize execution failed, reason=aicore timeout[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]         TraceBack (most recent call last):
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]        wait event to be complete failed, runtime result = 507014[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     output = func(*args, **kwargs)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 337, in execute_model
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     return self.worker.execute_model(scheduler_output)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 490, in execute_model
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     output = self.model_runner.execute_model(scheduler_output, intermediate_tensors)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     return func(*args, **kwargs)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1746, in execute_model
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     with self.synchronize_input_prep():
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 137, in __enter__
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     return next(self.gen)
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3494, in synchronize_input_prep
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     self.prepare_inputs_event.synchronize()
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/npu/streams.py", line 192, in synchronize
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]     super(Event, self).synchronize()
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] RuntimeError: synchronize:../torch_npu/csrc/core/npu/NPUEvent.cpp:212 NPU function error: aclrtSynchronizeEvent(event_), error code is 507014
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] [ERROR] 2026-07-25-16:35:59 (PID:9236, Device:0, RankID:-1) ERR00100 PTA call acl api failed
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] [Error]: The aicore execution times out.
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] EE9999: Inner Error!
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962] EE9999[PID: 9236] 2026-07-25-16:35:59.524.064 (EE9999):  rtEventSynchronize execution failed, reason=aicore timeout[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]         TraceBack (most recent call last):
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]        wait event to be complete failed, runtime result = 507014[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]
-(Worker_DP0_TP0_EP0 pid=9236) ERROR 07-25 16:35:59 [multiproc_executor.py:962]
-(Worker_DP0_TP0_EP0 pid=9236) INFO 07-25 16:35:59 [multiproc_executor.py:872] WorkerProc shutting down.
-[rank3]:[E725 16:36:00.783755610 OpParamMaker.cpp:454] operator():../third_party/op-plugin/op_plugin/utils/op_api_common.h:192 NPU function error: call failed, error code is 507014
-[ERROR] 2026-07-25-16:36:00 (PID:9877, Device:3, RankID:-1) ERR00100 PTA call acl api failed
-[Error]: The aicore execution times out.
-        Rectify the fault based on the error information in the ascend log.
-[PID: 9877] 2026-07-25-16:36:00.172.383 AclNN_Runtime_Error(EZ9903): aclrtLaunchKernelWithHostArgs failed: 507014
-        Solution: In this scenario, collect the plog when the fault occurs and locate the fault based on the plog.
-        TraceBack (most recent call last):
-        The error from device(chipId:1, dieId:1), serial number is 2, there is an exception of fftsplus aivector error, core id is 13, error code = 0, dump info: pc start: 0x124600600000, current: 0x124600605a9c, vec error info: 0x7b00214dbd, mte error info: 0x645b17afea, ifu error info: 0x378da15cd6380, ccu error info: 0xc2c7cda03aa0d445, cube error info: 0, biu error info: 0, aic error mask: 0x6500020bd00028c, para base: 0x12c10c157080.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:645]
-        The extend info: errcode:(0, 0, 0) errorStr: timeout or trap error. fixp_error0 info: 0xb17afea, fixp_error1 info: 0x64, fsmId:0, tslot:4, thread:0, ctxid:0, blk:0, sublk:0, subErrType:4.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:658]
-        Kernel task happen error, retCode=0x25, [aicore timeout].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
-        Failed to submit kernel task, retCode=0x7150025.[FUNC:LaunchKernelSubmit][FILE:context.cc][LINE:1223]
-        kernel launch submit failed.[FUNC:LaunchKernel][FILE:context.cc][LINE:1671]
-        rtsLaunchKernelWithHostArgs execution failed, reason=aicore timeout[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-        rtsLaunchKernelWithHostArgs failed, runtime result = 507014.[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-        aclrtLaunchKernelWithHostArgs failed: 507014
-        Kernel launch from cache failed.
-        OpExecCache run fail.
-        This is an error in DynamicQuant launch aicore
-
-Exception raised from operator() at ../third_party/op-plugin/op_plugin/utils/op_api_common.h:192 (most recent call first):
-frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xffff74d25978 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libc10.so)
-frame #1: c10::detail::torchCheckFail(char const*, char const*, unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0xc4 (0xffff74cc9adc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch/lib/libc10.so)
-frame #2: <unknown function> + 0x15828f0 (0xffff3d2d28f0 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #3: <unknown function> + 0x3a263b4 (0xffff3f7763b4 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #4: <unknown function> + 0xca80f0 (0xffff3c9f80f0 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #5: <unknown function> + 0xca8ccc (0xffff3c9f8ccc in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #6: <unknown function> + 0xca6be8 (0xffff3c9f6be8 in /usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/lib/libtorch_npu.so)
-frame #7: <unknown function> + 0x289da4 (0xffff3bc89da4 in /usr/local/Ascend/cann-9.0.0/lib64/libhccl.so)
-frame #8: <unknown function> + 0x8595c (0xffff8167595c in /lib/aarch64-linux-gnu/libc.so.6)
-frame #9: <unknown function> + 0xebb4c (0xffff816dbb4c in /lib/aarch64-linux-gnu/libc.so.6)
+(EngineCore_DP0 pid=324626) INFO 07-25 17:24:29 [mooncake_hybrid_connector.py:1272] Delaying free of 6 blocks for request chatcmpl-379593c1-9385-40b1-a806-d824e3650cff-80716ff0
+(APIServer pid=324526) INFO:     80.5.17.37:56602 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=324526) INFO 07-25 17:24:32 [loggers.py:271] Engine 000: Avg prompt throughput: 1.1 tokens/s, Avg generation throughput: 0.1 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.2%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 0.0%
+(APIServer pid=324526) INFO 07-25 17:24:42 [loggers.py:271] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.2%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 0.0%
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] WorkerProc hit an exception.
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     output = func(*args, **kwargs)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 337, in execute_model
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     return self.worker.execute_model(scheduler_output)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 490, in execute_model
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     output = self.model_runner.execute_model(scheduler_output, intermediate_tensors)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1941, in execute_model
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     (attn_metadata, spec_decode_common_attn_metadata) = self._build_attention_metadata(
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 3008, in _build_attention_metadata
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     _build_attn_group_metadata(
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2942, in _build_attn_group_metadata
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     attn_metadata_i = builder.build(
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]                       ^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 323, in build
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     req_metadata = self.build_req_metadata(
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]                    ^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 608, in build_req_metadata
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     qli_metadata = self._build_qli_metadata(
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 820, in _build_qli_metadata
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     max_seqlen_q = max(1, int(seq_lens_q.max().item()))
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]                               ^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] RuntimeError: operator():../torch_npu/csrc/aten/common/LocalScalarDenseNpu.cpp:23 NPU function error: c10_npu::acl::AclrtSynchronizeStreamWithTimeout(copy_stream), error code is 507018
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] [ERROR] 2026-07-25-17:24:58 (PID:324733, Device:0, RankID:-1) ERR00100 PTA call acl api failed
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] E39999: Inner Error!
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] E39999[PID: 324733] 2026-07-25-17:24:58.117.999 (E39999):  The error from device(chipId:0, dieId:0), serial number is 12, an exception occurred during AICPU execution, stream_id:66, task_id:65437, errcode:1, msg:execute kernel param invalid.[FUNC:ProcessStarsAicpuErrorInfo][FILE:device_error_proc.cc][LINE:1644]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]         TraceBack (most recent call last):
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]        Kernel task happen error, retCode=0x2a, [aicpu exception].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]        Aicpu kernel execute failed, device_id=0, stream_id=66, task_id=65437, soName=8786079630598814386.so, funcName=RunCpuKernel, kernelName=SparseAttnSharedkvMetadata, errorCode=0x2a.[FUNC:PrintAicpuErrorInfo][FILE:davinci_kernel_task.cc][LINE:1435]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]        rtStreamSynchronizeWithTimeout execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]        synchronize stream with timeout failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     output = func(*args, **kwargs)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 337, in execute_model
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     return self.worker.execute_model(scheduler_output)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 490, in execute_model
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     output = self.model_runner.execute_model(scheduler_output, intermediate_tensors)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1941, in execute_model
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     (attn_metadata, spec_decode_common_attn_metadata) = self._build_attention_metadata(
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 3008, in _build_attention_metadata
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     _build_attn_group_metadata(
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2942, in _build_attn_group_metadata
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     attn_metadata_i = builder.build(
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]                       ^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 323, in build
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     req_metadata = self.build_req_metadata(
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]                    ^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 608, in build_req_metadata
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     qli_metadata = self._build_qli_metadata(
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 820, in _build_qli_metadata
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     max_seqlen_q = max(1, int(seq_lens_q.max().item()))
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]                               ^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] RuntimeError: operator():../torch_npu/csrc/aten/common/LocalScalarDenseNpu.cpp:23 NPU function error: c10_npu::acl::AclrtSynchronizeStreamWithTimeout(copy_stream), error code is 507018
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] [ERROR] 2026-07-25-17:24:58 (PID:324733, Device:0, RankID:-1) ERR00100 PTA call acl api failed
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] E39999: Inner Error!
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] E39999[PID: 324733] 2026-07-25-17:24:58.117.999 (E39999):  The error from device(chipId:0, dieId:0), serial number is 12, an exception occurred during AICPU execution, stream_id:66, task_id:65437, errcode:1, msg:execute kernel param invalid.[FUNC:ProcessStarsAicpuErrorInfo][FILE:device_error_proc.cc][LINE:1644]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]         TraceBack (most recent call last):
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]        Kernel task happen error, retCode=0x2a, [aicpu exception].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]        Aicpu kernel execute failed, device_id=0, stream_id=66, task_id=65437, soName=8786079630598814386.so, funcName=RunCpuKernel, kernelName=SparseAttnSharedkvMetadata, errorCode=0x2a.[FUNC:PrintAicpuErrorInfo][FILE:davinci_kernel_task.cc][LINE:1435]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]        rtStreamSynchronizeWithTimeout execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]        synchronize stream with timeout failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] WorkerProc hit an exception.
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     output = func(*args, **kwargs)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 337, in execute_model
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     return self.worker.execute_model(scheduler_output)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 490, in execute_model
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     output = self.model_runner.execute_model(scheduler_output, intermediate_tensors)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1746, in execute_model
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     with self.synchronize_input_prep():
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 137, in __enter__
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     return next(self.gen)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3494, in synchronize_input_prep
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     self.prepare_inputs_event.synchronize()
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/npu/streams.py", line 192, in synchronize
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     super(Event, self).synchronize()
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] RuntimeError: synchronize:../torch_npu/csrc/core/npu/NPUEvent.cpp:212 NPU function error: aclrtSynchronizeEvent(event_), error code is 507018
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] [ERROR] 2026-07-25-17:24:58 (PID:324733, Device:0, RankID:-1) ERR00100 PTA call acl api failed
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] EE9999: Inner Error!
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] EE9999[PID: 324733] 2026-07-25-17:24:58.133.094 (EE9999):  rtEventSynchronize execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]         TraceBack (most recent call last):
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]        wait event to be complete failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     output = func(*args, **kwargs)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 337, in execute_model
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     return self.worker.execute_model(scheduler_output)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 490, in execute_model
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     output = self.model_runner.execute_model(scheduler_output, intermediate_tensors)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1746, in execute_model
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     with self.synchronize_input_prep():
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 137, in __enter__
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     return next(self.gen)
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3494, in synchronize_input_prep
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     self.prepare_inputs_event.synchronize()
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/npu/streams.py", line 192, in synchronize
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]     super(Event, self).synchronize()
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] RuntimeError: synchronize:../torch_npu/csrc/core/npu/NPUEvent.cpp:212 NPU function error: aclrtSynchronizeEvent(event_), error code is 507018
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] [ERROR] 2026-07-25-17:24:58 (PID:324733, Device:0, RankID:-1) ERR00100 PTA call acl api failed
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] EE9999: Inner Error!
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962] EE9999[PID: 324733] 2026-07-25-17:24:58.133.094 (EE9999):  rtEventSynchronize execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]         TraceBack (most recent call last):
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]        wait event to be complete failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]
+(Worker_DP0_TP0_EP0 pid=324733) ERROR 07-25 17:24:58 [multiproc_executor.py:962]
+(EngineCore_DP1 pid=324672) INFO 07-25 17:25:58 [shm_broadcast.py:681] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(EngineCore_DP0 pid=324626) INFO 07-25 17:25:58 [shm_broadcast.py:681] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(EngineCore_DP1 pid=324672) INFO 07-25 17:26:58 [shm_broadcast.py:681] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(EngineCore_DP0 pid=324626) INFO 07-25 17:26:58 [shm_broadcast.py:681] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(EngineCore_DP1 pid=324672) INFO 07-25 17:27:58 [shm_broadcast.py:681] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(EngineCore_DP0 pid=324626) INFO 07-25 17:27:58 [shm_broadcast.py:681] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
 
 
-Thread 9420 (idle): "MainThread"
-    build_prefill_metadata (vllm_ascend/attention/dsa_v1.py:711)
-    build (vllm_ascend/attention/dsa_v1.py:567)
-    _propose (vllm_ascend/spec_decode/llm_base_proposer.py:738)
-    propose_draft_token_ids (vllm_ascend/worker/model_runner_v1.py:1627)
-    propose_draft_token_ids (vllm_ascend/worker/model_runner_v1.py:2178)
-    sample_tokens (vllm_ascend/worker/model_runner_v1.py:2224)
-    decorate_context (torch/utils/_contextlib.py:124)
-    sample_tokens (vllm_ascend/worker/worker.py:522)
-    decorate_context (torch/utils/_contextlib.py:124)
-    worker_busy_loop (vllm/v1/executor/multiproc_executor.py:957)
-    worker_main (vllm/v1/executor/multiproc_executor.py:861)
-    run (multiprocessing/process.py:108)
-    _bootstrap (multiprocessing/process.py:314)
-    _main (multiprocessing/spawn.py:135)
-    spawn_main (multiprocessing/spawn.py:122)
-    <module> (<string>:1)
-Thread 9774 (idle)
-
-
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:5:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.166.831 [device_error_core_proc.cc:645]10120 PrintCoreInfo:The error from device(chipId:1, dieId:1), serial number is 2, there is an exception of fftsplus aivector error, core id is 13, error code = 0, dump info: pc start: 0x124600600000, current: 0x124600605a9c, vec error info: 0x7b00214dbd, mte error info: 0x645b17afea, ifu error info: 0x378da15cd6380, ccu error info: 0xc2c7cda03aa0d445, cube error info: 0, biu error info: 0, aic error mask: 0x6500020bd00028c, para base: 0x12c10c157080.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:6:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.166.898 [device_error_core_proc.cc:658]10120 PrintCoreInfo:The extend info: errcode:(0, 0, 0) errorStr: timeout or trap error. fixp_error0 info: 0xb17afea, fixp_error1 info: 0x64, fsmId:0, tslot:4, thread:0, ctxid:0, blk:0, sublk:0, subErrType:4.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:7:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.166.906 [device_error_core_proc.cc:732]10120 ProcessStarsCoreErrorInfo:devId=3, streamId=40, taskId=1878, MTE errorCode=0.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:8:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.166.920 [davinci_task.cc:213]10120 SetStarsResultForDavinciTask:AICORE Kernel task happen error, retCode=0x25.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:9:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.407 [davinci_kernel_task.cc:1729]10120 PreCheckTaskErr:Kernel task happen error, retCode=0x25, [aicore timeout].
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:10:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.504 [davinci_kernel_task.cc:1525]10120 GetArgsInfo:[AIC_INFO] args(0 to 7) after execute:0x3fffffb9000, 0x1407d7e36a00, 0x1407d7e3cc00, 0x3000, 0x8, 0x140600100000, 0x200000000000cb2, 0x12c0c1b9a000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:11:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.511 [davinci_kernel_task.cc:1529]10120 GetArgsInfo:tilingKey = 0, print 1 Times totalLen=(8*8), argsSize=64, schemMode=0, blockDim=8
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:12:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.527 [davinci_kernel_task.cc:1609]10120 PrintErrorInfoForDavinciTask:[AIC_INFO] after execute:args print end
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:13:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.548 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[0]=0x00000007.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:14:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.550 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[1]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:15:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.552 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[2]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:16:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.554 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[3]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:17:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.556 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[4]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:18:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.557 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[5]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:19:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.559 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[6]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:20:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.561 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[7]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:21:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.562 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[8]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:22:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.564 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[9]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:23:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.565 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[10]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:24:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.567 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[11]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:25:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.569 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[12]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:26:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.571 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[13]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:27:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.574 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[14]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:28:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.576 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[15]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:29:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.578 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[16]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:30:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.580 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[17]=0x00000004.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:31:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.582 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[18]=0x00010000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:32:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.583 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[19]=0x00080008.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:33:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.585 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[20]=0x0c157080.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:34:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.586 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[21]=0x004012c1.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:35:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.588 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[22]=0x0c157080.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:36:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.590 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[23]=0x004012c1.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:37:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.592 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[24]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:38:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.593 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[25]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:39:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.595 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[26]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:40:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.596 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[27]=0x00600000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:41:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.598 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[28]=0x12461246.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:42:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.600 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[29]=0x00600000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:43:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.602 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[30]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:44:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.603 [davinci_kernel_task.cc:1489]10120 GetMixCtxInfo:The DavinciTask Mix context-buf[31]=0000000000.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:45:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.170.606 [davinci_kernel_task.cc:1614]10120 PrintErrorInfoForDavinciTask:[AIC_INFO] after execute:mixCtx print end
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:46:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.171.070 [davinci_kernel_task.cc:1639]10120 PrintErrorInfoForDavinciTask:[DFX_INFO]Aicore kernel execute failed, device_id=3, stream_id=40, report_stream_id=40, task_id=1878, flip_num=1, fault kernel_name=ZBALAllGatherInner_0, fault kernel info ext=none, program id=3, hash=3292224567292358383.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:47:[ERROR] IDEDD(9877,):2026-07-25-16:36:00.171.639 [dump_args.cpp:330][tid:10120] No exception dfx info, dfxAddr[(nil)]|dfxSize[0].
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:48:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.172.026 [stream.cc:1472]10120 GetError:Stream Synchronize failed, stream_id=40, retCode=0x25, [aicore timeout].
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:49:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.172.030 [stream.cc:1475]10120 GetError:AICORE Kernel task happen error, retCode=0x25.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:50:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.172.043 [stream.cc:1475]10120 GetError:[AIC_INFO] after execute:args print end
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:51:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.172.049 [stream.cc:1475]10120 GetError:[AIC_INFO] after execute:mixCtx print end
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:52:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.172.055 [stream.cc:1475]10120 GetError:[DFX_INFO]Aicore kernel execute failed, device_id=3, stream_id=40, report_stream_id=40, task_id=1878, flip_num=1, fault kernel_name=ZBALAllGatherInner_0, fault kernel info ext=none, program id=3, hash=3292224567292358383.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:53:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.172.059 [stream.cc:3697]10120 EnterFailureAbort:stream_id=40 enter failure abort.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:54:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.172.081 [task_submit.cc:460]10121 AllocTaskAndSendStars:context is abort, status=0x7150025.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:55:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.172.088 [stars_engine.cc:1439]10120 StarsResumeRtsq:stop scheduling in abort failure mode: stream_id=40, sq_id=9, sq_head=1877, task_id=1878, taskType=0.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:56:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.172.090 [task_submit.cc:614]10121 SubmitTaskStars:AllocTaskAndSendStars fail, streamId=46, taskId=0, taskType=66, taskName=KERNEL_AIVEC, retCode=0x7150025
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:57:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.172.095 [context.cc:1223]10121 LaunchKernelSubmit:Failed to submit kernel task, retCode=0x7150025.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:58:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.172.120 [context.cc:1671]10121 LaunchKernel:kernel launch submit failed.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:59:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.172.131 [api_error.cc:692]10121 LaunchKernelV2:LaunchKernel failed.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:60:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.172.144 [api_c_kernel.cc:82]10121 rtsLaunchKernelWithHostArgs:ErrCode=507014, desc=[aicore timeout], InnerCode=0x7150025
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:61:[ERROR] RUNTIME(9877,):2026-07-25-16:36:00.172.150 [error_message_manage.cc:65]10121 FuncErrorReason:rtsLaunchKernelWithHostArgs execution failed, reason=aicore timeout
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:62:[ERROR] ASCENDCL(9877,):2026-07-25-16:36:00.172.314 [kernel.cpp:513]10121 aclrtLaunchKernelWithHostArgsImpl:rtsLaunchKernelWithHostArgs failed, runtime result = 507014.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:63:[ERROR] OP(9877,):2026-07-25-16:36:00.172.366 [rts_arg.cpp:871][NNOP][LaunchKernelFromCache][10121] errno[361001] OpName:[aclnnDynamicQuantV2_81576_DynamicQuant] aclrtLaunchKernelWithHostArgs failed: 507014
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:64:[ERROR] OP(9877,):2026-07-25-16:36:00.172.416 [rts_arg.cpp:952][NNOP][RunFromCache][10121] errno[361001] OpName:[aclnnDynamicQuantV2_81576_DynamicQuant] Kernel launch from cache failed.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:65:[ERROR] OP(9877,):2026-07-25-16:36:00.172.431 [op_cache.cpp:1177][NNOP][Run][10121] errno[361001] OpName:[aclnnDynamicQuantV2_81576_DynamicQuant] OpExecCache run fail.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:66:[ERROR] OP(9877,):2026-07-25-16:36:00.172.449 [aclnn_dynamic_quant.cpp:512][NNOP][aclnnDynamicQuantV2][10121] errno[561000] This is an error in DynamicQuant launch aicore
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:67:[ERROR] APP(9877,):2026-07-25-16:36:00.174.810 10121 ExecFuncOpApi:OpParamMaker.cpp:458: "[PTA]:"Custom hand error:operator():../third_party/op-plugin/op_plugin/utils/op_api_common.h:192 NPU function error: call failed, error code is 507014
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:68:[ERROR] 2026-07-25-16:36:00 (PID:9877, Device:3, RankID:-1) ERR00100 PTA call acl api failed
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:73:[ERROR] APP(9877,):2026-07-25-16:36:00.174.823 10121 ExecFuncOpApi:OpParamMaker.cpp:462: "[PTA]:"Custom hand fail! name=aclnnDynamicQuantV2, ret=100000""
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:74:[ERROR] APP(9877,):2026-07-25-16:36:00.174.833 10121 ReadQueue:NPUQueue.cpp:454: "[PTA]:"---Thread---281468669063584: device = 3, write_idx = 1166, read_idx = 3990, status = 1, ret = 100000""
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:75:[ERROR] APP(9877,):2026-07-25-16:36:00.175.572 9877 MakeSureQueueEmpty:NPUQueue.cpp:341: "[PTA]:"Inner error happened, detail: the current working operator name is aclnnDynamicQuantV2""
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:76:[ERROR] APP(9877,):2026-07-25-16:36:00.175.579 9877 MakeSureQueueEmpty:NPUQueue.cpp:344: "[PTA]:"runtime_error: The Inner error is reported as above. The process exits for this inner error, and the current working operator name is aclnnDynamicQuantV2.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:79:[ERROR] 2026-07-25-16:36:00 (PID:9877, Device:3, RankID:-1) ERR00100 PTA call acl api failed.
-/root/ascend/log/debug/plog/plog-9877_20260725162257150.log:81:[ERROR] APP(9877,):2026-07-25-16:36:00.181.615 9877 Enqueue:NPUQueue.cpp:543: "[PTA]:"Inner error happened with CAN_EXIT status, detail: the current working operator name i
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.115.517 [stars_engine.cc:1548]324929 ProcLogicCqReport:Task run failed, device_id=0, stream_id=66, task_id=65437, sqe_type=1(aicpu), errType=0x1(task exception), sqSwStatus=0x1
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.117.973 [device_error_proc.cc:1644]324929 ProcessStarsAicpuErrorInfo:The error from device(chipId:0, dieId:0), serial number is 12, an exception occurred during AICPU execution, stream_id:66, task_id:65437, errcode:1, msg:execute kernel param invalid.
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.118.035 [davinci_task.cc:209]324929 SetStarsResultForDavinciTask:AICPU Kernel task happen error, retCode=0x2a.
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.124.036 [davinci_kernel_task.cc:1729]324929 PreCheckTaskErr:Kernel task happen error, retCode=0x2a, [aicpu exception].
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.124.070 [davinci_kernel_task.cc:1435]324929 PrintAicpuErrorInfo:Aicpu kernel execute failed, device_id=0, stream_id=66, task_id=65437, soName=8786079630598814386.so, funcName=RunCpuKernel, kernelName=SparseAttnSharedkvMetadata, errorCode=0x2a.
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.124.084 [davinci_kernel_task.cc:1445]324929 PrintAicpuErrorInfo:Aicpu kernel execute failed, device_id=0, stream_id=66, task_id=65437, fault op_name=.
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.125.196 [stream.cc:1472]324929 GetError:Stream Synchronize failed, stream_id=66, retCode=0x2a, [aicpu exception].
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.125.199 [stream.cc:1475]324929 GetError:AICPU Kernel task happen error, retCode=0x2a.
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.125.209 [stream.cc:1475]324929 GetError:Aicpu kernel execute failed, device_id=0, stream_id=66, task_id=65437, fault op_name=.
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.125.214 [stream.cc:3697]324929 EnterFailureAbort:stream_id=66 enter failure abort.
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.125.225 [stream.cc:1613]324733 SynchronizeExecutedTask:context is abort, status=0x715002a.
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.125.231 [stream.cc:1667]324733 SynchronizeImpl:failed, stream_id=66, error=0x715002a
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.125.233 [stars_engine.cc:1439]324929 StarsResumeRtsq:stop scheduling in abort failure mode: stream_id=66, sq_id=83, sq_head=1949, task_id=65437, taskType=1.
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.125.235 [api_error.cc:1029]324733 StreamSynchronize:Stream synchronize failed, stream_id=66, timeout=-1ms.
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.125.245 [api_c_stream.cc:183]324733 rtStreamSynchronizeWithTimeout:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.125.250 [error_message_manage.cc:65]324733 FuncErrorReason:rtStreamSynchronizeWithTimeout execution failed, reason=aicpu exception
+[ERROR] ASCENDCL(324733,):2026-07-25-17:24:58.125.781 [stream.cpp:167]324733 aclrtSynchronizeStreamWithTimeoutImpl:synchronize stream with timeout failed, runtime result = 507018
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.127.651 [engine.cc:142]324933 SubmitTask:context is abort, status=0x715002a.
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.127.659 [event.cc:487]324933 Record:Failed to submit record task, retCode=0x715002a.
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.127.686 [event.cc:105]324933 EventIdCountSub:event_id=54, error free
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.127.691 [api_error.cc:1252]324933 EventRecord:Record event failed.
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.127.700 [api_c.cc:731]324933 rtEventRecord:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.127.704 [error_message_manage.cc:65]324933 FuncErrorReason:rtEventRecord execution failed, reason=aicpu exception
+[ERROR] ASCENDCL(324733,):2026-07-25-17:24:58.127.896 [event.cpp:107]324933 aclrtRecordEventImpl:record event failed, runtime result = 507018
+[ERROR] APP(324733,):2026-07-25-17:24:58.127.930 324933 RecordEventFunc:OpParamMaker.cpp:517: "[PTA]:"aclrtRecordEvent error! ret = 507018, eventAllocatorType = -1""
+[ERROR] APP(324733,):2026-07-25-17:24:58.127.937 324933 ReadQueue:NPUQueue.cpp:454: "[PTA]:"---Thread---281468491329952: device = 0, write_idx = 2915, read_idx = 2914, status = 1, ret = 507018""
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.133.075 [api_impl.cc:2255]324733 EventSynchronize:context is abort, status=0x715002a.
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.133.086 [api_c.cc:764]324733 rtEventSynchronize:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
+[ERROR] RUNTIME(324733,):2026-07-25-17:24:58.133.090 [error_message_manage.cc:65]324733 FuncErrorReason:rtEventSynchronize execution failed, reason=aicpu exception
+[ERROR] ASCENDCL(324733,):2026-07-25-17:24:58.133.272 [event.cpp:197]324733 aclrtSynchronizeEventImpl:wait event to be complete failed, runtime result = 507018
+[ERROR] APP(324733,):2026-07-25-17:29:58.350.942 324733 Enqueue:NPUQueue.cpp:543: "[PTA]:"Inner error happened with CAN_EXIT status, detail: the current working event is 0xaaab06fb78d0""
+[ERROR] APP(324733,):2026-07-25-17:29:59.746.828 324733 MakeSureQueueEmpty:NPUQueue.cpp:341: "[PTA]:"Inner error happened with CAN_EXIT status, detail: the current working event is 0xaaab06fb78d0""
+[ERROR] RUNTIME(324733,):2026-07-25-17:29:59.747.170 [context.cc:708]324733 Synchronize:context is abort, status=0x715002a.
+[ERROR] RUNTIME(324733,):2026-07-25-17:29:59.747.177 [api_error.cc:2698]324733 DeviceSynchronize:Device synchronize failed.
+[ERROR] RUNTIME(324733,):2026-07-25-17:29:59.747.196 [api_c_device.cc:245]324733 rtDeviceSynchronizeWithTimeout:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
+[ERROR] RUNTIME(324733,):2026-07-25-17:29:59.747.201 [error_message_manage.cc:65]324733 FuncErrorReason:rtDeviceSynchronizeWithTimeout execution failed, reason=aicpu exception
+[ERROR] ASCENDCL(324733,):2026-07-25-17:29:59.747.357 [device.cpp:198]324733 aclrtSynchronizeDeviceWithTimeoutImpl:wait for compute device to finish failed, runtime result = 507018.
+[ERROR] APP(324733,):2026-07-25-17:29:59.747.594 324733 THPModule_npu_shutdown_synchronize:InitNpuBindings.cpp:126: "[PTA]:"NPU shutdown synchronize device failed.""
+[ERROR] RUNTIME(324733,):2026-07-25-17:29:59.747.663 [api_impl.cc:2284]324733 EventQueryStatus:context is abort, status=0x715002a.
+[ERROR] RUNTIME(324733,):2026-07-25-17:29:59.747.668 [api_c.cc:802]324733 rtEventQueryStatus:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
+[ERROR] RUNTIME(324733,):2026-07-25-17:29:59.747.671 [error_message_manage.cc:65]324733 FuncErrorReason:rtEventQueryStatus execution failed, reason=aicpu exception
+[ERROR] ASCENDCL(324733,):2026-07-25-17:29:59.747.809 [event.cpp:157]324733 aclrtQueryEventStatusImpl:[Query][Status]query event recorded status failed, runtime result = 507018
+[ERROR] APP(324733,):2026-07-25-17:29:59.748.500 aclAppLog call vsnprintf_s failed
+[ERROR] RUNTIME(324733,):2026-07-25-17:29:59.748.515 [api_impl.cc:2284]324733 EventQueryStatus:context is abort, status=0x715002a.
+[ERROR] RUNTIME(324733,):2026-07-25-17:29:59.748.520 [api_c.cc:802]324733 rtEventQueryStatus:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
+[ERROR] RUNTIME(324733,):2026-07-25-17:29:59.748.523 [error_message_manage.cc:65]324733 FuncErrorReason:rtEventQueryStatus execution failed, reason=aicpu exception
+[ERROR] ASCENDCL(324733,):2026-07-25-17:29:59.748.648 [event.cpp:157]324733 aclrtQueryEventStatusImpl:[Query][Status]query event recorded status failed, runtime result = 507018
+[ERROR] APP(324733,):2026-07-25-17:29:59.749.205 aclAppLog call vsnprintf_s failed
+[ERROR] APP(324733,):2026-07-25-17:29:59.749.344 324733 MakeSureQueueEmpty:NPUQueue.cpp:341: "[PTA]:"Inner error happened with CAN_EXIT status, detail: the current working event is 0xaaab06fb78d0""
+[ERROR] RUNTIME(324733,):2026-07-25-17:29:59.749.372 [context.cc:708]324733 Synchronize:context is abort, status=0x715002a.
