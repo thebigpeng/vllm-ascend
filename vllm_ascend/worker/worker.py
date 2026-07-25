@@ -581,6 +581,22 @@ class NPUWorker(WorkerBase):
         # (online serving) can use the low_latency path normally.
         if zbal_low_latency_graph_mode:
             set_in_graph_compilation(False)
+            # One-time sync after compilation: ensure ALL pending device
+            # operations (including FFTS stream work submitted by normal
+            # dispatch during warmup/capture) are complete before the first
+            # eager low_latency dispatch. This is NOT a per-prefill sync
+            # (which would add 0.5~2ms overhead). The first low_latency
+            # forward after graph compilation will call
+            # clean_low_latency_buffer (triggered by the
+            # _needs_clean_before_low_latency flag set during normal-dispatch
+            # fallback in graph compilation) to clear the meta exchange region.
+            torch.npu.synchronize()
+            # Ensure all EP ranks transition to eager mode simultaneously.
+            # low_latency dispatch is a collective op; if one rank starts
+            # serving before another has finished compilation, the collective
+            # op deadlocks.
+            if torch.distributed.is_initialized():
+                torch.distributed.barrier()
 
         # Suggest an optimal --kv-cache-memory value for future runs.
         # Only emitted when we ran full profiling (kv_cache_memory_bytes was not
