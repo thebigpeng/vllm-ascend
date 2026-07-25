@@ -2,22 +2,23 @@
 
 ROLE="decode"              # prefill / decode
 HARDWARE_SERIES="A3"        # A2 (800I/800T A2) or A3 (800I/800T A3)
-LOCAL_IP="80.5.17.37"
+LOCAL_IP="80.5.17.36"
 NIC_NAME="enp194s0f0"
 
 export VLLM_ASCEND_ZBAL_LOCAL_MEM_SIZE=60416
-export VLLM_ASCEND_ZBAL_BOOTSTRAP_URL="tcp://80.5.17.37:16889"
+#export VLLM_ASCEND_ZBAL_LOCAL_MEM_SIZE=56320
+export VLLM_ASCEND_ZBAL_BOOTSTRAP_URL="tcp://80.5.17.36:16889"
 export VLLM_ASCEND_ZBAL_MOE_ENABLE=1
 export VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY=0
 export VLLM_ASCEND_ZBAL_MOE_NVL_BYTES=10240
 export VLLM_ASCEND_ZBAL_MOE_RDMA_BYTES=10240
 export DEEP_NORMAL_MODE_USE_INT8_QUANT=1
 export ASCEND_RT_VISIBLE_DEVICES="8,9,10,11,12,13,14,15"
-
+export ZBAL_HCCL_OP="alltoall,barrier,reduce_scatter,scatter,broadcast,allgather,allreduce,send,recv"
 #export ZBAL_PROF_ENABLE=1
 
 #MODEL_PATH="/home/weights/Qwen3-32B-W8A8/"
-MODEL_PATH="/data/deepseekv4-flash-w8a8-mtp/"
+MODEL_PATH="/home/weights/deepseekv4-flash-w8a8-mtp/"
 
 SERVED_MODEL_NAME="dsv4"
 P_DATA_PARALLEL_SIZE=2
@@ -88,12 +89,11 @@ NEW_ARGS=(
     --data-parallel-size 8 \
     --tensor-parallel-size 1 \
     --enable-expert-parallel \
-    --max-model-len 104856 \
+    --max-model-len 80857 \
     --max-num-batched-tokens 120 \
     --max-num-seqs 60 \
     --no-disable-hybrid-kv-cache-manager \
     --async-scheduling \
-    --enforce-eager \
     --no-enable-prefix-caching \
     --safetensors-load-strategy 'prefetch' \
     --trust-remote-code \
@@ -103,7 +103,7 @@ NEW_ARGS=(
     --tool-call-parser deepseek_v4 \
     --enable-auto-tool-choice \
     --reasoning-parser deepseek_v4 \
-    --gpu-memory-utilization 0.92 \
+    --gpu-memory-utilization 0.91 \
     --quantization ascend \
     --speculative-config '{"num_speculative_tokens": 1,"method": "mtp","enforce_eager": true}' \
     --compilation-config '{"cudagraph_mode": "FULL_DECODE_ONLY"}' \
