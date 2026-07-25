@@ -59,15 +59,15 @@ logger = logging.getLogger(__name__)
 # warmup loop and cleared after capture_model() returns.
 #
 # Why we need this:
-#   combine_low_latency kernel now has kernel-level self-cleaning
-#   (ResetMetaState cleans the FLAG region at Process() start, mirroring
-#   combine_normal). However, the FFTS-based low_latency kernels are
-#   collective operations that can deadlock during warmup if ranks
-#   progress at different speeds, causing
-#   torch.npu.graph().__enter__()→synchronize() to hang. Therefore,
-#   during the entire graph compilation flow (both warmup iterations and
-#   the final capture), we force fallback to the normal dispatch/combine
-#   path which is graph-compatible.
+#   combine_low_latency kernel lacks self-cleaning (no ResetMetaState, no
+#   STATE barrier) and relies on external clean_low_latency_buffer which
+#   uses Host-side AclrtMemset — an API that CANNOT be captured by ACL
+#   Graph. Moreover, the FFTS-based low_latency kernels are collective
+#   operations that can deadlock during warmup if ranks progress at
+#   different speeds, causing torch.npu.graph().__enter__()→synchronize()
+#   to hang. Therefore, during the entire graph compilation flow (both
+#   warmup iterations and the final capture), we force fallback to the
+#   normal dispatch/combine path which is graph-compatible.
 _in_graph_compilation: bool = False
 
 
@@ -204,17 +204,17 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
 
         # ACL Graph compilation incompatibility:
         # During graph compilation (warmup + capture), we must NOT use the
-        # low_latency path. Reason:
-        #   FFTS-based low_latency dispatch/combine are collective ops;
-        #   during warmup, ranks progress at different speeds across the
-        #   17 batch descriptors, causing FFTS slot deadlock → the
-        #   subsequent torch.npu.graph().__enter__()→synchronize() hangs.
-        # (Note: combine_low_latency now has kernel-level self-cleaning via
-        # ResetMetaState, so the previous "stale meta flags → address OOB"
-        # concern is resolved. The FFTS deadlock concern remains.)
-        # The normal dispatch/combine path is graph-compatible. We check
-        # the module-level _in_graph_compilation flag (set by
-        # NPUWorker.compile_or_warm_up_model) because
+        # low_latency path. Two reasons:
+        #   1. combine_low_latency kernel lacks self-cleaning and relies on
+        #      Host-side clean_low_latency_buffer (AclrtMemset) which cannot
+        #      be captured by ACL Graph → stale meta flags → address OOB.
+        #   2. FFTS-based low_latency dispatch/combine are collective ops;
+        #      during warmup, ranks progress at different speeds across the
+        #      17 batch descriptors, causing FFTS slot deadlock → the
+        #      subsequent torch.npu.graph().__enter__()→synchronize() hangs.
+        # The normal dispatch/combine path has full self-cleaning and is
+        # graph-compatible. We check the module-level _in_graph_compilation
+        # flag (set by NPUWorker.compile_or_warm_up_model) because
         # forward_context.capturing is only True during the final capture
         # call, NOT during the preceding warmup iterations.
         if prefer_low_latency and _in_graph_compilation:
@@ -248,10 +248,15 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             # If the previous forward used normal dispatch, the low-latency
             # buffer's meta exchange region is dirty (contains 0x3F800000
             # residuals from normal STATE/FLAG flags). We must clean it
-            # before running any low-latency kernel, otherwise the first
-            # low_latency dispatch's magicVal=1 (exp_flag=1.0f) collides
-            # with the residual 0x3F800000 (also 1.0f), causing WaitSyncFlag
-            # false positives and MTE address out-of-range errors.
+            # before running any low-latency kernel.
+            #
+            # Flag value design (avoids cross-kernel collision):
+            #   normal dispatch/combine flag  = 0x3F800000 (1.0f)
+            #   dispatch_low_latency exp_flag = 2.0f (magicVal increment step=2)
+            #   combine_low_latency flag      = 0x40400000 (3.0f)
+            # All three values are distinct, so even if normal dispatch
+            # leaves residual 0x3F800000 in the meta region, the low_latency
+            # kernels' WaitSyncFlag will not false-positive on stale values.
             if self._needs_clean_before_low_latency:
                 self._adapter.clean_low_latency_buffer(
                     num_max_dispatch_tokens_per_rank=self.low_latency_num_max_tokens_per_rank,
