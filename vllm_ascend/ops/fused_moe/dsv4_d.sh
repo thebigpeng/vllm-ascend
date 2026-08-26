@@ -6,11 +6,11 @@ LOCAL_IP="80.5.17.41"
 #NIC_NAME="enp194s0f0"
 NIC_NAME="enp48s3u1u1"
 
-#export VLLM_ASCEND_ZBAL_LOCAL_MEM_SIZE=60416
-#export VLLM_ASCEND_ZBAL_LOCAL_MEM_SIZE=53248
-#export VLLM_ASCEND_ZBAL_BOOTSTRAP_URL="tcp://80.5.17.36:16889"
+export VLLM_ASCEND_ZBAL_LOCAL_MEM_SIZE=60416
+export VLLM_ASCEND_ZBAL_BOOTSTRAP_URL="tcp://80.5.17.41:16889"
 export VLLM_ASCEND_ZBAL_MOE_ENABLE=1
 export VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY=0
+export ZBAL_ENABLE_GRAPH=1
 export VLLM_ASCEND_ZBAL_MOE_NVL_BYTES=10240
 export VLLM_ASCEND_ZBAL_MOE_RDMA_BYTES=10240
 export VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK=1024
@@ -74,7 +74,7 @@ export VLLM_USE_V1=1
 export PYTORCH_NPU_ALLOC_CONF=expandable_segments:True
 export ZBAL_NPU_ALLOC_CONF=use_vmm_for_static_memory:True
 export VLLM_PREFIX_CACHE_RETENTION_INTERVAL=0
-export ZBAL_ENABLE_GRAPH=1
+#export ZBAL_ENABLE_GRAPH=1
 
 # --async-scheduling \
 # --no-disable-hybrid-kv-cache-manager \
@@ -104,7 +104,7 @@ NEW_ARGS=(
     --tool-call-parser deepseek_v4 \
     --enable-auto-tool-choice \
     --reasoning-parser deepseek_v4 \
-    --gpu-memory-utilization 0.90 \
+    --gpu-memory-utilization 0.91 \
     --quantization ascend \
 --compilation-config '{"cudagraph_mode": "FULL_DECODE_ONLY", "max_cudagraph_capture_size":256}' \
 --kv-transfer-config \
