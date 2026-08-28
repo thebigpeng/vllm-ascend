@@ -1,0 +1,625 @@
+=== dsa_cp._build_sas_metadata:cp_sas_c4:miss t=66358.592583 pid=58230 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 3
+  attr max_seqlen_kv = 9
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:2'
+  attr has_cmp_kv = True
+  attr cmp_mask_mode = 3
+  attr cmp_topk = 512
+  attr cmp_ratio = 4
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b13ffe00 values=[9]
+=== dsa_cp._build_sas_metadata:cp_sas_c4:miss t=66358.593035 pid=58396 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 2
+  attr max_seqlen_kv = 11
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:3'
+  attr has_cmp_kv = True
+  attr cmp_mask_mode = 3
+  attr cmp_topk = 512
+  attr cmp_ratio = 4
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 2]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 2]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b13ffe00 values=[11]
+=== dsa_cp._build_sas_metadata:cp_sas_c4:miss t=66358.594490 pid=57921 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 3
+  attr max_seqlen_kv = 3
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:0'
+  attr has_cmp_kv = True
+  attr cmp_mask_mode = 3
+  attr cmp_topk = 512
+  attr cmp_ratio = 4
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b13ffe00 values=[3]
+=== dsa_cp._build_sas_metadata:cp_sas_c4:miss t=66358.594493 pid=58060 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 3
+  attr max_seqlen_kv = 6
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:1'
+  attr has_cmp_kv = True
+  attr cmp_mask_mode = 3
+  attr cmp_topk = 512
+  attr cmp_ratio = 4
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b13ffe00 values=[6]
+=== dsa_cp._build_sas_metadata:cp_sas_c4:op_return t=66359.314349 pid=58230 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140517e0c600 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '...(+960)']
+=== dsa_cp._build_qli_metadata:cp_qli:miss t=66359.314805 pid=58230 ===
+  attr num_reqs = 1
+  tensor seq_lens_q: shape=(1,) dtype=torch.int32 numel=1 ptr=0x140517e07a00 values=[3]
+  tensor seq_lens: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b13ffe00 values=[9]
+  tensor query_start_loc: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+=== dsa_cp._build_sas_metadata:cp_sas_c4:op_return t=66359.326381 pid=58396 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x1406d7e0c600 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '...(+960)']
+=== dsa_cp._build_qli_metadata:cp_qli:op_return t=66359.326585 pid=58230 ===
+  attr max_seqlen_q = 3
+  attr max_seqlen_k = 9
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140517e0d800 values=[1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '...(+960)']
+=== dsa_cp._build_qli_metadata:cp_qli:miss t=66359.326735 pid=58396 ===
+  attr num_reqs = 1
+  tensor seq_lens_q: shape=(1,) dtype=torch.int32 numel=1 ptr=0x1406d7e07a00 values=[2]
+  tensor seq_lens: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b13ffe00 values=[11]
+  tensor query_start_loc: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 2]
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.329232 pid=58230 {'cache_key': 'cp_sas_c4'}
+=== dsa_cp._build_sas_metadata:cp_sas_c4:op_return t=66359.331577 pid=57921 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140197e0c600 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '...(+960)']
+=== dsa_cp._build_sas_metadata:cp_sas_c128:miss t=66359.331737 pid=58230 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 3
+  attr max_seqlen_kv = 9
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:2'
+  attr has_cmp_kv = True
+  attr cmp_mask_mode = 3
+  attr cmp_ratio = 128
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12ce903ffe00 values=[0, 3]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12ce903ffe00 values=[0, 3]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b09ffc00 values=[9]
+=== dsa_cp._build_qli_metadata:cp_qli:miss t=66359.332068 pid=57921 ===
+  attr num_reqs = 1
+  tensor seq_lens_q: shape=(1,) dtype=torch.int32 numel=1 ptr=0x140197e07a00 values=[3]
+  tensor seq_lens: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b13ffe00 values=[3]
+  tensor query_start_loc: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+=== dsa_cp._build_sas_metadata:cp_sas_c128:op_return t=66359.332313 pid=58230 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140517e1d800 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '...(+960)']
+=== dsa_cp._build_sas_metadata:cp_sas_c4:op_return t=66359.332939 pid=58060 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140357e0c600 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '...(+960)']
+=== dsa_cp._build_qli_metadata:cp_qli:miss t=66359.333297 pid=58060 ===
+  attr num_reqs = 1
+  tensor seq_lens_q: shape=(1,) dtype=torch.int32 numel=1 ptr=0x140357e07a00 values=[3]
+  tensor seq_lens: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b13ffe00 values=[6]
+  tensor query_start_loc: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+=== dsa_cp._build_sas_metadata:cp_sas_c1:miss t=66359.334412 pid=58230 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 3
+  attr max_seqlen_kv = 9
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:2'
+  attr cmp_ratio = 1
+  attr has_cmp_kv = False
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b0bffc00 values=[0, 3]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b0bffc00 values=[0, 3]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b0bffe00 values=[9]
+=== dsa_cp._build_sas_metadata:cp_sas_c1:op_return t=66359.334902 pid=58230 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140517e25c00 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '...(+960)']
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.336897 pid=58230 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_qli_metadata:cp_qli:op_return t=66359.338237 pid=58396 ===
+  attr max_seqlen_q = 2
+  attr max_seqlen_k = 11
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x1406d7e0d800 values=[1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '...(+960)']
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.338852 pid=58230 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.340518 pid=58230 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.340821 pid=58396 {'cache_key': 'cp_sas_c4'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.342537 pid=58230 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cp_sas_c128:miss t=66359.343450 pid=58396 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 2
+  attr max_seqlen_kv = 11
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:3'
+  attr has_cmp_kv = True
+  attr cmp_mask_mode = 3
+  attr cmp_ratio = 128
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12ce903ffe00 values=[0, 2]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12ce903ffe00 values=[0, 2]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b09ffc00 values=[11]
+=== dsa_cp._build_qli_metadata:cp_qli:op_return t=66359.343560 pid=57921 ===
+  attr max_seqlen_q = 3
+  attr max_seqlen_k = 3
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140197e0d800 values=[1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '...(+960)']
+=== dsa_cp._build_sas_metadata:cp_sas_c128:op_return t=66359.343982 pid=58396 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x1406d7e1d800 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '...(+960)']
+=== dsa_cp._build_qli_metadata:cp_qli:op_return t=66359.344561 pid=58060 ===
+  attr max_seqlen_q = 3
+  attr max_seqlen_k = 6
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140357e0d800 values=[1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '...(+960)']
+=== dsa_cp._build_sas_metadata:cp_sas_c1:miss t=66359.346159 pid=58396 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 2
+  attr max_seqlen_kv = 11
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:3'
+  attr cmp_ratio = 1
+  attr has_cmp_kv = False
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b0bffc00 values=[0, 2]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b0bffc00 values=[0, 2]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b0bffe00 values=[11]
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.346525 pid=57921 {'cache_key': 'cp_sas_c4'}
+=== dsa_cp._build_sas_metadata:cp_sas_c1:op_return t=66359.346666 pid=58396 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x1406d7e25c00 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '...(+960)']
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.347292 pid=58060 {'cache_key': 'cp_sas_c4'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.348742 pid=58396 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cp_sas_c128:miss t=66359.349070 pid=57921 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 3
+  attr max_seqlen_kv = 3
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:0'
+  attr has_cmp_kv = True
+  attr cmp_mask_mode = 3
+  attr cmp_ratio = 128
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12ce903ffe00 values=[0, 3]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12ce903ffe00 values=[0, 3]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b09ffc00 values=[3]
+=== dsa_cp._build_sas_metadata:cp_sas_c128:op_return t=66359.349607 pid=57921 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140197e1d800 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '...(+960)']
+=== dsa_cp._build_sas_metadata:cp_sas_c128:miss t=66359.349964 pid=58060 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 3
+  attr max_seqlen_kv = 6
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:1'
+  attr has_cmp_kv = True
+  attr cmp_mask_mode = 3
+  attr cmp_ratio = 128
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12ce903ffe00 values=[0, 3]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12ce903ffe00 values=[0, 3]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b09ffc00 values=[6]
+=== dsa_cp._build_sas_metadata:cp_sas_c128:op_return t=66359.350650 pid=58060 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140357e1d800 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '...(+960)']
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.350833 pid=58396 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cp_sas_c1:miss t=66359.351759 pid=57921 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 3
+  attr max_seqlen_kv = 3
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:0'
+  attr cmp_ratio = 1
+  attr has_cmp_kv = False
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b0bffc00 values=[0, 3]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b0bffc00 values=[0, 3]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b0bffe00 values=[3]
+=== dsa_cp._build_sas_metadata:cp_sas_c1:op_return t=66359.352265 pid=57921 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140197e25c00 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '...(+960)']
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.352610 pid=58396 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cp_sas_c1:miss t=66359.352906 pid=58060 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 3
+  attr max_seqlen_kv = 6
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:1'
+  attr cmp_ratio = 1
+  attr has_cmp_kv = False
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b0bffc00 values=[0, 3]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b0bffc00 values=[0, 3]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b0bffe00 values=[6]
+=== dsa_cp._build_sas_metadata:cp_sas_c1:op_return t=66359.353392 pid=58060 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140357e25c00 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '...(+960)']
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.354256 pid=57921 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.354681 pid=58396 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.355441 pid=58060 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.356327 pid=57921 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.357563 pid=58060 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.358075 pid=57921 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.359367 pid=58060 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.360147 pid=57921 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66359.361496 pid=58060 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cp_sas_c4:miss t=66428.182926 pid=58230 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 3
+  attr max_seqlen_kv = 9
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:2'
+  attr has_cmp_kv = True
+  attr cmp_mask_mode = 3
+  attr cmp_topk = 512
+  attr cmp_ratio = 4
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b13ffe00 values=[9]
+=== dsa_cp._build_sas_metadata:cp_sas_c4:miss t=66428.182937 pid=58396 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 2
+  attr max_seqlen_kv = 11
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:3'
+  attr has_cmp_kv = True
+  attr cmp_mask_mode = 3
+  attr cmp_topk = 512
+  attr cmp_ratio = 4
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 2]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 2]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b13ffe00 values=[11]
+=== dsa_cp._build_sas_metadata:cp_sas_c4:op_return t=66428.183764 pid=58230 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140517e09200 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 0, 1056718653, -1077756969, 1061208075, -1079886194, -1103413266, -1102758072, -1098171103, 0, 1059831425, -1109966916, 1049378667, -1101283850, 1065238369, 1066057574, -1135198448, 0, -1078902824, -1100857396, -1087520837, -1086603336, -1077362836, 1039482854, 1072774940, 0, -1102430393, -1073528755, 1070743445, -1087914236, 1073856396, 1061502903, -1079591078, 0, 1075330599, -1094206265, 1034698389, -1087194072, -1092829275, -1083588692, 1053015980, '...(+960)']
+=== dsa_cp._build_sas_metadata:cp_sas_c4:op_return t=66428.183805 pid=58396 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x1406d7e09200 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1058586388, 1049312944, -1094762882, 1038139294, -1086341134, -1123009054, -1103282381, 0, 1056718653, -1077756969, 1061208075, -1079886194, -1103413266, -1102758072, -1098171103, 0, 1059831425, -1109966916, 1049378667, -1101283850, 1065238369, 1066057574, -1135198448, 0, -1078902824, -1100857396, -1087520837, -1086603336, -1077362836, 1039482854, 1072774940, 0, -1102430393, -1073528755, 1070743445, -1087914236, 1073856396, 1061502903, -1079591078, 0, 1075330599, -1094206265, 1034698389, -1087194072, -1092829275, -1083588692, 1053015980, '...(+960)']
+=== dsa_cp._build_qli_metadata:cp_qli:miss t=66428.184122 pid=58230 ===
+  attr num_reqs = 1
+  tensor seq_lens_q: shape=(1,) dtype=torch.int32 numel=1 ptr=0x140517e20600 values=[3]
+  tensor seq_lens: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b13ffe00 values=[9]
+  tensor query_start_loc: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+=== dsa_cp._build_qli_metadata:cp_qli:miss t=66428.184166 pid=58396 ===
+  attr num_reqs = 1
+  tensor seq_lens_q: shape=(1,) dtype=torch.int32 numel=1 ptr=0x1406d7e20600 values=[2]
+  tensor seq_lens: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b13ffe00 values=[11]
+  tensor query_start_loc: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 2]
+=== dsa_cp._build_sas_metadata:cp_sas_c4:miss t=66428.184012 pid=57921 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 3
+  attr max_seqlen_kv = 3
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:0'
+  attr has_cmp_kv = True
+  attr cmp_mask_mode = 3
+  attr cmp_topk = 512
+  attr cmp_ratio = 4
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b13ffe00 values=[3]
+=== dsa_cp._build_sas_metadata:cp_sas_c4:miss t=66428.183996 pid=58060 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 3
+  attr max_seqlen_kv = 6
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:1'
+  attr has_cmp_kv = True
+  attr cmp_mask_mode = 3
+  attr cmp_topk = 512
+  attr cmp_ratio = 4
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b13ffe00 values=[6]
+=== dsa_cp._build_qli_metadata:cp_qli:op_return t=66428.184942 pid=58230 ===
+  attr max_seqlen_q = 3
+  attr max_seqlen_k = 9
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140517e0a400 values=[1, 0, 0, 0, 1, 0, 0, 0, 0, -1091092661, 1063534072, 1044987905, 1068023065, -1099841835, -1093288267, -1080049974, 0, -1079099756, -1082048736, 1057177559, -1082245729, -1085686174, 1072578596, -1086210156, 0, -1085522255, -1122386396, 1063239460, -1090601218, -1084637105, 1062682449, -1088176753, 0, -1071857660, -1097613615, 1061371735, -1087848629, 1062583907, 1075724124, -1074675779, 0, 1045249856, 1071333194, -1073693011, 1063731228, -1077297145, -1084637487, -1123696999, 0, -1077199211, 1049345512, 1062485907, -1084309984, 1057537599, -1096041065, 1051508550, 0, -1092468968, 1069038215, 1043218285, 1061601149, 1069563456, -1122386220, 1043283707, '...(+960)']
+=== dsa_cp._build_qli_metadata:cp_qli:op_return t=66428.185009 pid=58396 ===
+  attr max_seqlen_q = 2
+  attr max_seqlen_k = 11
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x1406d7e0a400 values=[1, 0, 0, 0, 1, 0, 0, 0, 0, -1091092661, 1063534072, 1044987905, 1068023065, -1099841835, -1093288267, -1080049974, 0, -1079099756, -1082048736, 1057177559, -1082245729, -1085686174, 1072578596, -1086210156, 0, -1085522255, -1122386396, 1063239460, -1090601218, -1084637105, 1062682449, -1088176753, 0, -1071857660, -1097613615, 1061371735, -1087848629, 1062583907, 1075724124, -1074675779, 0, 1045249856, 1071333194, -1073693011, 1063731228, -1077297145, -1084637487, -1123696999, 0, -1077199211, 1049345512, 1062485907, -1084309984, 1057537599, -1096041065, 1051508550, 0, -1092468968, 1069038215, 1043218285, 1061601149, 1069563456, -1122386220, 1043283707, '...(+960)']
+=== dsa_cp._build_sas_metadata:cp_sas_c4:op_return t=66428.185173 pid=58060 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140357e09200 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 0, 1056718653, -1077756969, 1061208075, -1079886194, -1103413266, -1102758072, -1098171103, 0, 1059831425, -1109966916, 1049378667, -1101283850, 1065238369, 1066057574, -1135198448, 0, -1078902824, -1100857396, -1087520837, -1086603336, -1077362836, 1039482854, 1072774940, 0, -1102430393, -1073528755, 1070743445, -1087914236, 1073856396, 1061502903, -1079591078, 0, 1075330599, -1094206265, 1034698389, -1087194072, -1092829275, -1083588692, 1053015980, '...(+960)']
+=== dsa_cp._build_qli_metadata:cp_qli:miss t=66428.185446 pid=58060 ===
+  attr num_reqs = 1
+  tensor seq_lens_q: shape=(1,) dtype=torch.int32 numel=1 ptr=0x140357e24000 values=[3]
+  tensor seq_lens: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b13ffe00 values=[6]
+  tensor query_start_loc: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b11ffe00 values=[0, 3]
+=== dsa_cp._build_qli_metadata:cp_qli:op_return t=66428.186208 pid=58060 ===
+  attr max_seqlen_q = 3
+  attr max_seqlen_k = 6
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140357e0a400 values=[1, 0, 0, 0, 1, 0, 0, 0, 0, -1091092661, 1063534072, 1044987905, 1068023065, -1099841835, -1093288267, -1080049974, 0, -1079099756, -1082048736, 1057177559, -1082245729, -1085686174, 1072578596, -1086210156, 0, -1085522255, -1122386396, 1063239460, -1090601218, -1084637105, 1062682449, -1088176753, 0, -1071857660, -1097613615, 1061371735, -1087848629, 1062583907, 1075724124, -1074675779, 0, 1045249856, 1071333194, -1073693011, 1063731228, -1077297145, -1084637487, -1123696999, 0, -1077199211, 1049345512, 1062485907, -1084309984, 1057537599, -1096041065, 1051508550, 0, -1092468968, 1069038215, 1043218285, 1061601149, 1069563456, -1122386220, 1043283707, '...(+960)']
+=== dsa_cp._build_sas_metadata:cache_hit t=66428.187174 pid=58230 {'cache_key': 'cp_sas_c4'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66428.187398 pid=58396 {'cache_key': 'cp_sas_c4'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66428.188588 pid=58060 {'cache_key': 'cp_sas_c4'}
+=== dsa_cp._build_sas_metadata:cp_sas_c128:miss t=66428.189388 pid=58230 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 3
+  attr max_seqlen_kv = 9
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:2'
+  attr has_cmp_kv = True
+  attr cmp_mask_mode = 3
+  attr cmp_ratio = 128
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12ce903ffe00 values=[0, 3]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12ce903ffe00 values=[0, 3]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b09ffc00 values=[9]
+=== dsa_cp._build_sas_metadata:cp_sas_c128:miss t=66428.189721 pid=58396 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 2
+  attr max_seqlen_kv = 11
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:3'
+  attr has_cmp_kv = True
+  attr cmp_mask_mode = 3
+  attr cmp_ratio = 128
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12ce903ffe00 values=[0, 2]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12ce903ffe00 values=[0, 2]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b09ffc00 values=[11]
+=== dsa_cp._build_sas_metadata:cp_sas_c128:op_return t=66428.189786 pid=58230 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140517e26e00 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 0, -1083424953, 1052721022, 1063829186, -1120125222, 1049542410, -1074413670, 1078837125, 0, 1082081328, -1071791960, -1062093173, -1067401229, 1078673130, -1088077681, 1069793466, 0, -1064812797, 1066581505, 1039974075, -1082671203, -1073365141, -1076445339, -1066451189, 0, -1075396692, -1077723014, -1072939046, -1081065448, 1079394066, -1079689437, 1080475346, 0, -1077854362, 1046560672, -1109180536, -1084047217, -1066352777, -1079984139, -1092305008, '...(+960)']
+=== dsa_cp._build_sas_metadata:cp_sas_c128:op_return t=66428.190128 pid=58396 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x1406d7e26e00 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1056882718, 1040170913, -1083391980, -1075921143, -1096466844, 1078378423, 1063927541, 0, 1071759416, 1078149133, -1082343508, -1092829657, -1073495945, -1090174901, -1078149090, 0, 1079525408, -1072447961, 1060094014, -1082015576, 1066942146, 1080639619, 1074937615, 0, -1065435214, 1038368707, -1088012145, 1078214700, 1068449945, -1082605436, -1070251992, 0, -1073758179, -1081819477, 1052786608, 1064419171, 1050328896, -1077592058, 1075625913, 0, 1075560226, 1069301741, -1064910719, 1077002222, -1085358276, -1061437535, -1085882398, '...(+960)']
+=== dsa_cp._build_sas_metadata:cp_sas_c128:miss t=66428.190851 pid=58060 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 3
+  attr max_seqlen_kv = 6
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:1'
+  attr has_cmp_kv = True
+  attr cmp_mask_mode = 3
+  attr cmp_ratio = 128
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12ce903ffe00 values=[0, 3]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12ce903ffe00 values=[0, 3]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b09ffc00 values=[6]
+=== dsa_cp._build_sas_metadata:cp_sas_c128:op_return t=66428.191274 pid=58060 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140357e26e00 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 0, -1079689267, 1075068924, -1081000038, -1084604591, 1076412361, 1078083539, -1072939116, 0, 1083064245, 1052622795, 1057734455, -1085161670, 1053376191, 1039286368, -1105117096, 0, -1080607052, -1090568099, 1071136571, -1075167324, 1075625781, -1081426017, -1070088304, 0, -1074217290, 1048002348, -1070710818, 1049116611, 1060355400, 1070382588, 1079033944, 0, 1044725367, -1080541369, -1067794429, 1065664147, 1061601121, 1051377380, -1091944544, '...(+960)']
+=== dsa_cp._build_sas_metadata:cp_sas_c1:miss t=66428.191690 pid=58230 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 3
+  attr max_seqlen_kv = 9
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:2'
+  attr cmp_ratio = 1
+  attr has_cmp_kv = False
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b0bffc00 values=[0, 3]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b0bffc00 values=[0, 3]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b0bffe00 values=[9]
+=== dsa_cp._build_sas_metadata:cp_sas_c1:op_return t=66428.192051 pid=58230 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140517e2e200 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 0, 1080279072, -1092632756, 1075494928, 1065566215, -1089061213, 1059962867, -1120387001, 0, 1068384196, -1075757080, 1071890233, -1074675950, -1098039499, 1072152401, -1071497129, 0, -1077067808, -1074544584, -1075953845, -1070186378, 1075724322, 1070251673, -1086865388, 0, -1102889050, 1040629597, -1067302744, 1067302882, -1080836097, 1072185290, -1065598929, 0, 1081458770, -1067630468, 1075133925, 1051639596, -1108623530, -1085390812, -1073135664, '...(+960)']
+=== dsa_cp._build_sas_metadata:cp_sas_c1:miss t=66428.192151 pid=58396 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 2
+  attr max_seqlen_kv = 11
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:3'
+  attr cmp_ratio = 1
+  attr has_cmp_kv = False
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b0bffc00 values=[0, 2]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b0bffc00 values=[0, 2]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b0bffe00 values=[11]
+=== dsa_cp._build_sas_metadata:cp_sas_c1:op_return t=66428.192523 pid=58396 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x1406d7e2e200 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, -1096826946, 1078968279, 1081884615, -1076281321, 1046134258, -1100595284, -1069236543, 0, 1073037101, 1077165941, -1079722337, -1080344521, -1087619774, 1052950000, 1054785510, 0, -1064092023, 1029914338, 1063567333, -1080705020, 1067072919, 1078575206, -1123336175, 0, 1079394177, 1073233828, 1071791769, -1069793219, 1053868235, 1060126879, -1073266739, 0, -1079034128, 1066483780, 1056981130, -1065042021, -1079787444, 1076084788, 1062322150, 0, 1057570628, 1066680333, -1080639635, -1079984111, 1079164995, -1075331591, -1068875698, '...(+960)']
+=== dsa_cp._build_sas_metadata:cp_sas_c1:miss t=66428.193244 pid=58060 ===
+  attr num_heads_q = 64
+  attr num_heads_kv = 1
+  attr head_dim = 512
+  attr cu_seqlens_cmp_kv = None
+  attr max_seqlen_q = 3
+  attr max_seqlen_kv = 6
+  attr batch_size = 1
+  attr ori_mask_mode = 4
+  attr ori_win_left = 127
+  attr ori_win_right = 0
+  attr layout_q = 'TND'
+  attr layout_kv = 'PA_ND'
+  attr has_ori_kv = True
+  attr device = 'npu:1'
+  attr cmp_ratio = 1
+  attr has_cmp_kv = False
+  tensor cu_seqlens_q: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b0bffc00 values=[0, 3]
+  tensor cu_seqlens_ori_kv: shape=(2,) dtype=torch.int32 numel=2 ptr=0x12d1b0bffc00 values=[0, 3]
+  tensor seqused_q: shape=(0,) dtype=torch.float32 numel=0 ptr=0x0
+  tensor seqused_kv: shape=(1,) dtype=torch.int32 numel=1 ptr=0x12d1b0bffe00 values=[6]
+=== dsa_cp._build_sas_metadata:cp_sas_c1:op_return t=66428.193610 pid=58060 ===
+  tensor metadata: shape=(1024,) dtype=torch.int32 numel=1024 ptr=0x140357e2e200 values=[1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 0, 1052917725, 1056292731, -1080541138, 1082277415, -1107214329, -1138344186, -1085620433, 0, 1044889720, 1077657463, 1084505887, 1068056584, -1073528927, 1080213526, -1096466419, 0, -1085423582, -1120878672, 1081131027, -1080868985, 1058783137, 1060454186, -1075789909, 0, 1038827075, 1059438626, 1063731135, 1066942449, -1090732083, 1049804614, -1117798443, 0, 1075888114, 1028734785, 1036107900, -1115373479, 1073462984, -1084801241, 1059930202, '...(+960)']
+=== dsa_cp._build_sas_metadata:cache_hit t=66428.193866 pid=58230 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66428.194433 pid=58396 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66428.195551 pid=58060 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66428.195603 pid=58230 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66428.196280 pid=58396 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66428.197317 pid=58230 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66428.197330 pid=58060 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66428.198007 pid=58396 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66428.199020 pid=58060 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66428.199100 pid=58230 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66428.199855 pid=58396 {'cache_key': 'cp_sas_c1'}
+=== dsa_cp._build_sas_metadata:cache_hit t=66428.200923 pid=58060 {'cache_key': 'cp_sas_c1'}
