@@ -25,7 +25,7 @@ SERVED_MODEL_NAME="dsv4"
 #export ZBAL_HCCL_OP="alltoall"
 #export ZBAL_HCCL_OP="reduce_scatter,alltoall,allgather"
 
-export ASCEND_LAUNCH_BLOCKING=0
+export ASCEND_LAUNCH_BLOCKING=1
 export MMC_LOCAL_CONFIG_PATH=/home/p00801009/vllm-ascend/vllm_test/mmc-local.conf
 
 export TASK_QUEUE_ENABLE=1
