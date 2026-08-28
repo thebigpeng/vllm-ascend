@@ -1,4 +1,6 @@
 import math
+import os
+import time
 from dataclasses import dataclass
 from typing import ClassVar, TypeVar
 
@@ -30,7 +32,65 @@ from vllm_ascend.utils import (
 if HAS_TRITON:
     from vllm_ascend.ops.triton.rms_norm import triton_q_rms  # noqa: F811
 else:
-    triton_q_rms = None  # type: ignore
+    triton_q_rms = None  # type: ignore[assignment]
+
+
+# ---------------------------------------------------------------------------
+# Forensics for AICPU metadata ops failing with 0x2a (KERNEL_STATUS_PARAM_INVALID).
+# The AICPU kernels only fail validation in Prepare() (static attribute checks
+# + tensor existence checks); BalanceSchedule/GenMetaData always return true.
+# So the audit logs every attribute and tensor shape/emptiness/data_ptr, plus
+# a content snapshot for small tensors. Content snapshots issue a D2H sync and
+# are skipped while a stream is capturing; run with ASCEND_LAUNCH_BLOCKING=1
+# (verified active) for timing-neutral snapshots on eager paths.
+# ---------------------------------------------------------------------------
+_DSA_AICPU_AUDIT = os.getenv("VLLM_ASCEND_DSA_AICPU_AUDIT", "0") == "1"
+_DSA_AICPU_AUDIT_PATH = os.getenv("VLLM_ASCEND_DSA_AICPU_AUDIT_PATH", "/home/p00801009/vllm-ascend/vllm_test/dsa_aicpu_audit.log")
+
+
+def _audit_write(lines: list[str]) -> None:
+    try:
+        with open(_DSA_AICPU_AUDIT_PATH, "a") as f:
+            f.write("\n".join(lines) + "\n")
+            f.flush()
+    except OSError:
+        pass
+
+
+def _audit_aicpu_inputs(site: str, tensors: dict, attrs: dict) -> None:
+    if not _DSA_AICPU_AUDIT:
+        return
+    try:
+        capturing = torch.npu.is_current_stream_capturing()
+    except Exception:
+        capturing = False
+    lines = [f"=== {site} t={time.monotonic():.6f} pid={os.getpid()} ==="]
+    for k, v in attrs.items():
+        lines.append(f"  attr {k} = {v!r}")
+    for k, t in tensors.items():
+        if not isinstance(t, torch.Tensor):
+            lines.append(f"  tensor {k} = {t!r}")
+            continue
+        line = (
+            f"  tensor {k}: shape={tuple(t.shape)} dtype={t.dtype} "
+            f"numel={t.numel()} ptr={hex(t.data_ptr())}"
+        )
+        if t.numel() and not capturing and t.numel() <= 1024:
+            try:
+                vals = t.detach().cpu().tolist()
+                if len(vals) > 64:
+                    vals = vals[:64] + [f"...(+{len(vals) - 64})"]
+                line += f" values={vals}"
+            except Exception as e:
+                line += f" snapshot_failed={type(e).__name__}"
+        lines.append(line)
+    _audit_write(lines)
+
+
+def _audit_event(site: str, **fields) -> None:
+    if not _DSA_AICPU_AUDIT:
+        return
+    _audit_write([f"=== {site} t={time.monotonic():.6f} pid={os.getpid()} {fields}"])
 
 
 def hadamard_transform_ref(
@@ -804,7 +864,19 @@ class AscendDSACPMetadataBuilder(AttentionMetadataBuilder[AscendDSAMetadata]):
                 kw["cmp_ratio"] = cmp_ratio
                 kw["has_cmp_kv"] = False
 
+            _audit_aicpu_inputs(
+                f"dsa_cp._build_sas_metadata:{cache_key}:miss",
+                tensors={k: v for k, v in kw.items() if isinstance(v, torch.Tensor)},
+                attrs={k: v for k, v in kw.items() if not isinstance(v, torch.Tensor)},
+            )
             metadata = torch.ops._C_ascend.npu_sparse_attn_sharedkv_metadata(**kw)
+            _audit_aicpu_inputs(
+                f"dsa_cp._build_sas_metadata:{cache_key}:op_return",
+                tensors=dict(metadata=metadata),
+                attrs={},
+            )
+        else:
+            _audit_event("dsa_cp._build_sas_metadata:cache_hit", cache_key=cache_key)
         self.common_ratio_to_sas_metadata[cache_key] = metadata
         self.req_sas_metadata[:1024] = metadata
         return self.req_sas_metadata[:1024]
@@ -817,6 +889,11 @@ class AscendDSACPMetadataBuilder(AttentionMetadataBuilder[AscendDSAMetadata]):
         metadata = self.common_ratio_to_sas_metadata.get(cache_key)
 
         if metadata is None:
+            _audit_aicpu_inputs(
+                "dsa_cp._build_qli_metadata:cp_qli:miss",
+                tensors=dict(seq_lens_q=seq_lens_q, seq_lens=seq_lens, query_start_loc=query_start_loc),
+                attrs=dict(num_reqs=num_reqs),
+            )
             max_seqlen_q = max(1, int(seq_lens_q.max().item()))
             max_seqlen_k = max(1, int(seq_lens.max().item()))
             metadata = torch.ops._C_ascend.npu_quant_lightning_indexer_metadata(
@@ -838,6 +915,11 @@ class AscendDSACPMetadataBuilder(AttentionMetadataBuilder[AscendDSAMetadata]):
                 next_tokens=(1 << 63) - 1,
                 cmp_ratio=4,
                 device=str(self.seqused_q.device),
+            )
+            _audit_aicpu_inputs(
+                "dsa_cp._build_qli_metadata:cp_qli:op_return",
+                tensors=dict(metadata=metadata),
+                attrs=dict(max_seqlen_q=max_seqlen_q, max_seqlen_k=max_seqlen_k),
             )
         self.common_ratio_to_sas_metadata[cache_key] = metadata
         self.req_qli_metadata[:1024] = metadata
