@@ -1,5 +1,6 @@
 import math
 import os
+import threading
 import time
 from dataclasses import dataclass
 from typing import ClassVar, TypeVar
@@ -57,6 +58,18 @@ def _audit_write(lines: list[str]) -> None:
         pass
 
 
+def _audit_header(site: str) -> str:
+    """Wall clock (correlatable with vllm/mooncake logs) + monotonic clock
+    (for precise interval measurement) + pid/tid (worker/thread identity)."""
+    now = time.time()
+    wall = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(now))
+    return (
+        f"=== {site} wall={wall}.{int((now % 1) * 1000):03d}"
+        f" mono={time.monotonic():.6f}"
+        f" pid={os.getpid()} tid={threading.get_ident()} ==="
+    )
+
+
 def _audit_aicpu_inputs(site: str, tensors: dict, attrs: dict) -> None:
     if not _DSA_AICPU_AUDIT:
         return
@@ -64,7 +77,7 @@ def _audit_aicpu_inputs(site: str, tensors: dict, attrs: dict) -> None:
         capturing = torch.npu.is_current_stream_capturing()
     except Exception:
         capturing = False
-    lines = [f"=== {site} t={time.monotonic():.6f} pid={os.getpid()} ==="]
+    lines = [_audit_header(site)]
     for k, v in attrs.items():
         lines.append(f"  attr {k} = {v!r}")
     for k, t in tensors.items():
@@ -90,7 +103,7 @@ def _audit_aicpu_inputs(site: str, tensors: dict, attrs: dict) -> None:
 def _audit_event(site: str, **fields) -> None:
     if not _DSA_AICPU_AUDIT:
         return
-    _audit_write([f"=== {site} t={time.monotonic():.6f} pid={os.getpid()} {fields}"])
+    _audit_write([_audit_header(site) + f" {fields}"])
 
 
 def hadamard_transform_ref(
