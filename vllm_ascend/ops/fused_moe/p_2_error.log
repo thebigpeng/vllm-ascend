@@ -1,0 +1,255 @@
+(APIServer pid=501903) INFO 09-01 16:45:31 [launcher.py:46] Route: /generative_scoring, Methods: POST
+(APIServer pid=501903) INFO 09-01 16:45:31 [launcher.py:46] Route: /v1/chat/completions/render, Methods: POST
+(APIServer pid=501903) INFO 09-01 16:45:31 [launcher.py:46] Route: /v1/completions/render, Methods: POST
+(APIServer pid=501903) INFO:     Started server process [501903]
+(APIServer pid=501903) INFO:     Waiting for application startup.
+(APIServer pid=501903) INFO:     Application startup complete.
+(Worker_DP1_TP2_EP6 pid=502719) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=6, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(Worker_DP1_TP3_EP7 pid=502892) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=7, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(Worker_DP1_TP1_EP5 pid=502545) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=5, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(Worker_DP1_TP0_EP4 pid=502412) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=4, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+!!!!!!! Segfault encountered !!!!!!!
+  File "<unknown>", line 0, in c10::Dispatcher::callBoxed(c10::OperatorHandle const&, std::vector<c10::IValue, std::allocator<c10::IValue> >*) const [clone .isra.0]
+  File "<unknown>", line 0, in torch::jit::invokeOperatorFromPython(c10::ArrayRef<std::shared_ptr<torch::jit::Operator> >, pybind11::args const&, pybind11::kwargs const&, std::optional<c10::DispatchKey>)
+  File "<unknown>", line 0, in torch::jit::_get_operation_for_overload_or_packet(c10::ArrayRef<std::shared_ptr<torch::jit::Operator> >, c10::Symbol, pybind11::args const&, pybind11::kwargs const&, bool, std::optional<c10::DispatchKey>)
+  File "<unknown>", line 0, in torch::jit::_get_operation_for_overload_or_packet(std::vector<std::shared_ptr<torch::jit::Operator>, std::allocator<std::shared_ptr<torch::jit::Operator> > > const&, c10::Symbol, pybind11::args const&, pybind11::kwargs const&, bool, std::optional<c10                                ::DispatchKey>)
+  File "<unknown>", line 0, in pybind11::cpp_function::initialize<torch::jit::initJITBindings(_object*)::{lambda(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)#2}::operator()(std::__cxx11::basic_string<char, std::char_traits<char>, std::all                                ocator<char> > const&) const::{lambda(pybind11::args const&, pybind11::kwargs const&)#1}, pybind11::object, pybind11::args const&, pybind11::kwargs const&, pybind11::name, pybind11::doc>(torch::jit::initJITBindings(_object*)::{lambda(std::__cxx11::basic_string<char, std::char_trai                                ts<char>, std::allocator<char> > const&)#2}::operator()(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const::{lambda(pybind11::args const&, pybind11::kwargs const&)#1}&&, pybind11::object (*)(pybind11::args const&, pybind11::kwargs const&)                                , pybind11::name const&, pybind11::doc const&)::{lambda(pybind11::detail::function_call&)#1}::_FUN(pybind11::detail::function_call&)
+  File "<unknown>", line 0, in pybind11::cpp_function::dispatcher(_object*, _object*, _object*)
+  File "Objects/methodobject.c", line 542, in cfunction_call
+  File "Objects/call.c", line 343, in _PyObject_Call
+  File "Objects/call.c", line 313, in _PyObject_Call
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "Objects/call.c", line 152, in _PyObject_FastCallDictTstate
+  File "Objects/call.c", line 482, in _PyObject_Call_Prepend
+  File "Objects/typeobject.c", line 7624, in slot_tp_call
+  File "Objects/call.c", line 343, in _PyObject_Call
+  File "Objects/call.c", line 313, in _PyObject_Call
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "./Include/internal/pycore_call.h", line 92, in _PyObject_VectorcallTstate
+  File "Objects/classobject.c", line 59, in method_vectorcall
+  File "Objects/call.c", line 257, in _PyVectorcall_Call
+  File "Objects/call.c", line 328, in _PyObject_Call
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "./Include/internal/pycore_call.h", line 92, in _PyObject_VectorcallTstate
+  File "Objects/classobject.c", line 89, in method_vectorcall
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "Objects/call.c", line 257, in _PyVectorcall_Call
+  File "Objects/call.c", line 328, in _PyObject_Call
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "Python/ceval.c", line 1148, in PyEval_EvalCode
+  File "Python/pythonrun.c", line 1741, in run_eval_code_obj
+  File "Python/pythonrun.c", line 1762, in run_mod
+  File "Python/pythonrun.c", line 1632, in PyRun_StringFlags
+  File "Python/pythonrun.c", line 487, in PyRun_SimpleStringFlags
+  File "Modules/main.c", line 255, in pymain_run_command
+  File "Modules/main.c", line 596, in pymain_run_python
+  File "Modules/main.c", line 684, in Py_RunMain
+  File "Modules/main.c", line 714, in pymain_main
+  File "Modules/main.c", line 738, in Py_BytesMain
+  File "<unknown>", line 0, in _start
+  File "<unknown>", line 0, in 0xffffffffffffffff
+
+!!!!!!! Segfault encountered !!!!!!!
+  File "<unknown>", line 0, in c10::Dispatcher::callBoxed(c10::OperatorHandle const&, std::vector<c10::IValue, std::allocator<c10::IValue> >*) const [clone .isra.0]
+  File "<unknown>", line 0, in torch::jit::invokeOperatorFromPython(c10::ArrayRef<std::shared_ptr<torch::jit::Operator> >, pybind11::args const&, pybind11::kwargs const&, std::optional<c10::DispatchKey>)
+  File "<unknown>", line 0, in torch::jit::_get_operation_for_overload_or_packet(c10::ArrayRef<std::shared_ptr<torch::jit::Operator> >, c10::Symbol, pybind11::args const&, pybind11::kwargs const&, bool, std::optional<c10::DispatchKey>)
+  File "<unknown>", line 0, in torch::jit::_get_operation_for_overload_or_packet(std::vector<std::shared_ptr<torch::jit::Operator>, std::allocator<std::shared_ptr<torch::jit::Operator> > > const&, c10::Symbol, pybind11::args const&, pybind11::kwargs const&, bool, std::optional<c10                                ::DispatchKey>)
+  File "<unknown>", line 0, in pybind11::cpp_function::initialize<torch::jit::initJITBindings(_object*)::{lambda(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)#2}::operator()(std::__cxx11::basic_string<char, std::char_traits<char>, std::all                                ocator<char> > const&) const::{lambda(pybind11::args const&, pybind11::kwargs const&)#1}, pybind11::object, pybind11::args const&, pybind11::kwargs const&, pybind11::name, pybind11::doc>(torch::jit::initJITBindings(_object*)::{lambda(std::__cxx11::basic_string<char, std::char_trai                                ts<char>, std::allocator<char> > const&)#2}::operator()(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const::{lambda(pybind11::args const&, pybind11::kwargs const&)#1}&&, pybind11::object (*)(pybind11::args const&, pybind11::kwargs const&)                                , pybind11::name const&, pybind11::doc const&)::{lambda(pybind11::detail::function_call&)#1}::_FUN(pybind11::detail::function_call&)
+  File "<unknown>", line 0, in pybind11::cpp_function::dispatcher(_object*, _object*, _object*)
+  File "Objects/methodobject.c", line 542, in cfunction_call
+  File "Objects/call.c", line 343, in _PyObject_Call
+  File "Objects/call.c", line 313, in _PyObject_Call
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "Objects/call.c", line 152, in _PyObject_FastCallDictTstate
+  File "Objects/call.c", line 482, in _PyObject_Call_Prepend
+  File "Objects/typeobject.c", line 7624, in slot_tp_call
+  File "Objects/call.c", line 343, in _PyObject_Call
+  File "Objects/call.c", line 313, in _PyObject_Call
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "./Include/internal/pycore_call.h", line 92, in _PyObject_VectorcallTstate
+  File "Objects/classobject.c", line 59, in method_vectorcall
+  File "Objects/call.c", line 257, in _PyVectorcall_Call
+  File "Objects/call.c", line 328, in _PyObject_Call
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "./Include/internal/pycore_call.h", line 92, in _PyObject_VectorcallTstate
+  File "Objects/classobject.c", line 89, in method_vectorcall
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "Objects/call.c", line 257, in _PyVectorcall_Call
+  File "Objects/call.c", line 328, in _PyObject_Call
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "Python/ceval.c", line 1148, in PyEval_EvalCode
+  File "Python/pythonrun.c", line 1741, in run_eval_code_obj
+  File "Python/pythonrun.c", line 1762, in run_mod
+  File "Python/pythonrun.c", line 1632, in PyRun_StringFlags
+  File "Python/pythonrun.c", line 487, in PyRun_SimpleStringFlags
+  File "Modules/main.c", line 255, in pymain_run_command
+  File "Modules/main.c", line 596, in pymain_run_python
+  File "Modules/main.c", line 684, in Py_RunMain
+  File "Modules/main.c", line 714, in pymain_main
+  File "Modules/main.c", line 738, in Py_BytesMain
+  File "<unknown>", line 0, in _start
+  File "<unknown>", line 0, in 0xffffffffffffffff
+
+!!!!!!! Segfault encountered !!!!!!!
+!!!!!!! Segfault encountered !!!!!!!
+  File "<unknown>", line 0, in c10::Dispatcher::callBoxed(c10::OperatorHandle const&, std::vector<c10::IValue, std::allocator<c10::IValue> >*) const [clone .isra.0]
+  File "<unknown>", line 0, in torch::jit::invokeOperatorFromPython(c10::ArrayRef<std::shared_ptr<torch::jit::Operator> >, pybind11::args const&, pybind11::kwargs const&, std::optional<c10::DispatchKey>)
+  File "<unknown>", line 0, in torch::jit::_get_operation_for_overload_or_packet(c10::ArrayRef<std::shared_ptr<torch::jit::Operator> >, c10::Symbol, pybind11::args const&, pybind11::kwargs const&, bool, std::optional<c10::DispatchKey>)
+  File "<unknown>", line 0, in torch::jit::_get_operation_for_overload_or_packet(std::vector<std::shared_ptr<torch::jit::Operator>, std::allocator<std::shared_ptr<torch::jit::Operator> > > const&, c10::Symbol, pybind11::args const&, pybind11::kwargs const&, bool, std::optional<c10                                ::DispatchKey>)
+  File "<unknown>", line 0, in pybind11::cpp_function::initialize<torch::jit::initJITBindings(_object*)::{lambda(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)#2}::operator()(std::__cxx11::basic_string<char, std::char_traits<char>, std::all                                ocator<char> > const&) const::{lambda(pybind11::args const&, pybind11::kwargs const&)#1}, pybind11::object, pybind11::args const&, pybind11::kwargs const&, pybind11::name, pybind11::doc>(torch::jit::initJITBindings(_object*)::{lambda(std::__cxx11::basic_string<char, std::char_trai                                ts<char>, std::allocator<char> > const&)#2}::operator()(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const::{lambda(pybind11::args const&, pybind11::kwargs const&)#1}&&, pybind11::object (*)(pybind11::args const&, pybind11::kwargs const&)                                , pybind11::name const&, pybind11::doc const&)::{lambda(pybind11::detail::function_call&)#1}::_FUN(pybind11::detail::function_call&)
+  File "<unknown>", line 0, in pybind11::cpp_function::dispatcher(_object*, _object*, _object*)
+  File "Objects/methodobject.c", line 542, in cfunction_call
+  File "Objects/call.c", line 343, in _PyObject_Call
+  File "Objects/call.c", line 313, in _PyObject_Call
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "Objects/call.c", line 152, in _PyObject_FastCallDictTstate
+  File "Objects/call.c", line 482, in _PyObject_Call_Prepend
+  File "Objects/typeobject.c", line 7624, in slot_tp_call
+  File "Objects/call.c", line 343, in _PyObject_Call
+  File "Objects/call.c", line 313, in _PyObject_Call
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "./Include/internal/pycore_call.h", line 92, in _PyObject_VectorcallTstate
+  File "Objects/classobject.c", line 59, in method_vectorcall
+  File "Objects/call.c", line 257, in _PyVectorcall_Call
+  File "Objects/call.c", line 328, in _PyObject_Call
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "./Include/internal/pycore_call.h", line 92, in _PyObject_VectorcallTstate
+  File "Objects/classobject.c", line 89, in method_vectorcall
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "Objects/call.c", line 257, in _PyVectorcall_Call
+  File "Objects/call.c", line 328, in _PyObject_Call
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "Python/ceval.c", line 1148, in PyEval_EvalCode
+  File "Python/pythonrun.c", line 1741, in run_eval_code_obj
+  File "Python/pythonrun.c", line 1762, in run_mod
+  File "Python/pythonrun.c", line 1632, in PyRun_StringFlags
+  File "Python/pythonrun.c", line 487, in PyRun_SimpleStringFlags
+  File "Modules/main.c", line 255, in pymain_run_command
+  File "Modules/main.c", line 596, in pymain_run_python
+  File "Modules/main.c", line 684, in Py_RunMain
+  File "Modules/main.c", line 714, in pymain_main
+  File "Modules/main.c", line 738, in Py_BytesMain
+  File "<unknown>", line 0, in _start
+  File "<unknown>", line 0, in 0xffffffffffffffff
+  File "<unknown>", line 0, in c10::Dispatcher::callBoxed(c10::OperatorHandle const&, std::vector<c10::IValue, std::allocator<c10::IValue> >*) const [clone .isra.0]
+  File "<unknown>", line 0, in torch::jit::invokeOperatorFromPython(c10::ArrayRef<std::shared_ptr<torch::jit::Operator> >, pybind11::args const&, pybind11::kwargs const&, std::optional<c10::DispatchKey>)
+  File "<unknown>", line 0, in torch::jit::_get_operation_for_overload_or_packet(c10::ArrayRef<std::shared_ptr<torch::jit::Operator> >, c10::Symbol, pybind11::args const&, pybind11::kwargs const&, bool, std::optional<c10::DispatchKey>)
+  File "<unknown>", line 0, in torch::jit::_get_operation_for_overload_or_packet(std::vector<std::shared_ptr<torch::jit::Operator>, std::allocator<std::shared_ptr<torch::jit::Operator> > > const&, c10::Symbol, pybind11::args const&, pybind11::kwargs const&, bool, std::optional<c10                                ::DispatchKey>)
+  File "<unknown>", line 0, in pybind11::cpp_function::initialize<torch::jit::initJITBindings(_object*)::{lambda(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)#2}::operator()(std::__cxx11::basic_string<char, std::char_traits<char>, std::all                                ocator<char> > const&) const::{lambda(pybind11::args const&, pybind11::kwargs const&)#1}, pybind11::object, pybind11::args const&, pybind11::kwargs const&, pybind11::name, pybind11::doc>(torch::jit::initJITBindings(_object*)::{lambda(std::__cxx11::basic_string<char, std::char_trai                                ts<char>, std::allocator<char> > const&)#2}::operator()(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const::{lambda(pybind11::args const&, pybind11::kwargs const&)#1}&&, pybind11::object (*)(pybind11::args const&, pybind11::kwargs const&)                                , pybind11::name const&, pybind11::doc const&)::{lambda(pybind11::detail::function_call&)#1}::_FUN(pybind11::detail::function_call&)
+  File "<unknown>", line 0, in pybind11::cpp_function::dispatcher(_object*, _object*, _object*)
+  File "Objects/methodobject.c", line 542, in cfunction_call
+  File "Objects/call.c", line 343, in _PyObject_Call
+  File "Objects/call.c", line 313, in _PyObject_Call
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "Objects/call.c", line 152, in _PyObject_FastCallDictTstate
+  File "Objects/call.c", line 482, in _PyObject_Call_Prepend
+  File "Objects/typeobject.c", line 7624, in slot_tp_call
+  File "Objects/call.c", line 343, in _PyObject_Call
+  File "Objects/call.c", line 313, in _PyObject_Call
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "./Include/internal/pycore_call.h", line 92, in _PyObject_VectorcallTstate
+  File "Objects/classobject.c", line 59, in method_vectorcall
+  File "Objects/call.c", line 257, in _PyVectorcall_Call
+  File "Objects/call.c", line 328, in _PyObject_Call
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "./Include/internal/pycore_call.h", line 92, in _PyObject_VectorcallTstate
+  File "Objects/classobject.c", line 89, in method_vectorcall
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "Objects/call.c", line 257, in _PyVectorcall_Call
+  File "Objects/call.c", line 328, in _PyObject_Call
+  File "Python/ceval.c", line 7349, in do_call_core
+  File "Python/ceval.c", line 5376, in _PyEval_EvalFrameDefault
+  File "./Include/internal/pycore_ceval.h", line 73, in _PyEval_EvalFrame
+  File "Python/ceval.c", line 6434, in _PyEval_Vector
+  File "Python/ceval.c", line 1148, in PyEval_EvalCode
+  File "Python/pythonrun.c", line 1741, in run_eval_code_obj
+  File "Python/pythonrun.c", line 1762, in run_mod
+  File "Python/pythonrun.c", line 1632, in PyRun_StringFlags
+  File "Python/pythonrun.c", line 487, in PyRun_SimpleStringFlags
+  File "Modules/main.c", line 255, in pymain_run_command
+  File "Modules/main.c", line 596, in pymain_run_python
+  File "Modules/main.c", line 684, in Py_RunMain
+  File "Modules/main.c", line 714, in pymain_main
+  File "Modules/main.c", line 738, in Py_BytesMain
+  File "<unknown>", line 0, in _start
+  File "<unknown>", line 0, in 0xffffffffffffffff
+
+
+(EngineCore_DP0 pid=502004) ERROR 09-01 16:47:39 [multiproc_executor.py:283] Worker proc VllmWorker-2 died unexpectedly, shutting down executor.
+2026-09-01 16:47:39.269408 ERROR 502892:502892 [SMEM smem_tcp_config_store.cpp:351 GetReal] send get for key: SHM_(0)_S_zbal_0:7:1_1_GW, get null response
+2026-09-01 16:47:39.269496 ERROR 502545:502545 [SMEM smem_tcp_config_store.cpp:351 GetReal] send get for key: SHM_(0)_S_zbal_0:7:1_1_GW, get null response
+2026-09-01 16:47:39.269553 ERROR 502719:502719 [SMEM smem_tcp_config_store.cpp:351 GetReal] send get for key: SHM_(0)_S_zbal_0:7:1_1_GW, get null response
+2026-09-01 16:47:39.269574 ERROR 502412:502412 [SMEM smem_tcp_config_store.cpp:351 GetReal] send get for key: SHM_(0)_S_zbal_0:7:1_1_GW, get null response
