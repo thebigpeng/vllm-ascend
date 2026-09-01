@@ -61,6 +61,7 @@
 #include <iostream>
 #include <memory>
 #include <mutex>
+#include <vector>
 #include <sstream>
 #include <unordered_map>
 
@@ -1338,10 +1339,72 @@ auto get_valid_tensor = [](const c10::optional<at::Tensor> &tensor_opt, at::Devi
 // framework cannot accept a GVA address for this op's output descriptor,
 // aclnn execution fails with "AICPU kernel execute failed ... param invalid"
 // BEFORE the kernel's Compute() runs. Setting VLLM_ASCEND_SAS_OP_DMA_BYPASS=1
-// allocates the 4KB output via aclrtMalloc instead, which always yields plain
-// DMA device memory outside the GVA range — used to confirm/mitigate that
-// failure mode. Note the deleter synchronizes the allocating stream before
-// aclrtFree because the AICPU task writes the buffer asynchronously.
+// serves the 4KB output from a static DMA slot pool allocated once via
+// aclrtMalloc, so the buffer never lands in the ZBAL SMA/GVA heap.
+//
+// Implementation notes:
+// - The pool is allocated ONCE per device and intentionally never freed
+//   (process lifetime); a per-call aclrtMalloc/aclrtFree pair was tried and
+//   caused host-side segfaults because the deleter runs at GC time on an
+//   arbitrary thread with a captured aclrtStream handle.
+// - The deleter is a pure host-side slot return (no ACL calls, no stream
+//   handles). Reuse safety relies on same-stream ordering: the next SAS
+//   AICPU task that writes a recycled slot is queued on the same stream
+//   after all prior reads of that slot. Do NOT use the metadata tensor on
+//   a different stream than the one this op was invoked on.
+// - If the pool is exhausted or allocation fails, we fall back to the
+//   regular torch::empty path.
+namespace {
+constexpr int64_t SAS_OUTPUT_SIZE = 1024;
+constexpr size_t SAS_SLOT_BYTES = static_cast<size_t>(SAS_OUTPUT_SIZE * sizeof(int32_t));  // 4KB
+constexpr size_t SAS_SLOT_COUNT = 1024;                                                    // 4MB pool
+constexpr size_t SAS_MAX_DEVICES = 16;
+
+struct SasDmaSlotPool {
+    void *base = nullptr;
+    std::vector<uint32_t> free_slots;
+    std::mutex mu;
+};
+SasDmaSlotPool g_sas_pools[SAS_MAX_DEVICES];
+
+void *SasDmaSlotAcquire(int device_index, uint32_t &slot_id)
+{
+    if (device_index < 0 || device_index >= static_cast<int>(SAS_MAX_DEVICES)) {
+        return nullptr;
+    }
+    SasDmaSlotPool &pool = g_sas_pools[device_index];
+    std::lock_guard<std::mutex> lock(pool.mu);
+    if (pool.base == nullptr) {
+        if (aclrtMalloc(&pool.base, SAS_SLOT_BYTES * SAS_SLOT_COUNT, ACL_MEM_MALLOC_HUGE_FIRST) != ACL_SUCCESS) {
+            pool.base = nullptr;
+            return nullptr;
+        }
+        pool.free_slots.resize(SAS_SLOT_COUNT);
+        for (uint32_t i = 0; i < SAS_SLOT_COUNT; ++i) {
+            pool.free_slots[i] = i;
+        }
+    }
+    if (pool.free_slots.empty()) {
+        return nullptr;
+    }
+    slot_id = pool.free_slots.back();
+    pool.free_slots.pop_back();
+    return static_cast<char *>(pool.base) + static_cast<size_t>(slot_id) * SAS_SLOT_BYTES;
+}
+
+void SasDmaSlotRelease(int device_index, uint32_t slot_id)
+{
+    if (device_index < 0 || device_index >= static_cast<int>(SAS_MAX_DEVICES)) {
+        return;
+    }
+    SasDmaSlotPool &pool = g_sas_pools[device_index];
+    std::lock_guard<std::mutex> lock(pool.mu);
+    if (pool.base != nullptr) {
+        pool.free_slots.push_back(slot_id);
+    }
+}
+}  // namespace
+
 static bool SasDmaBypassEnabled()
 {
     static const bool enabled = ::getenv("VLLM_ASCEND_SAS_OP_DMA_BYPASS") != nullptr;
@@ -1387,26 +1450,25 @@ at::Tensor npu_sparse_attn_sharedkv_metadata_npu(
         output_device = seqused_kv.value().device();
     }
     at::Tensor output;
+    bool bypass_ok = false;
     if (SasDmaBypassEnabled()) {
-        // Plain DMA allocation via the CANN runtime: bypasses the pluggable
-        // torch allocator entirely, so the buffer never lands in the ZBAL
-        // SMA/GVA heap.
+        // Serve the 4KB output from the static DMA slot pool: plain device
+        // memory allocated via aclrtMalloc, outside the pluggable torch
+        // allocator and thus never in the ZBAL SMA/GVA heap.
         const c10_npu::OptionalNPUGuard npu_guard(output_device);
-        void *raw = nullptr;
-        aclrtStream alloc_stream = c10_npu::getCurrentNPUStream().stream(false);
-        aclError malloc_err = aclrtMalloc(&raw, OUTPUT_SIZE * sizeof(int32_t), ACL_MEM_MALLOC_HUGE_FIRST);
-        TORCH_CHECK(malloc_err == ACL_SUCCESS,
-                    "SAS DMA bypass: aclrtMalloc failed, err=", static_cast<int>(malloc_err));
-        output = at::from_blob(
-            raw, {OUTPUT_SIZE},
-            [alloc_stream](void *p) {
-                // The AICPU metadata task writes this buffer asynchronously
-                // on alloc_stream; make sure it finished before freeing.
-                (void)aclrtSynchronizeStream(alloc_stream);
-                (void)aclrtFree(p);
-            },
-            torch::dtype(torch::kInt32).device(output_device));
-    } else {
+        uint32_t slot_id = 0;
+        void *slot = SasDmaSlotAcquire(output_device.index(), slot_id);
+        if (slot != nullptr) {
+            const int dev_index = output_device.index();
+            output = at::from_blob(
+                slot, {OUTPUT_SIZE},
+                [dev_index, slot_id](void *) { SasDmaSlotRelease(dev_index, slot_id); },
+                torch::dtype(torch::kInt32).device(output_device));
+            bypass_ok = true;
+        }
+    }
+    if (!bypass_ok) {
+        // Regular path (bypass disabled, pool exhausted, or pool init failed).
         output = torch::empty({OUTPUT_SIZE}, torch::dtype(torch::kInt32).device(output_device));
     }
 
