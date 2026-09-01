@@ -1,316 +1,818 @@
-
-(APIServer pid=43120) INFO 08-28 14:21:10 [launcher.py:46] Route: /v1/messages/count_tokens, Methods: POST
-(APIServer pid=43120) INFO 08-28 14:21:10 [launcher.py:46] Route: /inference/v1/generate, Methods: POST
-(APIServer pid=43120) INFO 08-28 14:21:10 [launcher.py:46] Route: /scale_elastic_ep, Methods: POST
-(APIServer pid=43120) INFO 08-28 14:21:10 [launcher.py:46] Route: /is_scaling_elastic_ep, Methods: POST
-(APIServer pid=43120) INFO 08-28 14:21:10 [launcher.py:46] Route: /generative_scoring, Methods: POST
-(APIServer pid=43120) INFO 08-28 14:21:10 [launcher.py:46] Route: /v1/chat/completions/render, Methods: POST
-(APIServer pid=43120) INFO 08-28 14:21:10 [launcher.py:46] Route: /v1/completions/render, Methods: POST
-(APIServer pid=43120) INFO:     Started server process [43120]
-(APIServer pid=43120) INFO:     Waiting for application startup.
-(APIServer pid=43120) INFO:     Application startup complete.
-(Worker_DP1_TP2_EP6 pid=44033) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=6, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
-(Worker_DP1_TP3_EP7 pid=44205) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=7, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
-(Worker_DP1_TP1_EP5 pid=43861) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=5, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
-(Worker_DP1_TP0_EP4 pid=43721) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=4, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
-(Worker_DP0_TP1_EP1 pid=43863) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=1, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
-(Worker_DP0_TP0_EP0 pid=43720) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=0, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
-(Worker_DP0_TP2_EP2 pid=44045) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=2, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
-(Worker_DP0_TP3_EP3 pid=44219) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=3, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(EngineCore_DP0 pid=746593) INFO 09-01 21:20:36 [compilation.py:303] Enabled custom fusions: norm_quant, act_quant
+(APIServer pid=746416) INFO 09-01 21:20:36 [api_server.py:598] Supported tasks: ['generate']
+(APIServer pid=746416) INFO 09-01 21:20:36 [parser_manager.py:202] "auto" tool choice has been enabled.
+(APIServer pid=746416) WARNING 09-01 21:20:36 [model.py:1437] Default vLLM sampling parameters have been overridden by the model's `generation_config.json`: `{'temperature': 1.0, 'top_p': 1.0}`. If this is not intended, please relaunch vLLM instance with `--generation-config vllm`.
+(APIServer pid=746416) INFO 09-01 21:20:37 [api_server.py:602] Starting vLLM server on http://0.0.0.0:40060
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:37] Available routes are:
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /openapi.json, Methods: GET, HEAD
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /docs, Methods: GET, HEAD
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /docs/oauth2-redirect, Methods: GET, HEAD
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /redoc, Methods: GET, HEAD
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /tokenize, Methods: POST
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /detokenize, Methods: POST
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /load, Methods: GET
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /version, Methods: GET
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /health, Methods: GET
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /metrics, Methods: GET
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /v1/models, Methods: GET
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /ping, Methods: GET
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /ping, Methods: POST
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /invocations, Methods: POST
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /v1/chat/completions, Methods: POST
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /v1/chat/completions/batch, Methods: POST
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /v1/responses, Methods: POST
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /v1/responses/{response_id}, Methods: GET
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /v1/responses/{response_id}/cancel, Methods: POST
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /v1/completions, Methods: POST
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /v1/messages, Methods: POST
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /v1/messages/count_tokens, Methods: POST
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /inference/v1/generate, Methods: POST
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /scale_elastic_ep, Methods: POST
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /is_scaling_elastic_ep, Methods: POST
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /generative_scoring, Methods: POST
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /v1/chat/completions/render, Methods: POST
+(APIServer pid=746416) INFO 09-01 21:20:37 [launcher.py:46] Route: /v1/completions/render, Methods: POST
+(APIServer pid=746416) INFO:     Started server process [746416]
+(APIServer pid=746416) INFO:     Waiting for application startup.
+(APIServer pid=746416) INFO:     Application startup complete.
+[SAS_TB][21:21:46.071][pid=746801][seq=1] entry dev=npu:0 bs=1 maxSq=3 maxSkv=3 winL=127 topk=512 ratio=4 | ptrs: cuQ=0x0x12d1b11ffe00 cuOriKv=0x0x12d1b11ffe00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b13ffe00 OUT=0x0x140197e0c600 OUT_size=4096B
+[SAS_TB][21:21:46.071][pid=746942][seq=1] entry dev=npu:1 bs=1 maxSq=3 maxSkv=6 winL=127 topk=512 ratio=4 | ptrs: cuQ=0x0x12d1b11ffe00 cuOriKv=0x0x12d1b11ffe00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b13ffe00 OUT=0x0x140357e0c600 OUT_size=4096B
+[SAS_TB][21:21:46.071][pid=746942][seq=2] pre_exec
+[SAS_TB][21:21:46.071][pid=746801][seq=2] pre_exec
+[SAS_EXEC][21:21:46.071][pid=746942][seq=1] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:21:46.071][pid=746801][seq=1] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:21:46.071][pid=746942][seq=2] L3 symbols+initmem ok
+[SAS_EXEC][21:21:46.071][pid=746801][seq=2] L3 symbols+initmem ok
+[SAS_ACLNN][21:21:46.071][pid=746942][seq=1] GWS enter: bs=1 maxSq=3 maxSkv=6 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=512 ratio=4 | ptrs: cuQ=0xffff3104a050 cuOriKv=0xffff3104a6c0 cuCmpKv=0xffff3104ad30 seqQ=0xffff3104b3a0 seqKv=0xffff3104ba10 OUT_metaData=0xffff3104c080
+[SAS_ACLNN][21:21:46.071][pid=746801][seq=1] GWS enter: bs=1 maxSq=3 maxSkv=3 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=512 ratio=4 | ptrs: cuQ=0xffff5a54a050 cuOriKv=0xffff5a54a6c0 cuCmpKv=0xffff5a54ad30 seqQ=0xffff5a54b3a0 seqKv=0xffff5a54ba10 OUT_metaData=0xffff5a54c080
+[SAS_ACLNN][21:21:46.071][pid=746942][seq=2] GWS executor created
+[SAS_ACLNN][21:21:46.071][pid=746801][seq=2] GWS executor created
+[SAS_ACLNN][21:21:46.071][pid=746801][seq=3] GWS ParamsCheck ok
+[SAS_ACLNN][21:21:46.071][pid=746942][seq=3] GWS ParamsCheck ok
+[SAS_ACLNN][21:21:46.071][pid=746801][seq=4] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:21:46.071][pid=746942][seq=4] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:21:46.071][pid=746801][seq=5] GWS contiguous cuQ: in=0xffff5a54a050 out=0xffff5a54d4a0
+[SAS_ACLNN][21:21:46.071][pid=746942][seq=5] GWS contiguous cuQ: in=0xffff3104a050 out=0xffff3104d4a0
+[SAS_ACLNN][21:21:46.071][pid=746801][seq=6] GWS contiguous cuOriKv: in=0xffff5a54a6c0 out=0xffff5a54dad8
+[SAS_ACLNN][21:21:46.071][pid=746942][seq=6] GWS contiguous cuOriKv: in=0xffff3104a6c0 out=0xffff3104dad8
+[SAS_ACLNN][21:21:46.071][pid=746801][seq=7] GWS contiguous cuCmpKv: in=0xffff5a54ad30 out=0xffff5a54ad30
+[SAS_ACLNN][21:21:46.071][pid=746942][seq=7] GWS contiguous cuCmpKv: in=0xffff3104ad30 out=0xffff3104ad30
+[SAS_ACLNN][21:21:46.071][pid=746801][seq=8] GWS contiguous seqQ: in=0xffff5a54b3a0 out=0xffff5a54b3a0
+[SAS_ACLNN][21:21:46.071][pid=746942][seq=8] GWS contiguous seqQ: in=0xffff3104b3a0 out=0xffff3104b3a0
+[SAS_ACLNN][21:21:46.071][pid=746801][seq=9] GWS contiguous seqKv: in=0xffff5a54ba10 out=0xffff5a54e110
+[SAS_ACLNN][21:21:46.071][pid=746942][seq=9] GWS contiguous seqKv: in=0xffff3104ba10 out=0xffff3104e110
+[SAS_TB][21:21:46.072][pid=747298][seq=1] entry dev=npu:3 bs=1 maxSq=2 maxSkv=11 winL=127 topk=512 ratio=4 | ptrs: cuQ=0x0x12d1b11ffe00 cuOriKv=0x0x12d1b11ffe00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b13ffe00 OUT=0x0x1406d7e0c600 OUT_size=4096B
+[SAS_TB][21:21:46.072][pid=747124][seq=1] entry dev=npu:2 bs=1 maxSq=3 maxSkv=9 winL=127 topk=512 ratio=4 | ptrs: cuQ=0x0x12d1b11ffe00 cuOriKv=0x0x12d1b11ffe00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b13ffe00 OUT=0x0x140517e0c600 OUT_size=4096B
+[SAS_TB][21:21:46.072][pid=747124][seq=2] pre_exec
+[SAS_TB][21:21:46.072][pid=747298][seq=2] pre_exec
+[SAS_EXEC][21:21:46.072][pid=747298][seq=1] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:21:46.072][pid=747124][seq=1] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:21:46.072][pid=747298][seq=2] L3 symbols+initmem ok
+[SAS_EXEC][21:21:46.072][pid=747124][seq=2] L3 symbols+initmem ok
+[SAS_ACLNN][21:21:46.072][pid=747298][seq=1] GWS enter: bs=1 maxSq=2 maxSkv=11 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=512 ratio=4 | ptrs: cuQ=0xffff3914a050 cuOriKv=0xffff3914a6c0 cuCmpKv=0xffff3914ad30 seqQ=0xffff3914b3a0 seqKv=0xffff3914ba10 OUT_metaData=0xffff3914c080
+[SAS_ACLNN][21:21:46.072][pid=747124][seq=1] GWS enter: bs=1 maxSq=3 maxSkv=9 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=512 ratio=4 | ptrs: cuQ=0xffff4307a050 cuOriKv=0xffff4307a6c0 cuCmpKv=0xffff4307ad30 seqQ=0xffff4307b3a0 seqKv=0xffff4307ba10 OUT_metaData=0xffff4307c080
+[SAS_ACLNN][21:21:46.072][pid=747298][seq=2] GWS executor created
+[SAS_ACLNN][21:21:46.072][pid=747124][seq=2] GWS executor created
+[SAS_ACLNN][21:21:46.072][pid=747124][seq=3] GWS ParamsCheck ok
+[SAS_ACLNN][21:21:46.072][pid=747298][seq=3] GWS ParamsCheck ok
+[SAS_ACLNN][21:21:46.072][pid=747124][seq=4] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:21:46.072][pid=747298][seq=4] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:21:46.072][pid=747298][seq=5] GWS contiguous cuQ: in=0xffff3914a050 out=0xffff3914d4a0
+[SAS_ACLNN][21:21:46.072][pid=747124][seq=5] GWS contiguous cuQ: in=0xffff4307a050 out=0xffff4307d4a0
+[SAS_ACLNN][21:21:46.072][pid=747298][seq=6] GWS contiguous cuOriKv: in=0xffff3914a6c0 out=0xffff3914dad8
+[SAS_ACLNN][21:21:46.072][pid=747124][seq=6] GWS contiguous cuOriKv: in=0xffff4307a6c0 out=0xffff4307dad8
+[SAS_ACLNN][21:21:46.072][pid=747298][seq=7] GWS contiguous cuCmpKv: in=0xffff3914ad30 out=0xffff3914ad30
+[SAS_ACLNN][21:21:46.072][pid=747124][seq=7] GWS contiguous cuCmpKv: in=0xffff4307ad30 out=0xffff4307ad30
+[SAS_ACLNN][21:21:46.072][pid=747298][seq=8] GWS contiguous seqQ: in=0xffff3914b3a0 out=0xffff3914b3a0
+[SAS_ACLNN][21:21:46.072][pid=747124][seq=8] GWS contiguous seqQ: in=0xffff4307b3a0 out=0xffff4307b3a0
+[SAS_ACLNN][21:21:46.072][pid=747298][seq=9] GWS contiguous seqKv: in=0xffff3914ba10 out=0xffff3914e110
+[SAS_ACLNN][21:21:46.072][pid=747124][seq=9] GWS contiguous seqKv: in=0xffff4307ba10 out=0xffff4307e110
+[SAS_ACLNN][21:21:46.074][pid=746801][seq=10] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff5a54c080
+[SAS_ACLNN][21:21:46.074][pid=746801][seq=11] GWS ok: workspaceSize=0 executor=0xffff5a54c6f0
+[SAS_EXEC][21:21:46.074][pid=746801][seq=3] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff5a54c6f0
+[SAS_EXEC][21:21:46.074][pid=746801][seq=4] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:21:46.074][pid=746801][seq=5] L3 RUN enter stream=0xaaab2afc8530 executor=0xffff5a54c6f0
+[SAS_ACLNN][21:21:46.074][pid=746942][seq=10] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff3104c080
+[SAS_ACLNN][21:21:46.074][pid=746801][seq=12] RUN enter: executor=0xffff5a54c6f0 workspace=0 wsSize=0 stream=0xaaab2afc8530
+[SAS_ACLNN][21:21:46.074][pid=746942][seq=11] GWS ok: workspaceSize=0 executor=0xffff3104c6f0
+[SAS_EXEC][21:21:46.074][pid=746942][seq=3] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff3104c6f0
+[SAS_EXEC][21:21:46.074][pid=746942][seq=4] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:21:46.074][pid=746942][seq=5] L3 RUN enter stream=0xaaaae9fd2d90 executor=0xffff3104c6f0
+[SAS_ACLNN][21:21:46.074][pid=746942][seq=12] RUN enter: executor=0xffff3104c6f0 workspace=0 wsSize=0 stream=0xaaaae9fd2d90
+[SAS_ACLNN][21:21:46.075][pid=747298][seq=10] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff3914c080
+[SAS_ACLNN][21:21:46.075][pid=747124][seq=10] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff4307c080
+[SAS_ACLNN][21:21:46.075][pid=747124][seq=11] GWS ok: workspaceSize=0 executor=0xffff4307c6f0
+[SAS_ACLNN][21:21:46.075][pid=747298][seq=11] GWS ok: workspaceSize=0 executor=0xffff3914c6f0
+[SAS_EXEC][21:21:46.075][pid=747124][seq=3] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff4307c6f0
+[SAS_EXEC][21:21:46.075][pid=747298][seq=3] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff3914c6f0
+[SAS_EXEC][21:21:46.075][pid=747124][seq=4] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:21:46.075][pid=747298][seq=4] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:21:46.075][pid=747298][seq=5] L3 RUN enter stream=0xaaaaf84f89d0 executor=0xffff3914c6f0
+[SAS_EXEC][21:21:46.075][pid=747124][seq=5] L3 RUN enter stream=0xaaab0f7c6580 executor=0xffff4307c6f0
+[SAS_ACLNN][21:21:46.075][pid=747124][seq=12] RUN enter: executor=0xffff4307c6f0 workspace=0 wsSize=0 stream=0xaaab0f7c6580
+[SAS_ACLNN][21:21:46.075][pid=747298][seq=12] RUN enter: executor=0xffff3914c6f0 workspace=0 wsSize=0 stream=0xaaaaf84f89d0
+(Worker_DP1_TP0_EP4 pid=746800) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=4, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(Worker_DP1_TP3_EP7 pid=747285) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=7, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(Worker_DP1_TP2_EP6 pid=747112) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=6, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(Worker_DP1_TP1_EP5 pid=746941) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=5, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+[SAS_ACLNN][21:21:46.794][pid=746801][seq=13] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:21:46.794][pid=746801][seq=6] L3 RUN end ret=0
+[SAS_EXEC][21:21:46.795][pid=746801][seq=7] L3 cmd.Run() done
+[SAS_TB][21:21:46.795][pid=746801][seq=3] post_exec
+[SAS_ACLNN][21:21:46.796][pid=746942][seq=13] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:21:46.796][pid=746942][seq=6] L3 RUN end ret=0
+[SAS_EXEC][21:21:46.797][pid=746942][seq=7] L3 cmd.Run() done
+[SAS_TB][21:21:46.797][pid=746942][seq=3] post_exec
+[SAS_ACLNN][21:21:46.799][pid=747124][seq=13] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:21:46.799][pid=747124][seq=6] L3 RUN end ret=0
+[SAS_EXEC][21:21:46.800][pid=747124][seq=7] L3 cmd.Run() done
+[SAS_TB][21:21:46.800][pid=747124][seq=3] post_exec
+[SAS_ACLNN][21:21:46.803][pid=747298][seq=13] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:21:46.803][pid=747298][seq=6] L3 RUN end ret=0
+[SAS_EXEC][21:21:46.804][pid=747298][seq=7] L3 cmd.Run() done
+[SAS_TB][21:21:46.804][pid=747298][seq=3] post_exec
+[SAS_TB][21:21:46.813][pid=746801][seq=4] entry dev=npu:0 bs=1 maxSq=3 maxSkv=3 winL=127 topk=0 ratio=128 | ptrs: cuQ=0x0x12ce903ffe00 cuOriKv=0x0x12ce903ffe00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b09ffc00 OUT=0x0x140197e1d800 OUT_size=4096B
+[SAS_TB][21:21:46.813][pid=746801][seq=5] pre_exec
+[SAS_EXEC][21:21:46.813][pid=746801][seq=8] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:21:46.813][pid=746801][seq=9] L3 symbols+initmem ok
+[SAS_ACLNN][21:21:46.813][pid=746801][seq=14] GWS enter: bs=1 maxSq=3 maxSkv=3 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=0 ratio=128 | ptrs: cuQ=0xffff5a54a050 cuOriKv=0xffff5a54a6c0 cuCmpKv=0xffff5a54ad30 seqQ=0xffff5a54b3a0 seqKv=0xffff5a54ba10 OUT_metaData=0xffff5a54c080
+[SAS_ACLNN][21:21:46.813][pid=746801][seq=15] GWS executor created
+[SAS_ACLNN][21:21:46.813][pid=746801][seq=16] GWS ParamsCheck ok
+[SAS_ACLNN][21:21:46.813][pid=746801][seq=17] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:21:46.813][pid=746801][seq=18] GWS contiguous cuQ: in=0xffff5a54a050 out=0xffff5a54d4a0
+[SAS_ACLNN][21:21:46.813][pid=746801][seq=19] GWS contiguous cuOriKv: in=0xffff5a54a6c0 out=0xffff5a54dad8
+[SAS_ACLNN][21:21:46.813][pid=746801][seq=20] GWS contiguous cuCmpKv: in=0xffff5a54ad30 out=0xffff5a54ad30
+[SAS_ACLNN][21:21:46.813][pid=746801][seq=21] GWS contiguous seqQ: in=0xffff5a54b3a0 out=0xffff5a54b3a0
+[SAS_ACLNN][21:21:46.813][pid=746801][seq=22] GWS contiguous seqKv: in=0xffff5a54ba10 out=0xffff5a54e110
+[SAS_ACLNN][21:21:46.813][pid=746801][seq=23] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff5a54c080
+[SAS_ACLNN][21:21:46.813][pid=746801][seq=24] GWS ok: workspaceSize=0 executor=0xffff5a54c6f0
+[SAS_EXEC][21:21:46.813][pid=746801][seq=10] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff5a54c6f0
+[SAS_EXEC][21:21:46.813][pid=746801][seq=11] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:21:46.813][pid=746801][seq=12] L3 RUN enter stream=0xaaab2afc8530 executor=0xffff5a54c6f0
+[SAS_ACLNN][21:21:46.813][pid=746801][seq=25] RUN enter: executor=0xffff5a54c6f0 workspace=0 wsSize=0 stream=0xaaab2afc8530
+[SAS_ACLNN][21:21:46.813][pid=746801][seq=26] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:21:46.813][pid=746801][seq=13] L3 RUN end ret=0
+[SAS_EXEC][21:21:46.813][pid=746801][seq=14] L3 cmd.Run() done
+[SAS_TB][21:21:46.814][pid=746801][seq=6] post_exec
+[SAS_TB][21:21:46.814][pid=746942][seq=4] entry dev=npu:1 bs=1 maxSq=3 maxSkv=6 winL=127 topk=0 ratio=128 | ptrs: cuQ=0x0x12ce903ffe00 cuOriKv=0x0x12ce903ffe00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b09ffc00 OUT=0x0x140357e1d800 OUT_size=4096B
+[SAS_TB][21:21:46.814][pid=746942][seq=5] pre_exec
+[SAS_EXEC][21:21:46.814][pid=746942][seq=8] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:21:46.814][pid=746942][seq=9] L3 symbols+initmem ok
+[SAS_ACLNN][21:21:46.814][pid=746942][seq=14] GWS enter: bs=1 maxSq=3 maxSkv=6 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=0 ratio=128 | ptrs: cuQ=0xffff3104a050 cuOriKv=0xffff3104a6c0 cuCmpKv=0xffff3104ad30 seqQ=0xffff3104b3a0 seqKv=0xffff3104ba10 OUT_metaData=0xffff3104c080
+[SAS_ACLNN][21:21:46.814][pid=746942][seq=15] GWS executor created
+[SAS_ACLNN][21:21:46.814][pid=746942][seq=16] GWS ParamsCheck ok
+[SAS_ACLNN][21:21:46.814][pid=746942][seq=17] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:21:46.814][pid=746942][seq=18] GWS contiguous cuQ: in=0xffff3104a050 out=0xffff3104d4a0
+[SAS_ACLNN][21:21:46.814][pid=746942][seq=19] GWS contiguous cuOriKv: in=0xffff3104a6c0 out=0xffff3104dad8
+[SAS_ACLNN][21:21:46.814][pid=746942][seq=20] GWS contiguous cuCmpKv: in=0xffff3104ad30 out=0xffff3104ad30
+[SAS_ACLNN][21:21:46.814][pid=746942][seq=21] GWS contiguous seqQ: in=0xffff3104b3a0 out=0xffff3104b3a0
+[SAS_ACLNN][21:21:46.814][pid=746942][seq=22] GWS contiguous seqKv: in=0xffff3104ba10 out=0xffff3104e110
+[SAS_ACLNN][21:21:46.814][pid=746942][seq=23] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff3104c080
+[SAS_ACLNN][21:21:46.815][pid=746942][seq=24] GWS ok: workspaceSize=0 executor=0xffff3104c6f0
+[SAS_EXEC][21:21:46.815][pid=746942][seq=10] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff3104c6f0
+[SAS_EXEC][21:21:46.815][pid=746942][seq=11] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:21:46.815][pid=746942][seq=12] L3 RUN enter stream=0xaaaae9fd2d90 executor=0xffff3104c6f0
+[SAS_ACLNN][21:21:46.815][pid=746942][seq=25] RUN enter: executor=0xffff3104c6f0 workspace=0 wsSize=0 stream=0xaaaae9fd2d90
+[SAS_ACLNN][21:21:46.815][pid=746942][seq=26] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:21:46.815][pid=746942][seq=13] L3 RUN end ret=0
+[SAS_EXEC][21:21:46.815][pid=746942][seq=14] L3 cmd.Run() done
+[SAS_TB][21:21:46.815][pid=746942][seq=6] post_exec
+[SAS_TB][21:21:46.816][pid=746801][seq=7] entry dev=npu:0 bs=1 maxSq=3 maxSkv=3 winL=127 topk=0 ratio=1 | ptrs: cuQ=0x0x12d1b0bffc00 cuOriKv=0x0x12d1b0bffc00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b0bffe00 OUT=0x0x140197e25c00 OUT_size=4096B
+[SAS_TB][21:21:46.816][pid=746801][seq=8] pre_exec
+[SAS_EXEC][21:21:46.816][pid=746801][seq=15] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:21:46.816][pid=746801][seq=16] L3 symbols+initmem ok
+[SAS_ACLNN][21:21:46.816][pid=746801][seq=27] GWS enter: bs=1 maxSq=3 maxSkv=3 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=0 ratio=1 | ptrs: cuQ=0xffff5a54a050 cuOriKv=0xffff5a54a6c0 cuCmpKv=0xffff5a54ad30 seqQ=0xffff5a54b3a0 seqKv=0xffff5a54ba10 OUT_metaData=0xffff5a54c080
+[SAS_ACLNN][21:21:46.816][pid=746801][seq=28] GWS executor created
+[SAS_ACLNN][21:21:46.816][pid=746801][seq=29] GWS ParamsCheck ok
+[SAS_ACLNN][21:21:46.816][pid=746801][seq=30] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:21:46.816][pid=746801][seq=31] GWS contiguous cuQ: in=0xffff5a54a050 out=0xffff5a54d4a0
+[SAS_ACLNN][21:21:46.816][pid=746801][seq=32] GWS contiguous cuOriKv: in=0xffff5a54a6c0 out=0xffff5a54dad8
+[SAS_ACLNN][21:21:46.816][pid=746801][seq=33] GWS contiguous cuCmpKv: in=0xffff5a54ad30 out=0xffff5a54ad30
+[SAS_ACLNN][21:21:46.816][pid=746801][seq=34] GWS contiguous seqQ: in=0xffff5a54b3a0 out=0xffff5a54b3a0
+[SAS_ACLNN][21:21:46.816][pid=746801][seq=35] GWS contiguous seqKv: in=0xffff5a54ba10 out=0xffff5a54e110
+[SAS_ACLNN][21:21:46.816][pid=746801][seq=36] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff5a54c080
+[SAS_ACLNN][21:21:46.816][pid=746801][seq=37] GWS ok: workspaceSize=0 executor=0xffff5a54c6f0
+[SAS_EXEC][21:21:46.816][pid=746801][seq=17] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff5a54c6f0
+[SAS_EXEC][21:21:46.816][pid=746801][seq=18] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:21:46.816][pid=746801][seq=19] L3 RUN enter stream=0xaaab2afc8530 executor=0xffff5a54c6f0
+[SAS_ACLNN][21:21:46.816][pid=746801][seq=38] RUN enter: executor=0xffff5a54c6f0 workspace=0 wsSize=0 stream=0xaaab2afc8530
+[SAS_ACLNN][21:21:46.816][pid=746801][seq=39] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:21:46.816][pid=746801][seq=20] L3 RUN end ret=0
+[SAS_EXEC][21:21:46.816][pid=746801][seq=21] L3 cmd.Run() done
+[SAS_TB][21:21:46.816][pid=746801][seq=9] post_exec
+[SAS_TB][21:21:46.817][pid=746942][seq=7] entry dev=npu:1 bs=1 maxSq=3 maxSkv=6 winL=127 topk=0 ratio=1 | ptrs: cuQ=0x0x12d1b0bffc00 cuOriKv=0x0x12d1b0bffc00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b0bffe00 OUT=0x0x140357e25c00 OUT_size=4096B
+[SAS_TB][21:21:46.817][pid=746942][seq=8] pre_exec
+[SAS_EXEC][21:21:46.817][pid=746942][seq=15] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:21:46.817][pid=746942][seq=16] L3 symbols+initmem ok
+[SAS_ACLNN][21:21:46.817][pid=746942][seq=27] GWS enter: bs=1 maxSq=3 maxSkv=6 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=0 ratio=1 | ptrs: cuQ=0xffff3104a050 cuOriKv=0xffff3104a6c0 cuCmpKv=0xffff3104ad30 seqQ=0xffff3104b3a0 seqKv=0xffff3104ba10 OUT_metaData=0xffff3104c080
+[SAS_ACLNN][21:21:46.817][pid=746942][seq=28] GWS executor created
+[SAS_ACLNN][21:21:46.817][pid=746942][seq=29] GWS ParamsCheck ok
+[SAS_ACLNN][21:21:46.817][pid=746942][seq=30] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:21:46.817][pid=746942][seq=31] GWS contiguous cuQ: in=0xffff3104a050 out=0xffff3104d4a0
+[SAS_ACLNN][21:21:46.817][pid=746942][seq=32] GWS contiguous cuOriKv: in=0xffff3104a6c0 out=0xffff3104dad8
+[SAS_ACLNN][21:21:46.817][pid=746942][seq=33] GWS contiguous cuCmpKv: in=0xffff3104ad30 out=0xffff3104ad30
+[SAS_ACLNN][21:21:46.817][pid=746942][seq=34] GWS contiguous seqQ: in=0xffff3104b3a0 out=0xffff3104b3a0
+[SAS_ACLNN][21:21:46.817][pid=746942][seq=35] GWS contiguous seqKv: in=0xffff3104ba10 out=0xffff3104e110
+[SAS_ACLNN][21:21:46.817][pid=746942][seq=36] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff3104c080
+[SAS_ACLNN][21:21:46.817][pid=746942][seq=37] GWS ok: workspaceSize=0 executor=0xffff3104c6f0
+[SAS_EXEC][21:21:46.817][pid=746942][seq=17] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff3104c6f0
+[SAS_EXEC][21:21:46.817][pid=746942][seq=18] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:21:46.818][pid=746942][seq=19] L3 RUN enter stream=0xaaaae9fd2d90 executor=0xffff3104c6f0
+[SAS_ACLNN][21:21:46.818][pid=746942][seq=38] RUN enter: executor=0xffff3104c6f0 workspace=0 wsSize=0 stream=0xaaaae9fd2d90
+[SAS_ACLNN][21:21:46.818][pid=746942][seq=39] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:21:46.818][pid=746942][seq=20] L3 RUN end ret=0
+[SAS_EXEC][21:21:46.818][pid=746942][seq=21] L3 cmd.Run() done
+[SAS_TB][21:21:46.818][pid=746942][seq=9] post_exec
+[SAS_TB][21:21:46.818][pid=747124][seq=4] entry dev=npu:2 bs=1 maxSq=3 maxSkv=9 winL=127 topk=0 ratio=128 | ptrs: cuQ=0x0x12ce903ffe00 cuOriKv=0x0x12ce903ffe00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b09ffc00 OUT=0x0x140517e1d800 OUT_size=4096B
+[SAS_TB][21:21:46.818][pid=747124][seq=5] pre_exec
+[SAS_EXEC][21:21:46.818][pid=747124][seq=8] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:21:46.818][pid=747124][seq=9] L3 symbols+initmem ok
+[SAS_ACLNN][21:21:46.818][pid=747124][seq=14] GWS enter: bs=1 maxSq=3 maxSkv=9 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=0 ratio=128 | ptrs: cuQ=0xffff4307a050 cuOriKv=0xffff4307a6c0 cuCmpKv=0xffff4307ad30 seqQ=0xffff4307b3a0 seqKv=0xffff4307ba10 OUT_metaData=0xffff4307c080
+[SAS_ACLNN][21:21:46.818][pid=747124][seq=15] GWS executor created
+[SAS_ACLNN][21:21:46.818][pid=747124][seq=16] GWS ParamsCheck ok
+[SAS_ACLNN][21:21:46.818][pid=747124][seq=17] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:21:46.818][pid=747124][seq=18] GWS contiguous cuQ: in=0xffff4307a050 out=0xffff4307d4a0
+[SAS_ACLNN][21:21:46.818][pid=747124][seq=19] GWS contiguous cuOriKv: in=0xffff4307a6c0 out=0xffff4307dad8
+[SAS_ACLNN][21:21:46.818][pid=747124][seq=20] GWS contiguous cuCmpKv: in=0xffff4307ad30 out=0xffff4307ad30
+[SAS_ACLNN][21:21:46.818][pid=747124][seq=21] GWS contiguous seqQ: in=0xffff4307b3a0 out=0xffff4307b3a0
+[SAS_ACLNN][21:21:46.818][pid=747124][seq=22] GWS contiguous seqKv: in=0xffff4307ba10 out=0xffff4307e110
+[SAS_ACLNN][21:21:46.818][pid=747124][seq=23] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff4307c080
+[SAS_ACLNN][21:21:46.818][pid=747124][seq=24] GWS ok: workspaceSize=0 executor=0xffff4307c6f0
+[SAS_EXEC][21:21:46.818][pid=747124][seq=10] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff4307c6f0
+[SAS_EXEC][21:21:46.818][pid=747124][seq=11] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:21:46.818][pid=747124][seq=12] L3 RUN enter stream=0xaaab0f7c6580 executor=0xffff4307c6f0
+[SAS_ACLNN][21:21:46.818][pid=747124][seq=25] RUN enter: executor=0xffff4307c6f0 workspace=0 wsSize=0 stream=0xaaab0f7c6580
+[SAS_ACLNN][21:21:46.818][pid=747124][seq=26] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:21:46.818][pid=747124][seq=13] L3 RUN end ret=0
+[SAS_EXEC][21:21:46.818][pid=747124][seq=14] L3 cmd.Run() done
+[SAS_TB][21:21:46.818][pid=747124][seq=6] post_exec
+[SAS_TB][21:21:46.821][pid=747124][seq=7] entry dev=npu:2 bs=1 maxSq=3 maxSkv=9 winL=127 topk=0 ratio=1 | ptrs: cuQ=0x0x12d1b0bffc00 cuOriKv=0x0x12d1b0bffc00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b0bffe00 OUT=0x0x140517e25c00 OUT_size=4096B
+[SAS_TB][21:21:46.821][pid=747124][seq=8] pre_exec
+[SAS_EXEC][21:21:46.821][pid=747124][seq=15] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:21:46.821][pid=747124][seq=16] L3 symbols+initmem ok
+[SAS_ACLNN][21:21:46.821][pid=747124][seq=27] GWS enter: bs=1 maxSq=3 maxSkv=9 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=0 ratio=1 | ptrs: cuQ=0xffff4307a050 cuOriKv=0xffff4307a6c0 cuCmpKv=0xffff4307ad30 seqQ=0xffff4307b3a0 seqKv=0xffff4307ba10 OUT_metaData=0xffff4307c080
+[SAS_ACLNN][21:21:46.821][pid=747124][seq=28] GWS executor created
+[SAS_ACLNN][21:21:46.821][pid=747124][seq=29] GWS ParamsCheck ok
+[SAS_ACLNN][21:21:46.821][pid=747124][seq=30] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:21:46.821][pid=747124][seq=31] GWS contiguous cuQ: in=0xffff4307a050 out=0xffff4307d4a0
+[SAS_ACLNN][21:21:46.821][pid=747124][seq=32] GWS contiguous cuOriKv: in=0xffff4307a6c0 out=0xffff4307dad8
+[SAS_ACLNN][21:21:46.821][pid=747124][seq=33] GWS contiguous cuCmpKv: in=0xffff4307ad30 out=0xffff4307ad30
+[SAS_ACLNN][21:21:46.821][pid=747124][seq=34] GWS contiguous seqQ: in=0xffff4307b3a0 out=0xffff4307b3a0
+[SAS_ACLNN][21:21:46.821][pid=747124][seq=35] GWS contiguous seqKv: in=0xffff4307ba10 out=0xffff4307e110
+[SAS_ACLNN][21:21:46.821][pid=747124][seq=36] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff4307c080
+[SAS_ACLNN][21:21:46.821][pid=747124][seq=37] GWS ok: workspaceSize=0 executor=0xffff4307c6f0
+[SAS_EXEC][21:21:46.821][pid=747124][seq=17] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff4307c6f0
+[SAS_EXEC][21:21:46.821][pid=747124][seq=18] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:21:46.821][pid=747124][seq=19] L3 RUN enter stream=0xaaab0f7c6580 executor=0xffff4307c6f0
+[SAS_ACLNN][21:21:46.821][pid=747124][seq=38] RUN enter: executor=0xffff4307c6f0 workspace=0 wsSize=0 stream=0xaaab0f7c6580
+[SAS_ACLNN][21:21:46.821][pid=747124][seq=39] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:21:46.821][pid=747124][seq=20] L3 RUN end ret=0
+[SAS_EXEC][21:21:46.821][pid=747124][seq=21] L3 cmd.Run() done
+[SAS_TB][21:21:46.821][pid=747124][seq=9] post_exec
+[SAS_TB][21:21:46.822][pid=747298][seq=4] entry dev=npu:3 bs=1 maxSq=2 maxSkv=11 winL=127 topk=0 ratio=128 | ptrs: cuQ=0x0x12ce903ffe00 cuOriKv=0x0x12ce903ffe00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b09ffc00 OUT=0x0x1406d7e1d800 OUT_size=4096B
+[SAS_TB][21:21:46.822][pid=747298][seq=5] pre_exec
+[SAS_EXEC][21:21:46.822][pid=747298][seq=8] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:21:46.822][pid=747298][seq=9] L3 symbols+initmem ok
+[SAS_ACLNN][21:21:46.822][pid=747298][seq=14] GWS enter: bs=1 maxSq=2 maxSkv=11 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=0 ratio=128 | ptrs: cuQ=0xffff3914a050 cuOriKv=0xffff3914a6c0 cuCmpKv=0xffff3914ad30 seqQ=0xffff3914b3a0 seqKv=0xffff3914ba10 OUT_metaData=0xffff3914c080
+[SAS_ACLNN][21:21:46.822][pid=747298][seq=15] GWS executor created
+[SAS_ACLNN][21:21:46.822][pid=747298][seq=16] GWS ParamsCheck ok
+[SAS_ACLNN][21:21:46.822][pid=747298][seq=17] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:21:46.822][pid=747298][seq=18] GWS contiguous cuQ: in=0xffff3914a050 out=0xffff3914d4a0
+[SAS_ACLNN][21:21:46.822][pid=747298][seq=19] GWS contiguous cuOriKv: in=0xffff3914a6c0 out=0xffff3914dad8
+[SAS_ACLNN][21:21:46.822][pid=747298][seq=20] GWS contiguous cuCmpKv: in=0xffff3914ad30 out=0xffff3914ad30
+[SAS_ACLNN][21:21:46.822][pid=747298][seq=21] GWS contiguous seqQ: in=0xffff3914b3a0 out=0xffff3914b3a0
+[SAS_ACLNN][21:21:46.822][pid=747298][seq=22] GWS contiguous seqKv: in=0xffff3914ba10 out=0xffff3914e110
+[SAS_ACLNN][21:21:46.822][pid=747298][seq=23] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff3914c080
+[SAS_ACLNN][21:21:46.822][pid=747298][seq=24] GWS ok: workspaceSize=0 executor=0xffff3914c6f0
+[SAS_EXEC][21:21:46.822][pid=747298][seq=10] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff3914c6f0
+[SAS_EXEC][21:21:46.822][pid=747298][seq=11] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:21:46.822][pid=747298][seq=12] L3 RUN enter stream=0xaaaaf84f89d0 executor=0xffff3914c6f0
+[SAS_ACLNN][21:21:46.822][pid=747298][seq=25] RUN enter: executor=0xffff3914c6f0 workspace=0 wsSize=0 stream=0xaaaaf84f89d0
+[SAS_ACLNN][21:21:46.822][pid=747298][seq=26] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:21:46.822][pid=747298][seq=13] L3 RUN end ret=0
+[SAS_EXEC][21:21:46.822][pid=747298][seq=14] L3 cmd.Run() done
+[SAS_TB][21:21:46.822][pid=747298][seq=6] post_exec
+[SAS_TB][21:21:46.825][pid=747298][seq=7] entry dev=npu:3 bs=1 maxSq=2 maxSkv=11 winL=127 topk=0 ratio=1 | ptrs: cuQ=0x0x12d1b0bffc00 cuOriKv=0x0x12d1b0bffc00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b0bffe00 OUT=0x0x1406d7e25c00 OUT_size=4096B
+[SAS_TB][21:21:46.825][pid=747298][seq=8] pre_exec
+[SAS_EXEC][21:21:46.825][pid=747298][seq=15] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:21:46.825][pid=747298][seq=16] L3 symbols+initmem ok
+[SAS_ACLNN][21:21:46.825][pid=747298][seq=27] GWS enter: bs=1 maxSq=2 maxSkv=11 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=0 ratio=1 | ptrs: cuQ=0xffff3914a050 cuOriKv=0xffff3914a6c0 cuCmpKv=0xffff3914ad30 seqQ=0xffff3914b3a0 seqKv=0xffff3914ba10 OUT_metaData=0xffff3914c080
+[SAS_ACLNN][21:21:46.825][pid=747298][seq=28] GWS executor created
+[SAS_ACLNN][21:21:46.825][pid=747298][seq=29] GWS ParamsCheck ok
+[SAS_ACLNN][21:21:46.825][pid=747298][seq=30] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:21:46.825][pid=747298][seq=31] GWS contiguous cuQ: in=0xffff3914a050 out=0xffff3914d4a0
+[SAS_ACLNN][21:21:46.825][pid=747298][seq=32] GWS contiguous cuOriKv: in=0xffff3914a6c0 out=0xffff3914dad8
+[SAS_ACLNN][21:21:46.825][pid=747298][seq=33] GWS contiguous cuCmpKv: in=0xffff3914ad30 out=0xffff3914ad30
+[SAS_ACLNN][21:21:46.825][pid=747298][seq=34] GWS contiguous seqQ: in=0xffff3914b3a0 out=0xffff3914b3a0
+[SAS_ACLNN][21:21:46.825][pid=747298][seq=35] GWS contiguous seqKv: in=0xffff3914ba10 out=0xffff3914e110
+[SAS_ACLNN][21:21:46.825][pid=747298][seq=36] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff3914c080
+[SAS_ACLNN][21:21:46.825][pid=747298][seq=37] GWS ok: workspaceSize=0 executor=0xffff3914c6f0
+[SAS_EXEC][21:21:46.825][pid=747298][seq=17] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff3914c6f0
+[SAS_EXEC][21:21:46.825][pid=747298][seq=18] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:21:46.825][pid=747298][seq=19] L3 RUN enter stream=0xaaaaf84f89d0 executor=0xffff3914c6f0
+[SAS_ACLNN][21:21:46.825][pid=747298][seq=38] RUN enter: executor=0xffff3914c6f0 workspace=0 wsSize=0 stream=0xaaaaf84f89d0
+[SAS_ACLNN][21:21:46.825][pid=747298][seq=39] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:21:46.825][pid=747298][seq=20] L3 RUN end ret=0
+[SAS_EXEC][21:21:46.825][pid=747298][seq=21] L3 cmd.Run() done
+[SAS_TB][21:21:46.825][pid=747298][seq=9] post_exec
+(Worker_DP0_TP2_EP2 pid=747124) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=2, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(Worker_DP0_TP3_EP3 pid=747298) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=3, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(Worker_DP0_TP0_EP0 pid=746801) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=0, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+(Worker_DP0_TP1_EP1 pid=746942) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Initializing adapter with rank=1, group_size=8, num_experts=256, hidden_size=4096, low_latency_mode=False
+[init] rank:1, group_name: zbal_0:7:1
 [init] rank:3, group_name: zbal_0:7:1
 [init] rank:0, group_name: zbal_0:7:1
-[init] rank:1, group_name: zbal_0:7:1
-[init] rank:2, group_name: zbal_0:7:1
-[init] rank:6, group_name: zbal_0:7:1
-(Worker_DP0_TP1_EP1 pid=43863) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
-[init] rank:7, group_name: zbal_0:7:1
-(Worker_DP0_TP0_EP0 pid=43720) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
-(Worker_DP0_TP3_EP3 pid=44219) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
-(Worker_DP0_TP2_EP2 pid=44045) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
 [init] rank:5, group_name: zbal_0:7:1
+[init] rank:2, group_name: zbal_0:7:1
 [init] rank:4, group_name: zbal_0:7:1
-(Worker_DP1_TP2_EP6 pid=44033) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
-(Worker_DP1_TP3_EP7 pid=44205) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
-(Worker_DP1_TP0_EP4 pid=43721) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
-(Worker_DP1_TP1_EP5 pid=43861) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
-(EngineCore_DP0 pid=43511) INFO 08-28 14:22:50 [mooncake_hybrid_connector.py:1272] Delaying free of 6 blocks for request chatcmpl-57fb7d37-dc18-4b4b-a348-5ea7c480e8e7-b2ce026e
-(APIServer pid=43120) INFO:     80.5.17.36:33586 - "POST /v1/chat/completions HTTP/1.1" 200 OK
-(APIServer pid=43120) INFO 08-28 14:23:00 [loggers.py:271] Engine 000: Avg prompt throughput: 1.1 tokens/s, Avg generation throughput: 0.1 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 0.0%
-(APIServer pid=43120) INFO 08-28 14:23:10 [loggers.py:271] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 0.0%
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] WorkerProc hit an exception.
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3496, in synchronize_input_prep
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     yield
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1941, in execute_model
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     (attn_metadata, spec_decode_common_attn_metadata) = self._build_attention_metadata(
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 3008, in _build_attention_metadata
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     _build_attn_group_metadata(
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2942, in _build_attn_group_metadata
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     attn_metadata_i = builder.build(
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]                       ^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 323, in build
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     req_metadata = self.build_req_metadata(
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]                    ^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 594, in build_req_metadata
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     sas_metadata = self._build_sas_metadata(
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]                    ^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 807, in _build_sas_metadata
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     metadata = torch.ops._C_ascend.npu_sparse_attn_sharedkv_metadata(**kw)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_ops.py", line 1209, in __call__
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     return self._op(*args, **kwargs)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] RuntimeError: Sync:../torch_npu/csrc/framework/OpCommand.cpp:340 NPU function error: c10_npu::acl::AclrtSynchronizeStreamWithTimeout(stream), error code is 507018
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] [ERROR] 2026-08-28-14:23:21 (PID:43863, Device:1, RankID:-1) ERR00100 PTA call acl api failed
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] E39999: Inner Error!
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] E39999[PID: 43863] 2026-08-28-14:23:21.590.194 (E39999):  The error from device(chipId:0, dieId:1), serial number is 2, an exception occurred during AICPU execution, stream_id:46, task_id:62036, errcode:1, msg:execute kernel param invalid.[FUNC:ProcessStarsAicpuErrorInfo][FILE:device_error_proc.cc][LINE:1644]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]         TraceBack (most recent call last):
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]        Kernel task happen error, retCode=0x2a, [aicpu exception].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]        Aicpu kernel execute failed, device_id=1, stream_id=46, task_id=62036, soName=8786079630598814386.so, funcName=RunCpuKernel, kernelName=SparseAttnSharedkvMetadata, errorCode=0x2a.[FUNC:PrintAicpuErrorInfo][FILE:davinci_kernel_task.cc][LINE:1435]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]        rtStreamSynchronizeWithTimeout execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]        synchronize stream with timeout failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] During handling of the above exception, another exception occurred:
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     output = func(*args, **kwargs)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 337, in execute_model
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     return self.worker.execute_model(scheduler_output)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 490, in execute_model
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     output = self.model_runner.execute_model(scheduler_output, intermediate_tensors)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     return func(*args, **kwargs)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1746, in execute_model
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     with self.synchronize_input_prep():
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 158, in __exit__
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     self.gen.throw(typ, value, traceback)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3498, in synchronize_input_prep
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     self.prepare_inputs_event.record()
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/npu/streams.py", line 151, in record
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     super(Event, self).record(stream)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] RuntimeError: LaunchRecordTask:../torch_npu/csrc/core/npu/interface/AsyncTaskQueueInterface.cpp:215 NPU function error: aclrtRecordEvent(eventParam_.event, npuStream), error code is 507018
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] [ERROR] 2026-08-28-14:23:21 (PID:43863, Device:1, RankID:-1) ERR00100 PTA call acl api failed
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] EE9999: Inner Error!
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] EE9999[PID: 43863] 2026-08-28-14:23:21.596.196 (EE9999):  Failed to submit record task, retCode=0x715002a.[FUNC:Record][FILE:event.cc][LINE:487]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]         TraceBack (most recent call last):
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]        rtEventRecord execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]        record event failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3496, in synchronize_input_prep
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     yield
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1941, in execute_model
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     (attn_metadata, spec_decode_common_attn_metadata) = self._build_attention_metadata(
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 3008, in _build_attention_metadata
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     _build_attn_group_metadata(
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2942, in _build_attn_group_metadata
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     attn_metadata_i = builder.build(
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]                       ^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 323, in build
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     req_metadata = self.build_req_metadata(
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]                    ^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 594, in build_req_metadata
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     sas_metadata = self._build_sas_metadata(
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]                    ^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 807, in _build_sas_metadata
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     metadata = torch.ops._C_ascend.npu_sparse_attn_sharedkv_metadata(**kw)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_ops.py", line 1209, in __call__
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     return self._op(*args, **kwargs)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] RuntimeError: Sync:../torch_npu/csrc/framework/OpCommand.cpp:340 NPU function error: c10_npu::acl::AclrtSynchronizeStreamWithTimeout(stream), error code is 507018
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] [ERROR] 2026-08-28-14:23:21 (PID:43863, Device:1, RankID:-1) ERR00100 PTA call acl api failed
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] E39999: Inner Error!
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] E39999[PID: 43863] 2026-08-28-14:23:21.590.194 (E39999):  The error from device(chipId:0, dieId:1), serial number is 2, an exception occurred during AICPU execution, stream_id:46, task_id:62036, errcode:1, msg:execute kernel param invalid.[FUNC:ProcessStarsAicpuErrorInfo][FILE:device_error_proc.cc][LINE:1644]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]         TraceBack (most recent call last):
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]        Kernel task happen error, retCode=0x2a, [aicpu exception].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]        Aicpu kernel execute failed, device_id=1, stream_id=46, task_id=62036, soName=8786079630598814386.so, funcName=RunCpuKernel, kernelName=SparseAttnSharedkvMetadata, errorCode=0x2a.[FUNC:PrintAicpuErrorInfo][FILE:davinci_kernel_task.cc][LINE:1435]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]        rtStreamSynchronizeWithTimeout execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]        synchronize stream with timeout failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] During handling of the above exception, another exception occurred:
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     output = func(*args, **kwargs)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 337, in execute_model
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     return self.worker.execute_model(scheduler_output)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 490, in execute_model
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     output = self.model_runner.execute_model(scheduler_output, intermediate_tensors)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     return func(*args, **kwargs)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1746, in execute_model
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     with self.synchronize_input_prep():
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 158, in __exit__
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     self.gen.throw(typ, value, traceback)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3498, in synchronize_input_prep
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     self.prepare_inputs_event.record()
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/npu/streams.py", line 151, in record
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     super(Event, self).record(stream)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] RuntimeError: LaunchRecordTask:../torch_npu/csrc/core/npu/interface/AsyncTaskQueueInterface.cpp:215 NPU function error: aclrtRecordEvent(eventParam_.event, npuStream), error code is 507018
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] [ERROR] 2026-08-28-14:23:21 (PID:43863, Device:1, RankID:-1) ERR00100 PTA call acl api failed
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] EE9999: Inner Error!
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] EE9999[PID: 43863] 2026-08-28-14:23:21.596.196 (EE9999):  Failed to submit record task, retCode=0x715002a.[FUNC:Record][FILE:event.cc][LINE:487]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]         TraceBack (most recent call last):
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]        rtEventRecord execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]        record event failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] WorkerProc hit an exception.
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     output = func(*args, **kwargs)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 337, in execute_model
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     return self.worker.execute_model(scheduler_output)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 490, in execute_model
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     output = self.model_runner.execute_model(scheduler_output, intermediate_tensors)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     return func(*args, **kwargs)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1746, in execute_model
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     with self.synchronize_input_prep():
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 137, in __enter__
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     return next(self.gen)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3494, in synchronize_input_prep
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     self.prepare_inputs_event.synchronize()
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/npu/streams.py", line 192, in synchronize
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     super(Event, self).synchronize()
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] RuntimeError: synchronize:../torch_npu/csrc/core/npu/NPUEvent.cpp:212 NPU function error: aclrtSynchronizeEvent(event_), error code is 507018
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] [ERROR] 2026-08-28-14:23:21 (PID:43863, Device:1, RankID:-1) ERR00100 PTA call acl api failed
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] EE9999: Inner Error!
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] EE9999[PID: 43863] 2026-08-28-14:23:21.603.431 (EE9999):  rtEventSynchronize execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]         TraceBack (most recent call last):
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]        wait event to be complete failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] Traceback (most recent call last):
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     output = func(*args, **kwargs)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 337, in execute_model
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     return self.worker.execute_model(scheduler_output)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 490, in execute_model
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     output = self.model_runner.execute_model(scheduler_output, intermediate_tensors)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     return func(*args, **kwargs)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1746, in execute_model
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     with self.synchronize_input_prep():
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 137, in __enter__
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     return next(self.gen)
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3494, in synchronize_input_prep
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     self.prepare_inputs_event.synchronize()
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/npu/streams.py", line 192, in synchronize
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]     super(Event, self).synchronize()
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] RuntimeError: synchronize:../torch_npu/csrc/core/npu/NPUEvent.cpp:212 NPU function error: aclrtSynchronizeEvent(event_), error code is 507018
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] [ERROR] 2026-08-28-14:23:21 (PID:43863, Device:1, RankID:-1) ERR00100 PTA call acl api failed
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] EE9999: Inner Error!
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962] EE9999[PID: 43863] 2026-08-28-14:23:21.603.431 (EE9999):  rtEventSynchronize execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]         TraceBack (most recent call last):
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]        wait event to be complete failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]
-(Worker_DP0_TP1_EP1 pid=43863) ERROR 08-28 14:23:21 [multiproc_executor.py:962]
-(EngineCore_DP1 pid=43609) INFO 08-28 14:24:21 [shm_broadcast.py:681] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
-(EngineCore_DP0 pid=43511) INFO 08-28 14:24:21 [shm_broadcast.py:681] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(Worker_DP0_TP1_EP1 pid=746942) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
+(Worker_DP0_TP3_EP3 pid=747298) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
+(Worker_DP0_TP2_EP2 pid=747124) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
+(Worker_DP0_TP0_EP0 pid=746801) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
+(Worker_DP1_TP1_EP5 pid=746941) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
+[init] rank:6, group_name: zbal_0:7:1
+[init] rank:7, group_name: zbal_0:7:1
+(Worker_DP1_TP0_EP4 pid=746800) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
+(Worker_DP1_TP3_EP7 pid=747285) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
+(Worker_DP1_TP2_EP6 pid=747112) INFO:vllm_ascend.ops.fused_moe.zbal_moe_adapter:[ZBALMoEAdapter] Adapter initialized successfully
+(EngineCore_DP0 pid=746593) INFO 09-01 21:21:47 [mooncake_hybrid_connector.py:1272] Delaying free of 6 blocks for request chatcmpl-d1c36378-ff18-4943-820b-0ba28bd1c81e-8290299e
+(APIServer pid=746416) INFO:     80.5.17.36:37804 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=746416) INFO 09-01 21:21:57 [loggers.py:271] Engine 000: Avg prompt throughput: 1.1 tokens/s, Avg generation throughput: 0.1 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 0.0%
+(APIServer pid=746416) INFO 09-01 21:22:07 [loggers.py:271] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%, External prefix cache hit rate: 0.0%
+[SAS_TB][21:22:08.751][pid=746801][seq=10] entry dev=npu:0 bs=1 maxSq=3 maxSkv=3 winL=127 topk=512 ratio=4 | ptrs: cuQ=0x0x12d1b11ffe00 cuOriKv=0x0x12d1b11ffe00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b13ffe00 OUT=0x0x140197e09200 OUT_size=4096B
+[SAS_TB][21:22:08.751][pid=746942][seq=10] entry dev=npu:1 bs=1 maxSq=3 maxSkv=6 winL=127 topk=512 ratio=4 | ptrs: cuQ=0x0x12d1b11ffe00 cuOriKv=0x0x12d1b11ffe00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b13ffe00 OUT=0x0x140357e09200 OUT_size=4096B
+[SAS_TB][21:22:08.751][pid=746942][seq=11] pre_exec
+[SAS_TB][21:22:08.751][pid=746801][seq=11] pre_exec
+[SAS_EXEC][21:22:08.751][pid=746942][seq=22] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:22:08.751][pid=746801][seq=22] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:22:08.751][pid=746942][seq=23] L3 symbols+initmem ok
+[SAS_EXEC][21:22:08.751][pid=746801][seq=23] L3 symbols+initmem ok
+[SAS_ACLNN][21:22:08.751][pid=746801][seq=40] GWS enter: bs=1 maxSq=3 maxSkv=3 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=512 ratio=4 | ptrs: cuQ=0xffff5a54a050 cuOriKv=0xffff5a54a6c0 cuCmpKv=0xffff5a54ad30 seqQ=0xffff5a54b3a0 seqKv=0xffff5a54ba10 OUT_metaData=0xffff5a54c080
+[SAS_ACLNN][21:22:08.751][pid=746942][seq=40] GWS enter: bs=1 maxSq=3 maxSkv=6 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=512 ratio=4 | ptrs: cuQ=0xffff3104a050 cuOriKv=0xffff3104a6c0 cuCmpKv=0xffff3104ad30 seqQ=0xffff3104b3a0 seqKv=0xffff3104ba10 OUT_metaData=0xffff3104c080
+[SAS_ACLNN][21:22:08.751][pid=746801][seq=41] GWS executor created
+[SAS_ACLNN][21:22:08.751][pid=746942][seq=41] GWS executor created
+[SAS_ACLNN][21:22:08.751][pid=746942][seq=42] GWS ParamsCheck ok
+[SAS_ACLNN][21:22:08.751][pid=746801][seq=42] GWS ParamsCheck ok
+[SAS_ACLNN][21:22:08.751][pid=746942][seq=43] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:22:08.751][pid=746801][seq=43] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:22:08.751][pid=746801][seq=44] GWS contiguous cuQ: in=0xffff5a54a050 out=0xffff5a54d4a0
+[SAS_ACLNN][21:22:08.751][pid=746942][seq=44] GWS contiguous cuQ: in=0xffff3104a050 out=0xffff3104d4a0
+[SAS_ACLNN][21:22:08.751][pid=746801][seq=45] GWS contiguous cuOriKv: in=0xffff5a54a6c0 out=0xffff5a54dad8
+[SAS_ACLNN][21:22:08.751][pid=746942][seq=45] GWS contiguous cuOriKv: in=0xffff3104a6c0 out=0xffff3104dad8
+[SAS_ACLNN][21:22:08.751][pid=746801][seq=46] GWS contiguous cuCmpKv: in=0xffff5a54ad30 out=0xffff5a54ad30
+[SAS_ACLNN][21:22:08.751][pid=746942][seq=46] GWS contiguous cuCmpKv: in=0xffff3104ad30 out=0xffff3104ad30
+[SAS_ACLNN][21:22:08.751][pid=746801][seq=47] GWS contiguous seqQ: in=0xffff5a54b3a0 out=0xffff5a54b3a0
+[SAS_ACLNN][21:22:08.751][pid=746942][seq=47] GWS contiguous seqQ: in=0xffff3104b3a0 out=0xffff3104b3a0
+[SAS_ACLNN][21:22:08.751][pid=746801][seq=48] GWS contiguous seqKv: in=0xffff5a54ba10 out=0xffff5a54e110
+[SAS_ACLNN][21:22:08.751][pid=746942][seq=48] GWS contiguous seqKv: in=0xffff3104ba10 out=0xffff3104e110
+[SAS_ACLNN][21:22:08.751][pid=746801][seq=49] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff5a54c080
+[SAS_ACLNN][21:22:08.751][pid=746942][seq=49] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff3104c080
+[SAS_ACLNN][21:22:08.751][pid=746801][seq=50] GWS ok: workspaceSize=0 executor=0xffff5a54c6f0
+[SAS_ACLNN][21:22:08.751][pid=746942][seq=50] GWS ok: workspaceSize=0 executor=0xffff3104c6f0
+[SAS_EXEC][21:22:08.751][pid=746801][seq=24] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff5a54c6f0
+[SAS_EXEC][21:22:08.751][pid=746942][seq=24] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff3104c6f0
+[SAS_EXEC][21:22:08.751][pid=746801][seq=25] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:22:08.751][pid=746942][seq=25] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:22:08.751][pid=746942][seq=26] L3 RUN enter stream=0xaaaae9fd2d90 executor=0xffff3104c6f0
+[SAS_EXEC][21:22:08.751][pid=746801][seq=26] L3 RUN enter stream=0xaaab2afc8530 executor=0xffff5a54c6f0
+[SAS_ACLNN][21:22:08.751][pid=746942][seq=51] RUN enter: executor=0xffff3104c6f0 workspace=0 wsSize=0 stream=0xaaaae9fd2d90
+[SAS_ACLNN][21:22:08.751][pid=746801][seq=51] RUN enter: executor=0xffff5a54c6f0 workspace=0 wsSize=0 stream=0xaaab2afc8530
+[SAS_ACLNN][21:22:08.751][pid=746942][seq=52] RUN end: ret=0 (0=success)
+[SAS_ACLNN][21:22:08.751][pid=746801][seq=52] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:22:08.751][pid=746801][seq=27] L3 RUN end ret=0
+[SAS_EXEC][21:22:08.751][pid=746942][seq=27] L3 RUN end ret=0
+[SAS_TB][21:22:08.751][pid=747124][seq=10] entry dev=npu:2 bs=1 maxSq=3 maxSkv=9 winL=127 topk=512 ratio=4 | ptrs: cuQ=0x0x12d1b11ffe00 cuOriKv=0x0x12d1b11ffe00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b13ffe00 OUT=0x0x140517e09200 OUT_size=4096B
+[SAS_TB][21:22:08.751][pid=747298][seq=10] entry dev=npu:3 bs=1 maxSq=2 maxSkv=11 winL=127 topk=512 ratio=4 | ptrs: cuQ=0x0x12d1b11ffe00 cuOriKv=0x0x12d1b11ffe00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b13ffe00 OUT=0x0x1406d7e09200 OUT_size=4096B
+[SAS_TB][21:22:08.751][pid=747298][seq=11] pre_exec
+[SAS_TB][21:22:08.751][pid=747124][seq=11] pre_exec
+[SAS_EXEC][21:22:08.751][pid=747298][seq=22] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:22:08.751][pid=747124][seq=22] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:22:08.751][pid=747298][seq=23] L3 symbols+initmem ok
+[SAS_EXEC][21:22:08.751][pid=747124][seq=23] L3 symbols+initmem ok
+[SAS_ACLNN][21:22:08.751][pid=747124][seq=40] GWS enter: bs=1 maxSq=3 maxSkv=9 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=512 ratio=4 | ptrs: cuQ=0xffff4307a050 cuOriKv=0xffff4307a6c0 cuCmpKv=0xffff4307ad30 seqQ=0xffff4307b3a0 seqKv=0xffff4307ba10 OUT_metaData=0xffff4307c080
+[SAS_ACLNN][21:22:08.751][pid=747298][seq=40] GWS enter: bs=1 maxSq=2 maxSkv=11 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=512 ratio=4 | ptrs: cuQ=0xffff3914a050 cuOriKv=0xffff3914a6c0 cuCmpKv=0xffff3914ad30 seqQ=0xffff3914b3a0 seqKv=0xffff3914ba10 OUT_metaData=0xffff3914c080
+[SAS_ACLNN][21:22:08.751][pid=747298][seq=41] GWS executor created
+[SAS_ACLNN][21:22:08.751][pid=747124][seq=41] GWS executor created
+[SAS_ACLNN][21:22:08.751][pid=747124][seq=42] GWS ParamsCheck ok
+[SAS_ACLNN][21:22:08.751][pid=747298][seq=42] GWS ParamsCheck ok
+[SAS_ACLNN][21:22:08.751][pid=747124][seq=43] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:22:08.751][pid=747298][seq=43] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:22:08.751][pid=747124][seq=44] GWS contiguous cuQ: in=0xffff4307a050 out=0xffff4307d4a0
+[SAS_ACLNN][21:22:08.751][pid=747298][seq=44] GWS contiguous cuQ: in=0xffff3914a050 out=0xffff3914d4a0
+[SAS_ACLNN][21:22:08.751][pid=747298][seq=45] GWS contiguous cuOriKv: in=0xffff3914a6c0 out=0xffff3914dad8
+[SAS_ACLNN][21:22:08.751][pid=747124][seq=45] GWS contiguous cuOriKv: in=0xffff4307a6c0 out=0xffff4307dad8
+[SAS_ACLNN][21:22:08.751][pid=747298][seq=46] GWS contiguous cuCmpKv: in=0xffff3914ad30 out=0xffff3914ad30
+[SAS_ACLNN][21:22:08.751][pid=747124][seq=46] GWS contiguous cuCmpKv: in=0xffff4307ad30 out=0xffff4307ad30
+[SAS_ACLNN][21:22:08.751][pid=747298][seq=47] GWS contiguous seqQ: in=0xffff3914b3a0 out=0xffff3914b3a0
+[SAS_ACLNN][21:22:08.751][pid=747124][seq=47] GWS contiguous seqQ: in=0xffff4307b3a0 out=0xffff4307b3a0
+[SAS_EXEC][21:22:08.751][pid=746801][seq=28] L3 cmd.Run() done
+[SAS_ACLNN][21:22:08.751][pid=747298][seq=48] GWS contiguous seqKv: in=0xffff3914ba10 out=0xffff3914e110
+[SAS_ACLNN][21:22:08.751][pid=747124][seq=48] GWS contiguous seqKv: in=0xffff4307ba10 out=0xffff4307e110
+[SAS_TB][21:22:08.751][pid=746801][seq=12] post_exec
+[SAS_ACLNN][21:22:08.751][pid=747124][seq=49] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff4307c080
+[SAS_ACLNN][21:22:08.751][pid=747298][seq=49] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff3914c080
+[SAS_ACLNN][21:22:08.751][pid=747298][seq=50] GWS ok: workspaceSize=0 executor=0xffff3914c6f0
+[SAS_ACLNN][21:22:08.751][pid=747124][seq=50] GWS ok: workspaceSize=0 executor=0xffff4307c6f0
+[SAS_EXEC][21:22:08.751][pid=747298][seq=24] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff3914c6f0
+[SAS_EXEC][21:22:08.751][pid=747124][seq=24] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff4307c6f0
+[SAS_EXEC][21:22:08.751][pid=747298][seq=25] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:22:08.751][pid=747124][seq=25] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:22:08.751][pid=747124][seq=26] L3 RUN enter stream=0xaaab0f7c6580 executor=0xffff4307c6f0
+[SAS_EXEC][21:22:08.751][pid=747298][seq=26] L3 RUN enter stream=0xaaaaf84f89d0 executor=0xffff3914c6f0
+[SAS_ACLNN][21:22:08.751][pid=747298][seq=51] RUN enter: executor=0xffff3914c6f0 workspace=0 wsSize=0 stream=0xaaaaf84f89d0
+[SAS_ACLNN][21:22:08.751][pid=747124][seq=51] RUN enter: executor=0xffff4307c6f0 workspace=0 wsSize=0 stream=0xaaab0f7c6580
+[SAS_ACLNN][21:22:08.751][pid=747298][seq=52] RUN end: ret=0 (0=success)
+[SAS_ACLNN][21:22:08.751][pid=747124][seq=52] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:22:08.751][pid=747124][seq=27] L3 RUN end ret=0
+[SAS_EXEC][21:22:08.751][pid=747298][seq=27] L3 RUN end ret=0
+[SAS_EXEC][21:22:08.752][pid=747124][seq=28] L3 cmd.Run() done
+[SAS_TB][21:22:08.752][pid=747124][seq=12] post_exec
+[SAS_EXEC][21:22:08.752][pid=747298][seq=28] L3 cmd.Run() done
+[SAS_TB][21:22:08.752][pid=747298][seq=12] post_exec
+[SAS_TB][21:22:08.757][pid=746801][seq=13] entry dev=npu:0 bs=1 maxSq=3 maxSkv=3 winL=127 topk=0 ratio=128 | ptrs: cuQ=0x0x12ce903ffe00 cuOriKv=0x0x12ce903ffe00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b09ffc00 OUT=0x0x140197e26e00 OUT_size=4096B
+[SAS_TB][21:22:08.757][pid=746801][seq=14] pre_exec
+[SAS_EXEC][21:22:08.757][pid=746801][seq=29] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:22:08.757][pid=746801][seq=30] L3 symbols+initmem ok
+[SAS_ACLNN][21:22:08.757][pid=746801][seq=53] GWS enter: bs=1 maxSq=3 maxSkv=3 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=0 ratio=128 | ptrs: cuQ=0xffff5a54a050 cuOriKv=0xffff5a54a6c0 cuCmpKv=0xffff5a54ad30 seqQ=0xffff5a54b3a0 seqKv=0xffff5a54ba10 OUT_metaData=0xffff5a54c080
+[SAS_ACLNN][21:22:08.757][pid=746801][seq=54] GWS executor created
+[SAS_ACLNN][21:22:08.757][pid=746801][seq=55] GWS ParamsCheck ok
+[SAS_ACLNN][21:22:08.757][pid=746801][seq=56] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:22:08.757][pid=746801][seq=57] GWS contiguous cuQ: in=0xffff5a54a050 out=0xffff5a54d4a0
+[SAS_ACLNN][21:22:08.757][pid=746801][seq=58] GWS contiguous cuOriKv: in=0xffff5a54a6c0 out=0xffff5a54dad8
+[SAS_ACLNN][21:22:08.757][pid=746801][seq=59] GWS contiguous cuCmpKv: in=0xffff5a54ad30 out=0xffff5a54ad30
+[SAS_ACLNN][21:22:08.757][pid=746801][seq=60] GWS contiguous seqQ: in=0xffff5a54b3a0 out=0xffff5a54b3a0
+[SAS_ACLNN][21:22:08.757][pid=746801][seq=61] GWS contiguous seqKv: in=0xffff5a54ba10 out=0xffff5a54e110
+[SAS_ACLNN][21:22:08.757][pid=746801][seq=62] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff5a54c080
+[SAS_ACLNN][21:22:08.757][pid=746801][seq=63] GWS ok: workspaceSize=0 executor=0xffff5a54c6f0
+[SAS_EXEC][21:22:08.757][pid=746801][seq=31] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff5a54c6f0
+[SAS_EXEC][21:22:08.757][pid=746801][seq=32] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:22:08.757][pid=746801][seq=33] L3 RUN enter stream=0xaaab2afc8530 executor=0xffff5a54c6f0
+[SAS_ACLNN][21:22:08.757][pid=746801][seq=64] RUN enter: executor=0xffff5a54c6f0 workspace=0 wsSize=0 stream=0xaaab2afc8530
+[SAS_ACLNN][21:22:08.757][pid=746801][seq=65] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:22:08.757][pid=746801][seq=34] L3 RUN end ret=0
+[SAS_EXEC][21:22:08.758][pid=746801][seq=35] L3 cmd.Run() done
+[SAS_TB][21:22:08.758][pid=746801][seq=15] post_exec
+[SAS_TB][21:22:08.758][pid=747298][seq=13] entry dev=npu:3 bs=1 maxSq=2 maxSkv=11 winL=127 topk=0 ratio=128 | ptrs: cuQ=0x0x12ce903ffe00 cuOriKv=0x0x12ce903ffe00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b09ffc00 OUT=0x0x1406d7e26e00 OUT_size=4096B
+[SAS_TB][21:22:08.758][pid=747298][seq=14] pre_exec
+[SAS_EXEC][21:22:08.758][pid=747298][seq=29] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:22:08.758][pid=747298][seq=30] L3 symbols+initmem ok
+[SAS_ACLNN][21:22:08.758][pid=747298][seq=53] GWS enter: bs=1 maxSq=2 maxSkv=11 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=0 ratio=128 | ptrs: cuQ=0xffff3914a050 cuOriKv=0xffff3914a6c0 cuCmpKv=0xffff3914ad30 seqQ=0xffff3914b3a0 seqKv=0xffff3914ba10 OUT_metaData=0xffff3914c080
+[SAS_ACLNN][21:22:08.758][pid=747298][seq=54] GWS executor created
+[SAS_ACLNN][21:22:08.758][pid=747298][seq=55] GWS ParamsCheck ok
+[SAS_ACLNN][21:22:08.758][pid=747298][seq=56] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:22:08.758][pid=747298][seq=57] GWS contiguous cuQ: in=0xffff3914a050 out=0xffff3914d4a0
+[SAS_ACLNN][21:22:08.758][pid=747298][seq=58] GWS contiguous cuOriKv: in=0xffff3914a6c0 out=0xffff3914dad8
+[SAS_ACLNN][21:22:08.758][pid=747298][seq=59] GWS contiguous cuCmpKv: in=0xffff3914ad30 out=0xffff3914ad30
+[SAS_ACLNN][21:22:08.758][pid=747298][seq=60] GWS contiguous seqQ: in=0xffff3914b3a0 out=0xffff3914b3a0
+[SAS_ACLNN][21:22:08.758][pid=747298][seq=61] GWS contiguous seqKv: in=0xffff3914ba10 out=0xffff3914e110
+[SAS_ACLNN][21:22:08.758][pid=747298][seq=62] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff3914c080
+[SAS_ACLNN][21:22:08.758][pid=747298][seq=63] GWS ok: workspaceSize=0 executor=0xffff3914c6f0
+[SAS_EXEC][21:22:08.758][pid=747298][seq=31] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff3914c6f0
+[SAS_EXEC][21:22:08.758][pid=747298][seq=32] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:22:08.758][pid=747298][seq=33] L3 RUN enter stream=0xaaaaf84f89d0 executor=0xffff3914c6f0
+[SAS_ACLNN][21:22:08.758][pid=747298][seq=64] RUN enter: executor=0xffff3914c6f0 workspace=0 wsSize=0 stream=0xaaaaf84f89d0
+[SAS_ACLNN][21:22:08.758][pid=747298][seq=65] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:22:08.758][pid=747298][seq=34] L3 RUN end ret=0
+[SAS_TB][21:22:08.758][pid=747124][seq=13] entry dev=npu:2 bs=1 maxSq=3 maxSkv=9 winL=127 topk=0 ratio=128 | ptrs: cuQ=0x0x12ce903ffe00 cuOriKv=0x0x12ce903ffe00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b09ffc00 OUT=0x0x140517e26e00 OUT_size=4096B
+[SAS_TB][21:22:08.758][pid=747124][seq=14] pre_exec
+[SAS_EXEC][21:22:08.758][pid=747124][seq=29] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:22:08.758][pid=747124][seq=30] L3 symbols+initmem ok
+[SAS_ACLNN][21:22:08.758][pid=747124][seq=53] GWS enter: bs=1 maxSq=3 maxSkv=9 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=0 ratio=128 | ptrs: cuQ=0xffff4307a050 cuOriKv=0xffff4307a6c0 cuCmpKv=0xffff4307ad30 seqQ=0xffff4307b3a0 seqKv=0xffff4307ba10 OUT_metaData=0xffff4307c080
+[SAS_ACLNN][21:22:08.758][pid=747124][seq=54] GWS executor created
+[SAS_ACLNN][21:22:08.758][pid=747124][seq=55] GWS ParamsCheck ok
+[SAS_ACLNN][21:22:08.758][pid=747124][seq=56] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:22:08.758][pid=747124][seq=57] GWS contiguous cuQ: in=0xffff4307a050 out=0xffff4307d4a0
+[SAS_ACLNN][21:22:08.758][pid=747124][seq=58] GWS contiguous cuOriKv: in=0xffff4307a6c0 out=0xffff4307dad8
+[SAS_ACLNN][21:22:08.758][pid=747124][seq=59] GWS contiguous cuCmpKv: in=0xffff4307ad30 out=0xffff4307ad30
+[SAS_ACLNN][21:22:08.758][pid=747124][seq=60] GWS contiguous seqQ: in=0xffff4307b3a0 out=0xffff4307b3a0
+[SAS_ACLNN][21:22:08.758][pid=747124][seq=61] GWS contiguous seqKv: in=0xffff4307ba10 out=0xffff4307e110
+[SAS_ACLNN][21:22:08.758][pid=747124][seq=62] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff4307c080
+[SAS_ACLNN][21:22:08.758][pid=747124][seq=63] GWS ok: workspaceSize=0 executor=0xffff4307c6f0
+[SAS_EXEC][21:22:08.758][pid=747124][seq=31] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff4307c6f0
+[SAS_EXEC][21:22:08.758][pid=747124][seq=32] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:22:08.758][pid=747124][seq=33] L3 RUN enter stream=0xaaab0f7c6580 executor=0xffff4307c6f0
+[SAS_ACLNN][21:22:08.758][pid=747124][seq=64] RUN enter: executor=0xffff4307c6f0 workspace=0 wsSize=0 stream=0xaaab0f7c6580
+[SAS_ACLNN][21:22:08.758][pid=747124][seq=65] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:22:08.758][pid=747124][seq=34] L3 RUN end ret=0
+[SAS_EXEC][21:22:08.758][pid=747298][seq=35] L3 cmd.Run() done
+[SAS_TB][21:22:08.758][pid=747298][seq=15] post_exec
+[SAS_EXEC][21:22:08.758][pid=747124][seq=35] L3 cmd.Run() done
+[SAS_TB][21:22:08.758][pid=747124][seq=15] post_exec
+[SAS_TB][21:22:08.760][pid=746801][seq=16] entry dev=npu:0 bs=1 maxSq=3 maxSkv=3 winL=127 topk=0 ratio=1 | ptrs: cuQ=0x0x12d1b0bffc00 cuOriKv=0x0x12d1b0bffc00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b0bffe00 OUT=0x0x140197e2e200 OUT_size=4096B
+[SAS_TB][21:22:08.760][pid=746801][seq=17] pre_exec
+[SAS_EXEC][21:22:08.760][pid=746801][seq=36] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:22:08.760][pid=746801][seq=37] L3 symbols+initmem ok
+[SAS_ACLNN][21:22:08.760][pid=746801][seq=66] GWS enter: bs=1 maxSq=3 maxSkv=3 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=0 ratio=1 | ptrs: cuQ=0xffff5a54a050 cuOriKv=0xffff5a54a6c0 cuCmpKv=0xffff5a54ad30 seqQ=0xffff5a54b3a0 seqKv=0xffff5a54ba10 OUT_metaData=0xffff5a54c080
+[SAS_ACLNN][21:22:08.760][pid=746801][seq=67] GWS executor created
+[SAS_ACLNN][21:22:08.760][pid=746801][seq=68] GWS ParamsCheck ok
+[SAS_ACLNN][21:22:08.760][pid=746801][seq=69] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:22:08.760][pid=746801][seq=70] GWS contiguous cuQ: in=0xffff5a54a050 out=0xffff5a54d4a0
+[SAS_ACLNN][21:22:08.760][pid=746801][seq=71] GWS contiguous cuOriKv: in=0xffff5a54a6c0 out=0xffff5a54dad8
+[SAS_ACLNN][21:22:08.760][pid=746801][seq=72] GWS contiguous cuCmpKv: in=0xffff5a54ad30 out=0xffff5a54ad30
+[SAS_ACLNN][21:22:08.760][pid=746801][seq=73] GWS contiguous seqQ: in=0xffff5a54b3a0 out=0xffff5a54b3a0
+[SAS_ACLNN][21:22:08.760][pid=746801][seq=74] GWS contiguous seqKv: in=0xffff5a54ba10 out=0xffff5a54e110
+[SAS_ACLNN][21:22:08.760][pid=746801][seq=75] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff5a54c080
+[SAS_ACLNN][21:22:08.760][pid=746801][seq=76] GWS ok: workspaceSize=0 executor=0xffff5a54c6f0
+[SAS_EXEC][21:22:08.760][pid=746801][seq=38] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff5a54c6f0
+[SAS_EXEC][21:22:08.760][pid=746801][seq=39] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:22:08.760][pid=746801][seq=40] L3 RUN enter stream=0xaaab2afc8530 executor=0xffff5a54c6f0
+[SAS_ACLNN][21:22:08.760][pid=746801][seq=77] RUN enter: executor=0xffff5a54c6f0 workspace=0 wsSize=0 stream=0xaaab2afc8530
+[SAS_ACLNN][21:22:08.760][pid=746801][seq=78] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:22:08.760][pid=746801][seq=41] L3 RUN end ret=0
+[SAS_EXEC][21:22:08.760][pid=746801][seq=42] L3 cmd.Run() done
+[SAS_TB][21:22:08.760][pid=746801][seq=18] post_exec
+[SAS_TB][21:22:08.760][pid=747298][seq=16] entry dev=npu:3 bs=1 maxSq=2 maxSkv=11 winL=127 topk=0 ratio=1 | ptrs: cuQ=0x0x12d1b0bffc00 cuOriKv=0x0x12d1b0bffc00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b0bffe00 OUT=0x0x1406d7e2e200 OUT_size=4096B
+[SAS_TB][21:22:08.760][pid=747298][seq=17] pre_exec
+[SAS_EXEC][21:22:08.760][pid=747298][seq=36] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:22:08.760][pid=747298][seq=37] L3 symbols+initmem ok
+[SAS_ACLNN][21:22:08.760][pid=747298][seq=66] GWS enter: bs=1 maxSq=2 maxSkv=11 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=0 ratio=1 | ptrs: cuQ=0xffff3914a050 cuOriKv=0xffff3914a6c0 cuCmpKv=0xffff3914ad30 seqQ=0xffff3914b3a0 seqKv=0xffff3914ba10 OUT_metaData=0xffff3914c080
+[SAS_ACLNN][21:22:08.760][pid=747298][seq=67] GWS executor created
+[SAS_ACLNN][21:22:08.760][pid=747298][seq=68] GWS ParamsCheck ok
+[SAS_ACLNN][21:22:08.760][pid=747298][seq=69] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:22:08.760][pid=747298][seq=70] GWS contiguous cuQ: in=0xffff3914a050 out=0xffff3914d4a0
+[SAS_ACLNN][21:22:08.760][pid=747298][seq=71] GWS contiguous cuOriKv: in=0xffff3914a6c0 out=0xffff3914dad8
+[SAS_ACLNN][21:22:08.760][pid=747298][seq=72] GWS contiguous cuCmpKv: in=0xffff3914ad30 out=0xffff3914ad30
+[SAS_ACLNN][21:22:08.760][pid=747298][seq=73] GWS contiguous seqQ: in=0xffff3914b3a0 out=0xffff3914b3a0
+[SAS_ACLNN][21:22:08.760][pid=747298][seq=74] GWS contiguous seqKv: in=0xffff3914ba10 out=0xffff3914e110
+[SAS_ACLNN][21:22:08.760][pid=747298][seq=75] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff3914c080
+[SAS_ACLNN][21:22:08.760][pid=747298][seq=76] GWS ok: workspaceSize=0 executor=0xffff3914c6f0
+[SAS_EXEC][21:22:08.760][pid=747298][seq=38] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff3914c6f0
+[SAS_EXEC][21:22:08.760][pid=747298][seq=39] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:22:08.760][pid=747298][seq=40] L3 RUN enter stream=0xaaaaf84f89d0 executor=0xffff3914c6f0
+[SAS_ACLNN][21:22:08.760][pid=747298][seq=77] RUN enter: executor=0xffff3914c6f0 workspace=0 wsSize=0 stream=0xaaaaf84f89d0
+[SAS_ACLNN][21:22:08.760][pid=747298][seq=78] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:22:08.760][pid=747298][seq=41] L3 RUN end ret=0
+[SAS_TB][21:22:08.760][pid=747124][seq=16] entry dev=npu:2 bs=1 maxSq=3 maxSkv=9 winL=127 topk=0 ratio=1 | ptrs: cuQ=0x0x12d1b0bffc00 cuOriKv=0x0x12d1b0bffc00 cuCmpKv=0x0 seqQ=0x0 seqKv=0x0x12d1b0bffe00 OUT=0x0x140517e2e200 OUT_size=4096B
+[SAS_TB][21:22:08.760][pid=747124][seq=17] pre_exec
+[SAS_EXEC][21:22:08.760][pid=747124][seq=36] L3 enter aclnnSparseAttnSharedkvMetadata
+[SAS_EXEC][21:22:08.760][pid=747124][seq=37] L3 symbols+initmem ok
+[SAS_ACLNN][21:22:08.760][pid=747124][seq=66] GWS enter: bs=1 maxSq=3 maxSkv=9 headsQ=64 headsKv=1 headDim=512 winL=127 winR=0 topk=0 ratio=1 | ptrs: cuQ=0xffff4307a050 cuOriKv=0xffff4307a6c0 cuCmpKv=0xffff4307ad30 seqQ=0xffff4307b3a0 seqKv=0xffff4307ba10 OUT_metaData=0xffff4307c080
+[SAS_ACLNN][21:22:08.761][pid=747124][seq=67] GWS executor created
+[SAS_ACLNN][21:22:08.761][pid=747124][seq=68] GWS ParamsCheck ok
+[SAS_ACLNN][21:22:08.761][pid=747124][seq=69] GWS platform: aicCoreNum=24 aivCoreNum=48 soc=Ascend910_9382
+[SAS_ACLNN][21:22:08.761][pid=747124][seq=70] GWS contiguous cuQ: in=0xffff4307a050 out=0xffff4307d4a0
+[SAS_ACLNN][21:22:08.761][pid=747124][seq=71] GWS contiguous cuOriKv: in=0xffff4307a6c0 out=0xffff4307dad8
+[SAS_ACLNN][21:22:08.761][pid=747124][seq=72] GWS contiguous cuCmpKv: in=0xffff4307ad30 out=0xffff4307ad30
+[SAS_ACLNN][21:22:08.761][pid=747124][seq=73] GWS contiguous seqQ: in=0xffff4307b3a0 out=0xffff4307b3a0
+[SAS_ACLNN][21:22:08.761][pid=747124][seq=74] GWS contiguous seqKv: in=0xffff4307ba10 out=0xffff4307e110
+[SAS_ACLNN][21:22:08.761][pid=747124][seq=75] GWS l0op::SparseAttnSharedkvMetadata serialized ok, out=0xffff4307c080
+[SAS_ACLNN][21:22:08.761][pid=747124][seq=76] GWS ok: workspaceSize=0 executor=0xffff4307c6f0
+[SAS_EXEC][21:22:08.761][pid=747124][seq=38] L3 GetWorkspaceSize ret=0 wsSize=0 executor=0xffff4307c6f0
+[SAS_EXEC][21:22:08.761][pid=747124][seq=39] L3 workspace ready addr=0 size=0
+[SAS_EXEC][21:22:08.761][pid=747124][seq=40] L3 RUN enter stream=0xaaab0f7c6580 executor=0xffff4307c6f0
+[SAS_ACLNN][21:22:08.761][pid=747124][seq=77] RUN enter: executor=0xffff4307c6f0 workspace=0 wsSize=0 stream=0xaaab0f7c6580
+[SAS_EXEC][21:22:08.761][pid=747298][seq=42] L3 cmd.Run() done
+[SAS_TB][21:22:08.761][pid=747298][seq=18] post_exec
+[SAS_ACLNN][21:22:08.761][pid=747124][seq=78] RUN end: ret=0 (0=success)
+[SAS_EXEC][21:22:08.761][pid=747124][seq=41] L3 RUN end ret=0
+[SAS_EXEC][21:22:08.761][pid=747124][seq=42] L3 cmd.Run() done
+[SAS_TB][21:22:08.761][pid=747124][seq=18] post_exec
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] WorkerProc hit an exception.
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3496, in synchronize_input_prep
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     yield
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1941, in execute_model
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     (attn_metadata, spec_decode_common_attn_metadata) = self._build_attention_metadata(
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 3008, in _build_attention_metadata
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     _build_attn_group_metadata(
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2942, in _build_attn_group_metadata
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     attn_metadata_i = builder.build(
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]                       ^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 396, in build
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     req_metadata = self.build_req_metadata(
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]                    ^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 667, in build_req_metadata
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     sas_metadata = self._build_sas_metadata(
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 885, in _build_sas_metadata
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     metadata = torch.ops._C_ascend.npu_sparse_attn_sharedkv_metadata(**kw)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_ops.py", line 1209, in __call__
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     return self._op(*args, **kwargs)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] RuntimeError: Sync:../torch_npu/csrc/framework/OpCommand.cpp:340 NPU function error: c10_npu::acl::AclrtSynchronizeStreamWithTimeout(stream), error code is 507018
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] [ERROR] 2026-09-01-21:22:08 (PID:746942, Device:1, RankID:-1) ERR00100 PTA call acl api failed
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] E39999: Inner Error!
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] E39999[PID: 746942] 2026-09-01-21:22:08.753.151 (E39999):  The error from device(chipId:0, dieId:1), serial number is 14, an exception occurred during AICPU execution, stream_id:46, task_id:62036, errcode:1, msg:execute kernel param invalid.[FUNC:ProcessStarsAicpuErrorInfo][FILE:device_error_proc.cc][LINE:1644]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]         TraceBack (most recent call last):
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]        Kernel task happen error, retCode=0x2a, [aicpu exception].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]        Aicpu kernel execute failed, device_id=1, stream_id=46, task_id=62036, soName=14505240243109094615.so, funcName=RunCpuKernel, kernelName=SparseAttnSharedkvMetadata, errorCode=0x2a.[FUNC:PrintAicpuErrorInfo][FILE:davinci_kernel_task.cc][LINE:1435]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]        rtStreamSynchronizeWithTimeout execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]        synchronize stream with timeout failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] During handling of the above exception, another exception occurred:
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     output = func(*args, **kwargs)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 337, in execute_model
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     return self.worker.execute_model(scheduler_output)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 490, in execute_model
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     output = self.model_runner.execute_model(scheduler_output, intermediate_tensors)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1746, in execute_model
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     with self.synchronize_input_prep():
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 158, in __exit__
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     self.gen.throw(typ, value, traceback)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3498, in synchronize_input_prep
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     self.prepare_inputs_event.record()
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/npu/streams.py", line 151, in record
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     super(Event, self).record(stream)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] RuntimeError: LaunchRecordTask:../torch_npu/csrc/core/npu/interface/AsyncTaskQueueInterface.cpp:215 NPU function error: aclrtRecordEvent(eventParam_.event, npuStream), error code is 507018
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] [ERROR] 2026-09-01-21:22:08 (PID:746942, Device:1, RankID:-1) ERR00100 PTA call acl api failed
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] EE9999: Inner Error!
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] EE9999[PID: 746942] 2026-09-01-21:22:08.758.397 (EE9999):  Failed to submit record task, retCode=0x715002a.[FUNC:Record][FILE:event.cc][LINE:487]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]         TraceBack (most recent call last):
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]        rtEventRecord execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]        record event failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3496, in synchronize_input_prep
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     yield
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1941, in execute_model
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     (attn_metadata, spec_decode_common_attn_metadata) = self._build_attention_metadata(
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 3008, in _build_attention_metadata
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     _build_attn_group_metadata(
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 2942, in _build_attn_group_metadata
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     attn_metadata_i = builder.build(
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]                       ^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 396, in build
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     req_metadata = self.build_req_metadata(
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]                    ^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 667, in build_req_metadata
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     sas_metadata = self._build_sas_metadata(
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/attention/context_parallel/dsa_cp.py", line 885, in _build_sas_metadata
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     metadata = torch.ops._C_ascend.npu_sparse_attn_sharedkv_metadata(**kw)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/_ops.py", line 1209, in __call__
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     return self._op(*args, **kwargs)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] RuntimeError: Sync:../torch_npu/csrc/framework/OpCommand.cpp:340 NPU function error: c10_npu::acl::AclrtSynchronizeStreamWithTimeout(stream), error code is 507018
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] [ERROR] 2026-09-01-21:22:08 (PID:746942, Device:1, RankID:-1) ERR00100 PTA call acl api failed
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] E39999: Inner Error!
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] E39999[PID: 746942] 2026-09-01-21:22:08.753.151 (E39999):  The error from device(chipId:0, dieId:1), serial number is 14, an exception occurred during AICPU execution, stream_id:46, task_id:62036, errcode:1, msg:execute kernel param invalid.[FUNC:ProcessStarsAicpuErrorInfo][FILE:device_error_proc.cc][LINE:1644]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]         TraceBack (most recent call last):
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]        Kernel task happen error, retCode=0x2a, [aicpu exception].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]        Aicpu kernel execute failed, device_id=1, stream_id=46, task_id=62036, soName=14505240243109094615.so, funcName=RunCpuKernel, kernelName=SparseAttnSharedkvMetadata, errorCode=0x2a.[FUNC:PrintAicpuErrorInfo][FILE:davinci_kernel_task.cc][LINE:1435]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]        rtStreamSynchronizeWithTimeout execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]        synchronize stream with timeout failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] During handling of the above exception, another exception occurred:
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     output = func(*args, **kwargs)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 337, in execute_model
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     return self.worker.execute_model(scheduler_output)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 490, in execute_model
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     output = self.model_runner.execute_model(scheduler_output, intermediate_tensors)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1746, in execute_model
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     with self.synchronize_input_prep():
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 158, in __exit__
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     self.gen.throw(typ, value, traceback)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3498, in synchronize_input_prep
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     self.prepare_inputs_event.record()
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/npu/streams.py", line 151, in record
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     super(Event, self).record(stream)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] RuntimeError: LaunchRecordTask:../torch_npu/csrc/core/npu/interface/AsyncTaskQueueInterface.cpp:215 NPU function error: aclrtRecordEvent(eventParam_.event, npuStream), error code is 507018
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] [ERROR] 2026-09-01-21:22:08 (PID:746942, Device:1, RankID:-1) ERR00100 PTA call acl api failed
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] EE9999: Inner Error!
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] EE9999[PID: 746942] 2026-09-01-21:22:08.758.397 (EE9999):  Failed to submit record task, retCode=0x715002a.[FUNC:Record][FILE:event.cc][LINE:487]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]         TraceBack (most recent call last):
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]        rtEventRecord execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]        record event failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] WorkerProc hit an exception.
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     output = func(*args, **kwargs)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 337, in execute_model
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     return self.worker.execute_model(scheduler_output)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 490, in execute_model
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     output = self.model_runner.execute_model(scheduler_output, intermediate_tensors)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1746, in execute_model
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     with self.synchronize_input_prep():
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 137, in __enter__
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     return next(self.gen)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3494, in synchronize_input_prep
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     self.prepare_inputs_event.synchronize()
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/npu/streams.py", line 192, in synchronize
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     super(Event, self).synchronize()
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] RuntimeError: synchronize:../torch_npu/csrc/core/npu/NPUEvent.cpp:212 NPU function error: aclrtSynchronizeEvent(event_), error code is 507018
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] [ERROR] 2026-09-01-21:22:08 (PID:746942, Device:1, RankID:-1) ERR00100 PTA call acl api failed
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] EE9999: Inner Error!
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] EE9999[PID: 746942] 2026-09-01-21:22:08.764.949 (EE9999):  rtEventSynchronize execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]         TraceBack (most recent call last):
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]        wait event to be complete failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] Traceback (most recent call last):
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 957, in worker_busy_loop
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     output = func(*args, **kwargs)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 337, in execute_model
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     return self.worker.execute_model(scheduler_output)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/worker.py", line 490, in execute_model
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     output = self.model_runner.execute_model(scheduler_output, intermediate_tensors)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     return func(*args, **kwargs)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/home/p00801009/vllm-ascend/vllm_ascend/worker/model_runner_v1.py", line 1746, in execute_model
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     with self.synchronize_input_prep():
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/contextlib.py", line 137, in __enter__
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     return next(self.gen)
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]            ^^^^^^^^^^^^^^
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3494, in synchronize_input_prep
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     self.prepare_inputs_event.synchronize()
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]   File "/usr/local/python3.11.10/lib/python3.11/site-packages/torch_npu/npu/streams.py", line 192, in synchronize
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]     super(Event, self).synchronize()
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] RuntimeError: synchronize:../torch_npu/csrc/core/npu/NPUEvent.cpp:212 NPU function error: aclrtSynchronizeEvent(event_), error code is 507018
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] [ERROR] 2026-09-01-21:22:08 (PID:746942, Device:1, RankID:-1) ERR00100 PTA call acl api failed
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] [Error]: The aicpu execution is abnormal.
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]         Rectify the fault based on the error information in the ascend log.
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] EE9999: Inner Error!
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962] EE9999[PID: 746942] 2026-09-01-21:22:08.764.949 (EE9999):  rtEventSynchronize execution failed, reason=aicpu exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]         TraceBack (most recent call last):
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]        wait event to be complete failed, runtime result = 507018[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]
+(Worker_DP0_TP1_EP1 pid=746942) ERROR 09-01 21:22:08 [multiproc_executor.py:962]
+(EngineCore_DP1 pid=746688) INFO 09-01 21:23:08 [shm_broadcast.py:681] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(EngineCore_DP0 pid=746593) INFO 09-01 21:23:08 [shm_broadcast.py:681] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+^C^C^C^C^C^CvLLM started. Log file: log_prefill.log
 
 
 
+[ERROR] AICPU(19717,aicpu_custom_scheduler):2026-09-01-21:21:46.830.162 [sparse_attn_sharedkv_metadata_aicpu.cpp:28][Compute][tid:19791]Start SparseAttnSharedkvMetadataCpuKernel!
+[ERROR] AICPU(19717,aicpu_custom_scheduler):2026-09-01-21:21:46.830.216 [sparse_attn_sharedkv_metadata_aicpu.cpp:36][Compute][tid:19791]End SparseAttnSharedkvMetadataCpuKernel! success: 1
+[ERROR] AICPU(19717,aicpu_custom_scheduler):2026-09-01-21:21:46.848.156 [sparse_attn_sharedkv_metadata_aicpu.cpp:28][Compute][tid:19795]Start SparseAttnSharedkvMetadataCpuKernel!
+[ERROR] AICPU(19717,aicpu_custom_scheduler):2026-09-01-21:21:46.848.219 [sparse_attn_sharedkv_metadata_aicpu.cpp:36][Compute][tid:19795]End SparseAttnSharedkvMetadataCpuKernel! success: 1
+[ERROR] AICPU(19717,aicpu_custom_scheduler):2026-09-01-21:21:46.851.040 [sparse_attn_sharedkv_metadata_aicpu.cpp:28][Compute][tid:19791]Start SparseAttnSharedkvMetadataCpuKernel!
+[ERROR] AICPU(19717,aicpu_custom_scheduler):2026-09-01-21:21:46.851.072 [sparse_attn_sharedkv_metadata_aicpu.cpp:36][Compute][tid:19791]End SparseAttnSharedkvMetadataCpuKernel! success: 1
+~
 
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.588.771 [stars_engine.cc:1548]44115 ProcLogicCqReport:Task run failed, device_id=1, stream_id=46, task_id=62036, sqe_type=1(aicpu), errType=0x1(task exception), sqSwStatus=0x1
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.590.172 [device_error_proc.cc:1644]44115 ProcessStarsAicpuErrorInfo:The error from device(chipId:0, dieId:1), serial number is 2, an exception occurred during AICPU execution, stream_id:46, task_id:62036, errcode:1, msg:execute kernel param invalid.
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.590.228 [davinci_task.cc:209]44115 SetStarsResultForDavinciTask:AICPU Kernel task happen error, retCode=0x2a.
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.593.504 [davinci_kernel_task.cc:1729]44115 PreCheckTaskErr:Kernel task happen error, retCode=0x2a, [aicpu exception].
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.593.532 [davinci_kernel_task.cc:1435]44115 PrintAicpuErrorInfo:Aicpu kernel execute failed, device_id=1, stream_id=46, task_id=62036, soName=8786079630598814386.so, funcName=RunCpuKernel, kernelName=SparseAttnSharedkvMetadata, errorCode=0x2a.
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.593.544 [davinci_kernel_task.cc:1445]44115 PrintAicpuErrorInfo:Aicpu kernel execute failed, device_id=1, stream_id=46, task_id=62036, fault op_name=.
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.594.663 [stream.cc:1472]44115 GetError:Stream Synchronize failed, stream_id=46, retCode=0x2a, [aicpu exception].
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.594.666 [stream.cc:1475]44115 GetError:AICPU Kernel task happen error, retCode=0x2a.
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.594.676 [stream.cc:1475]44115 GetError:Aicpu kernel execute failed, device_id=1, stream_id=46, task_id=62036, fault op_name=.
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.594.681 [stream.cc:3697]44115 EnterFailureAbort:stream_id=46 enter failure abort.
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.594.694 [stream.cc:1613]43863 SynchronizeExecutedTask:context is abort, status=0x715002a.
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.594.702 [stream.cc:1667]43863 SynchronizeImpl:failed, stream_id=46, error=0x715002a
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.594.703 [stars_engine.cc:1439]44115 StarsResumeRtsq:stop scheduling in abort failure mode: stream_id=46, sq_id=3, sq_head=596, task_id=62036, taskType=1.
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.594.706 [api_error.cc:1029]43863 StreamSynchronize:Stream synchronize failed, stream_id=46, timeout=-1ms.
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.594.715 [api_c_stream.cc:183]43863 rtStreamSynchronizeWithTimeout:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.594.720 [error_message_manage.cc:65]43863 FuncErrorReason:rtStreamSynchronizeWithTimeout execution failed, reason=aicpu exception
-[ERROR] ASCENDCL(43863,):2026-08-28-14:23:21.595.161 [stream.cpp:167]43863 aclrtSynchronizeStreamWithTimeoutImpl:synchronize stream with timeout failed, runtime result = 507018
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.596.185 [engine.cc:142]43863 SubmitTask:context is abort, status=0x715002a.
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.596.192 [event.cc:487]43863 Record:Failed to submit record task, retCode=0x715002a.
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.596.208 [event.cc:105]43863 EventIdCountSub:event_id=19, error free
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.596.211 [api_error.cc:1252]43863 EventRecord:Record event failed.
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.596.217 [api_c.cc:731]43863 rtEventRecord:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.596.221 [error_message_manage.cc:65]43863 FuncErrorReason:rtEventRecord execution failed, reason=aicpu exception
-[ERROR] ASCENDCL(43863,):2026-08-28-14:23:21.596.357 [event.cpp:107]43863 aclrtRecordEventImpl:record event failed, runtime result = 507018
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.603.410 [api_impl.cc:2255]43863 EventSynchronize:context is abort, status=0x715002a.
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.603.422 [api_c.cc:764]43863 rtEventSynchronize:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
-[ERROR] RUNTIME(43863,):2026-08-28-14:23:21.603.426 [error_message_manage.cc:65]43863 FuncErrorReason:rtEventSynchronize execution failed, reason=aicpu exception
-[ERROR] ASCENDCL(43863,):2026-08-28-14:23:21.603.570 [event.cpp:197]43863 aclrtSynchronizeEventImpl:wait event to be complete failed, runtime result = 507018
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.209.794 [context.cc:708]43863 Synchronize:context is abort, status=0x715002a.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.209.810 [api_error.cc:2698]43863 DeviceSynchronize:Device synchronize failed.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.209.824 [api_c_device.cc:245]43863 rtDeviceSynchronizeWithTimeout:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.209.829 [error_message_manage.cc:65]43863 FuncErrorReason:rtDeviceSynchronizeWithTimeout execution failed, reason=aicpu exception
-[ERROR] ASCENDCL(43863,):2026-08-28-14:25:33.210.251 [device.cpp:198]43863 aclrtSynchronizeDeviceWithTimeoutImpl:wait for compute device to finish failed, runtime result = 507018.
-[ERROR] APP(43863,):2026-08-28-14:25:33.210.480 43863 THPModule_npu_shutdown_synchronize:InitNpuBindings.cpp:126: "[PTA]:"NPU shutdown synchronize device failed.""
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.210.531 [api_impl.cc:2284]43863 EventQueryStatus:context is abort, status=0x715002a.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.210.537 [api_c.cc:802]43863 rtEventQueryStatus:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.210.540 [error_message_manage.cc:65]43863 FuncErrorReason:rtEventQueryStatus execution failed, reason=aicpu exception
-[ERROR] ASCENDCL(43863,):2026-08-28-14:25:33.210.681 [event.cpp:157]43863 aclrtQueryEventStatusImpl:[Query][Status]query event recorded status failed, runtime result = 507018
-[ERROR] APP(43863,):2026-08-28-14:25:33.211.327 aclAppLog call vsnprintf_s failed
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.211.463 [context.cc:708]43863 Synchronize:context is abort, status=0x715002a.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.211.467 [api_error.cc:2698]43863 DeviceSynchronize:Device synchronize failed.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.211.472 [api_c_device.cc:245]43863 rtDeviceSynchronizeWithTimeout:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.211.475 [error_message_manage.cc:65]43863 FuncErrorReason:rtDeviceSynchronizeWithTimeout execution failed, reason=aicpu exception
-[ERROR] ASCENDCL(43863,):2026-08-28-14:25:33.211.616 [device.cpp:198]43863 aclrtSynchronizeDeviceWithTimeoutImpl:wait for compute device to finish failed, runtime result = 507018.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.211.761 [context.cc:708]43863 Synchronize:context is abort, status=0x715002a.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.211.764 [api_error.cc:2698]43863 DeviceSynchronize:Device synchronize failed.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.211.768 [api_c_device.cc:245]43863 rtDeviceSynchronizeWithTimeout:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.211.770 [error_message_manage.cc:65]43863 FuncErrorReason:rtDeviceSynchronizeWithTimeout execution failed, reason=aicpu exception
-[ERROR] ASCENDCL(43863,):2026-08-28-14:25:33.211.884 [device.cpp:198]43863 aclrtSynchronizeDeviceWithTimeoutImpl:wait for compute device to finish failed, runtime result = 507018.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.211.990 [context.cc:708]43863 Synchronize:context is abort, status=0x715002a.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.211.994 [api_error.cc:2698]43863 DeviceSynchronize:Device synchronize failed.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.211.997 [api_c_device.cc:245]43863 rtDeviceSynchronizeWithTimeout:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.211.999 [error_message_manage.cc:65]43863 FuncErrorReason:rtDeviceSynchronizeWithTimeout execution failed, reason=aicpu exception
-[ERROR] ASCENDCL(43863,):2026-08-28-14:25:33.212.115 [device.cpp:198]43863 aclrtSynchronizeDeviceWithTimeoutImpl:wait for compute device to finish failed, runtime result = 507018.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.212.182 [context.cc:708]43863 Synchronize:context is abort, status=0x715002a.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.212.185 [api_error.cc:2698]43863 DeviceSynchronize:Device synchronize failed.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.212.188 [api_c_device.cc:245]43863 rtDeviceSynchronizeWithTimeout:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.212.191 [error_message_manage.cc:65]43863 FuncErrorReason:rtDeviceSynchronizeWithTimeout execution failed, reason=aicpu exception
-[ERROR] ASCENDCL(43863,):2026-08-28-14:25:33.212.288 [device.cpp:198]43863 aclrtSynchronizeDeviceWithTimeoutImpl:wait for compute device to finish failed, runtime result = 507018.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.212.355 [context.cc:708]43863 Synchronize:context is abort, status=0x715002a.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.212.358 [api_error.cc:2698]43863 DeviceSynchronize:Device synchronize failed.
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.212.361 [api_c_device.cc:245]43863 rtDeviceSynchronizeWithTimeout:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
-[ERROR] RUNTIME(43863,):2026-08-28-14:25:33.212.363 [error_message_manage.cc:65]43863 FuncErrorReason:rtDeviceSynchronizeWithTimeout execution failed, reason=aicpu exception
-[ERROR] ASCENDCL(43863,):2026-08-28-14:25:33.212.459 [device.cpp:198]43863 aclrtSynchronizeDeviceWithTimeoutImpl:wait for compute device to finish failed, runtime result = 507018.
-[ERROR] TUNE(43863,):2026-08-28-14:25:33.477.620 [pywrapper.cpp:108][CANNKB][Tid:43863]"Traceback (most recent call last):
-"
-[ERROR] TUNE(43863,):2026-08-28-14:25:33.477.628 [pywrapper.cpp:108][CANNKB][Tid:43863]"  File "/usr/local/python3.11.10/lib/python3.11/multiprocessing/managers.py", line 814, in _callmethod
+
+[ERROR] APP(746942,python):2026-09-01-21:17:45.144.404 746942 parseExpandableSegments:zbal_pytorch_c10_dma.cpp:926: "[PTA]:" NPU function error: [ShmemAllocator Currently do not support detail error log]
+""
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.751.710 [stars_engine.cc:1548]747208 ProcLogicCqReport:Task run failed, device_id=1, stream_id=46, task_id=62036, sqe_type=1(aicpu), errType=0x1(task exception), sqSwStatus=0x1
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.753.126 [device_error_proc.cc:1644]747208 ProcessStarsAicpuErrorInfo:The error from device(chipId:0, dieId:1), serial number is 14, an exception occurred during AICPU execution, stream_id:46, task_id:62036, errcode:1, msg:execute kernel param invalid.
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.753.171 [davinci_task.cc:209]747208 SetStarsResultForDavinciTask:AICPU Kernel task happen error, retCode=0x2a.
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.756.272 [davinci_kernel_task.cc:1729]747208 PreCheckTaskErr:Kernel task happen error, retCode=0x2a, [aicpu exception].
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.756.290 [davinci_kernel_task.cc:1435]747208 PrintAicpuErrorInfo:Aicpu kernel execute failed, device_id=1, stream_id=46, task_id=62036, soName=14505240243109094615.so, funcName=RunCpuKernel, kernelName=SparseAttnSharedkvMetadata, errorCode=0x2a.
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.756.298 [davinci_kernel_task.cc:1445]747208 PrintAicpuErrorInfo:Aicpu kernel execute failed, device_id=1, stream_id=46, task_id=62036, fault op_name=.
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.757.401 [stream.cc:1472]747208 GetError:Stream Synchronize failed, stream_id=46, retCode=0x2a, [aicpu exception].
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.757.404 [stream.cc:1475]747208 GetError:AICPU Kernel task happen error, retCode=0x2a.
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.757.410 [stream.cc:1475]747208 GetError:Aicpu kernel execute failed, device_id=1, stream_id=46, task_id=62036, fault op_name=.
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.757.414 [stream.cc:3697]747208 EnterFailureAbort:stream_id=46 enter failure abort.
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.757.423 [stream.cc:1613]746942 SynchronizeExecutedTask:context is abort, status=0x715002a.
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.757.429 [stream.cc:1667]746942 SynchronizeImpl:failed, stream_id=46, error=0x715002a
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.757.432 [api_error.cc:1029]746942 StreamSynchronize:Stream synchronize failed, stream_id=46, timeout=-1ms.
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.757.434 [stars_engine.cc:1439]747208 StarsResumeRtsq:stop scheduling in abort failure mode: stream_id=46, sq_id=3, sq_head=596, task_id=62036, taskType=1.
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.757.439 [api_c_stream.cc:183]746942 rtStreamSynchronizeWithTimeout:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.757.443 [error_message_manage.cc:65]746942 FuncErrorReason:rtStreamSynchronizeWithTimeout execution failed, reason=aicpu exception
+[ERROR] ASCENDCL(746942,):2026-09-01-21:22:08.757.634 [stream.cpp:167]746942 aclrtSynchronizeStreamWithTimeoutImpl:synchronize stream with timeout failed, runtime result = 507018
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.758.386 [engine.cc:142]746942 SubmitTask:context is abort, status=0x715002a.
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.758.392 [event.cc:487]746942 Record:Failed to submit record task, retCode=0x715002a.
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.758.406 [event.cc:105]746942 EventIdCountSub:event_id=19, error free
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.758.409 [api_error.cc:1252]746942 EventRecord:Record event failed.
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.758.415 [api_c.cc:731]746942 rtEventRecord:ErrCode=507018, desc=[aicpu exception], InnerCode=0x715002a
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.758.419 [error_message_manage.cc:65]746942 FuncErrorReason:rtEventRecord execution failed, reason=aicpu exception
+[ERROR] ASCENDCL(746942,):2026-09-01-21:22:08.758.546 [event.cpp:107]746942 aclrtRecordEventImpl:record event failed, runtime result = 507018
+[ERROR] RUNTIME(746942,):2026-09-01-21:22:08.764.929 [api_impl.cc:2255]746942 EventSynchronize:context is abort, status=0x715002a.
+
+
+

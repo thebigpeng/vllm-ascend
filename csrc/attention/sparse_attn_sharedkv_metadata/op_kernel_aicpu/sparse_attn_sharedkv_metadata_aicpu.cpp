@@ -25,12 +25,15 @@ namespace aicpu {
 uint32_t
 SparseAttnSharedkvMetadataCpuKernel::Compute(CpuKernelContext &ctx)
 {
+    KERNEL_LOG_ERROR("Start SparseAttnSharedkvMetadataCpuKernel!");
     bool success = Prepare(ctx);
     if (!success) {
+        KERNEL_LOG_ERROR("Prepare is failed!");
         return KERNEL_STATUS_PARAM_INVALID;
     }
     SplitResult splitRes {aicCoreNum_, aivCoreNum_};
     success = BalanceSchedule(splitRes) && GenMetaData(splitRes);
+    KERNEL_LOG_ERROR("End SparseAttnSharedkvMetadataCpuKernel! success: %d",success);
     return success ? KERNEL_STATUS_OK : KERNEL_STATUS_PARAM_INVALID;
 }
 

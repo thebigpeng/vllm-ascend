@@ -13,6 +13,13 @@ export VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY=0
 export VLLM_ASCEND_ZBAL_MOE_NVL_BYTES=10240
 export VLLM_ASCEND_ZBAL_MOE_RDMA_BYTES=10240
 export VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK=1024
+export ASCEND_LAUNCH_BLOCKING=1
+export VLLM_ASCEND_DSA_AICPU_AUDIT=1
+export VLLM_ASCEND_SAS_ACLNN_DEBUG=1
+#export VLLM_ASCEND_SAS_OP_DEBUG_DIR="/home/p00801009/vllm-ascend/vllm_test"
+#export ZBAL_HCCL_OP="allgather,alltoall,broadcast,scatter,reduce_scatter,_reduce_scatter_base,alltoall_base,send,recv,allreduce"
+
+rm -rf /root/ascend/log/*
 
 #MODEL_PATH="/home/weights/Qwen3-32B-W8A8/"
 MODEL_PATH="/home/weights/deepseekv4-flash-w8a8-mtp/"
@@ -25,7 +32,6 @@ SERVED_MODEL_NAME="dsv4"
 #export ZBAL_HCCL_OP="alltoall"
 #export ZBAL_HCCL_OP="reduce_scatter,alltoall,allgather"
 
-export ASCEND_LAUNCH_BLOCKING=1
 export MMC_LOCAL_CONFIG_PATH=/home/p00801009/vllm-ascend/vllm_test/mmc-local.conf
 
 export TASK_QUEUE_ENABLE=1
@@ -65,7 +71,7 @@ source /usr/local/Ascend/ascend-toolkit/set_env.sh
 source /usr/local/Ascend/nnal/atb/set_env.sh
 
 export PYTHONHASHSEED=0
-export HCCL_BUFFSIZE=2048
+export HCCL_BUFFSIZE=4096
 export OMP_PROC_BIND=false
 export OMP_NUM_THREADS=10
 #export PYTORCH_NPU_ALLOC_CONF=expandable_segments:True
