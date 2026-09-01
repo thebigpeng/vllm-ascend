@@ -56,11 +56,17 @@
 #include <c10/util/Exception.h>
 #include <c10/util/Logging.h>
 #include <array>
+#include <atomic>
+#include <chrono>
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
+#include <iomanip>
 #include <iostream>
 #include <memory>
 #include <mutex>
 #include <sstream>
+#include <unistd.h>
 #include <unordered_map>
 
 namespace vllm_ascend {
@@ -1332,8 +1338,10 @@ auto get_valid_tensor = [](const c10::optional<at::Tensor> &tensor_opt, at::Devi
 // ---------------------------------------------------------------------------
 // Temporary debug tracing for the PD-disaggregation failure investigation
 // (layer 2: torch binding). Same gate as the aclnn layer probes:
-// VLLM_ASCEND_SAS_ACLNN_DEBUG — set only on the P node (eager). When unset
-// every probe is a no-op boolean check, safe for graph capture on the D node.
+// VLLM_ASCEND_SAS_ACLNN_DEBUG — set only on the P node (eager). The gate is
+// enforced INSIDE SasDbgLogTb so every call site is safe by construction,
+// even the bare pre_exec/post_exec probes. Format matches the L4 aclnn
+// probes ([SAS_ACLNN][...][pid=...][seq=...]) for cross-layer correlation.
 // NOTE: remove before merging.
 // ---------------------------------------------------------------------------
 static bool SasAclnnDebugEnabled()
@@ -1342,9 +1350,24 @@ static bool SasAclnnDebugEnabled()
     return enabled;
 }
 
+static uint64_t SasTbNextSeq()
+{
+    static std::atomic<uint64_t> s_seq{0};
+    return s_seq.fetch_add(1) + 1;
+}
+
 static void SasDbgLogTb(const std::string &stage)
 {
-    std::cout << "[SAS_TB][" << stage << "]" << std::endl;
+    if (!SasAclnnDebugEnabled()) {
+        return;
+    }
+    auto now = std::chrono::system_clock::now();
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count() % 1000;
+    std::time_t t = std::chrono::system_clock::to_time_t(now);
+    std::tm tmBuf;
+    (void)localtime_r(&t, &tmBuf);
+    std::cout << "[SAS_TB][" << std::put_time(&tmBuf, "%H:%M:%S") << "." << std::setw(3) << std::setfill('0') << ms
+              << "][pid=" << getpid() << "][seq=" << SasTbNextSeq() << "] " << stage << std::endl;
 }
 
 at::Tensor npu_sparse_attn_sharedkv_metadata_npu(

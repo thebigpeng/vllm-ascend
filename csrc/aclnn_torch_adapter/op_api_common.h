@@ -25,9 +25,14 @@
 #include <type_traits>
 #include <vector>
 
+#include <atomic>
+#include <chrono>
 #include <cstdlib>
+#include <ctime>
+#include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <unistd.h>
 
 #include <torch_npu/csrc/framework/utils/CalcuOpUtil.h>
 #include <torch_npu/csrc/framework/utils/OpAdapter.h>
@@ -64,7 +69,22 @@ inline bool SasOpShouldTrace(const char *op_name)
 
 inline void SasOpDbgLog(const std::string &stage)
 {
-  std::cout << "[SAS_EXEC][" << stage << "]" << std::endl;
+  // Gate enforced inside the logger as a safety net on top of the
+  // sasTrace-filtered call sites in EXEC_NPU_CMD.
+  if (!SasOpDebugEnabled()) {
+    return;
+  }
+  static std::atomic<uint64_t> s_seq{0};
+  auto now = std::chrono::system_clock::now();
+  auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+                now.time_since_epoch()).count() % 1000;
+  std::time_t t = std::chrono::system_clock::to_time_t(now);
+  std::tm tmBuf;
+  (void)localtime_r(&t, &tmBuf);
+  std::cout << "[SAS_EXEC][" << std::put_time(&tmBuf, "%H:%M:%S") << "."
+            << std::setw(3) << std::setfill('0') << ms << "][pid=" << getpid()
+            << "][seq=" << (s_seq.fetch_add(1) + 1) << "] " << stage
+            << std::endl;
 }
 
 #define NPU_NAME_SPACE at_npu::native
