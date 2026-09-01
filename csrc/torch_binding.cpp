@@ -1329,6 +1329,24 @@ auto get_valid_tensor = [](const c10::optional<at::Tensor> &tensor_opt, at::Devi
     return tensor_opt.has_value() ? tensor_opt : torch::empty({0}, torch::dtype(torch::kInt32).device(device));
 };
 
+// ---------------------------------------------------------------------------
+// Temporary debug tracing for the PD-disaggregation failure investigation
+// (layer 2: torch binding). Same gate as the aclnn layer probes:
+// VLLM_ASCEND_SAS_ACLNN_DEBUG — set only on the P node (eager). When unset
+// every probe is a no-op boolean check, safe for graph capture on the D node.
+// NOTE: remove before merging.
+// ---------------------------------------------------------------------------
+static bool SasAclnnDebugEnabled()
+{
+    static const bool enabled = (::getenv("VLLM_ASCEND_SAS_ACLNN_DEBUG") != nullptr);
+    return enabled;
+}
+
+static void SasDbgLogTb(const std::string &stage)
+{
+    std::cout << "[SAS_TB][" << stage << "]" << std::endl;
+}
+
 at::Tensor npu_sparse_attn_sharedkv_metadata_npu(
     int64_t num_heads_q,
     int64_t num_heads_kv,
@@ -1368,6 +1386,20 @@ at::Tensor npu_sparse_attn_sharedkv_metadata_npu(
         output_device = seqused_kv.value().device();
     }
     at::Tensor output = torch::empty({OUTPUT_SIZE}, torch::dtype(torch::kInt32).device(output_device));
+    if (SasAclnnDebugEnabled()) {
+        std::ostringstream oss;
+        oss << "entry dev=" << output_device.str() << " bs=" << batch_size << " maxSq=" << max_seqlen_q
+            << " maxSkv=" << max_seqlen_kv << " winL=" << ori_win_left << " topk=" << cmp_topk
+            << " ratio=" << cmp_ratio
+            << " | ptrs: cuQ=0x" << std::hex << (cu_seqlens_q.has_value() ? cu_seqlens_q->data_ptr() : nullptr)
+            << " cuOriKv=0x" << (cu_seqlens_ori_kv.has_value() ? cu_seqlens_ori_kv->data_ptr() : nullptr)
+            << " cuCmpKv=0x" << (cu_seqlens_cmp_kv.has_value() ? cu_seqlens_cmp_kv->data_ptr() : nullptr)
+            << " seqQ=0x" << (seqused_q.has_value() ? seqused_q->data_ptr() : nullptr)
+            << " seqKv=0x" << (seqused_kv.has_value() ? seqused_kv->data_ptr() : nullptr)
+            << " OUT=0x" << output.data_ptr() << std::dec
+            << " OUT_size=" << output.nbytes() << "B";
+        SasDbgLogTb(oss.str());
+    }
 
     auto cu_seqlens_q_val = get_valid_tensor(cu_seqlens_q, output_device);
     auto cu_seqlens_ori_kv_val = get_valid_tensor(cu_seqlens_ori_kv, output_device);
@@ -1380,10 +1412,12 @@ at::Tensor npu_sparse_attn_sharedkv_metadata_npu(
     char *layout_q_ptr = const_cast<char *>(layout_q_str.c_str());
     char *layout_kv_ptr = const_cast<char *>(layout_kv_str.c_str());
 
+    SasDbgLogTb("pre_exec");
     EXEC_NPU_CMD(aclnnSparseAttnSharedkvMetadata, cu_seqlens_q_val, cu_seqlens_ori_kv_val, cu_seqlens_cmp_kv_val, seqused_q_val,
                     seqused_kv_val, num_heads_q, num_heads_kv, head_dim, batch_size, max_seqlen_q, max_seqlen_kv, ori_topk, cmp_topk,
                     cmp_ratio, ori_mask_mode, cmp_mask_mode, ori_win_left, ori_win_right, layout_q_ptr,
                     layout_kv_ptr, has_ori_kv, has_cmp_kv, output);
+    SasDbgLogTb("post_exec");
     return output;
 }
 

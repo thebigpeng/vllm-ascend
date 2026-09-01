@@ -25,6 +25,10 @@
 #include <type_traits>
 #include <vector>
 
+#include <cstdlib>
+#include <iostream>
+#include <sstream>
+
 #include <torch_npu/csrc/framework/utils/CalcuOpUtil.h>
 #include <torch_npu/csrc/framework/utils/OpAdapter.h>
 #include "torch_npu/csrc/aten/NPUNativeFunctions.h"
@@ -35,6 +39,33 @@
 #include "torch_npu/csrc/framework/utils/OpPreparation.h"
 #include "NPUBridge.h"
 #include "NPUStorageImpl.h"
+
+// ---------------------------------------------------------------------------
+// Temporary debug tracing for the PD-disaggregation failure investigation
+// (layer 3: EXEC_NPU_CMD macro). Gate: VLLM_ASCEND_SAS_ACLNN_DEBUG, set only
+// on the P node (eager). Tracing is additionally filtered to the
+// SparseAttnSharedkvMetadata op so the shared macro does not flood the log
+// with every other op. When unset every probe is a no-op boolean check,
+// safe for graph capture on the D node.
+// NOTE: remove before merging.
+// ---------------------------------------------------------------------------
+inline bool SasOpDebugEnabled()
+{
+  static const bool enabled = (::getenv("VLLM_ASCEND_SAS_ACLNN_DEBUG") != nullptr);
+  return enabled;
+}
+
+// True when this EXEC_NPU_CMD invocation is for the op under investigation.
+inline bool SasOpShouldTrace(const char *op_name)
+{
+  return SasOpDebugEnabled() &&
+         (std::string(op_name).find("SparseAttnSharedkvMetadata") != std::string::npos);
+}
+
+inline void SasOpDbgLog(const std::string &stage)
+{
+  std::cout << "[SAS_EXEC][" << stage << "]" << std::endl;
+}
 
 #define NPU_NAME_SPACE at_npu::native
 using namespace at;
@@ -531,6 +562,8 @@ typedef void (*ReleaseHugeMem)(void *, bool);
 
 #define EXEC_NPU_CMD(aclnn_api, ...)                                          \
   do {                                                                        \
+    const bool sasTrace = SasOpShouldTrace(#aclnn_api);                       \
+    if (sasTrace) { SasOpDbgLog("L3 enter " #aclnn_api); }                    \
     static const auto getWorkspaceSizeFuncAddr =                              \
         GetOpApiFuncAddr(#aclnn_api "GetWorkspaceSize");                      \
     static const auto opApiFuncAddr = GetOpApiFuncAddr(#aclnn_api);           \
@@ -555,11 +588,19 @@ typedef void (*ReleaseHugeMem)(void *, bool);
     if (initMemFunc) {                                                        \
       initMemFunc(nullptr, false);                                            \
     }                                                                         \
+    if (sasTrace) { SasOpDbgLog("L3 symbols+initmem ok"); }                   \
     auto converted_params =                                                   \
         ConvertTypes(__VA_ARGS__, workspace_size_addr, executor_addr);        \
     static auto getWorkspaceSizeFunc =                                        \
         ConvertToOpApiFunc(converted_params, getWorkspaceSizeFuncAddr);       \
     auto workspace_status = call(getWorkspaceSizeFunc, converted_params);     \
+    if (sasTrace) {                                                           \
+      std::ostringstream ossL3;                                               \
+      ossL3 << "L3 GetWorkspaceSize ret=" << workspace_status                 \
+            << " wsSize=" << workspace_size                                   \
+            << " executor=" << (void *)executor;                              \
+      SasOpDbgLog(ossL3.str());                                               \
+    }                                                                         \
     TORCH_CHECK(workspace_status == 0,                                        \
                 "call " #aclnn_api " failed, detail:", aclGetRecentErrMsg()); \
     void *workspace_addr = nullptr;                                           \
@@ -570,13 +611,30 @@ typedef void (*ReleaseHugeMem)(void *, bool);
           at::empty({workspace_size}, options.dtype(kByte));                  \
       workspace_addr = const_cast<void *>(workspace_tensor.storage().data()); \
     }                                                                         \
+    if (sasTrace) {                                                           \
+      std::ostringstream ossL3w;                                              \
+      ossL3w << "L3 workspace ready addr=" << workspace_addr                  \
+             << " size=" << workspace_size;                                   \
+      SasOpDbgLog(ossL3w.str());                                              \
+    }                                                                         \
     auto acl_call = [converted_params, workspace_addr, workspace_size,        \
-                     acl_stream, executor]() -> int {                         \
+                     acl_stream, executor, sasTrace]() -> int {               \
       typedef int (*OpApiFunc)(void *, uint64_t, aclOpExecutor *,             \
                                const aclrtStream);                            \
       OpApiFunc opApiFunc = reinterpret_cast<OpApiFunc>(opApiFuncAddr);       \
+      if (sasTrace) {                                                         \
+        std::ostringstream ossL3r;                                            \
+        ossL3r << "L3 RUN enter stream=" << (void *)acl_stream                \
+               << " executor=" << (void *)executor;                           \
+        SasOpDbgLog(ossL3r.str());                                            \
+      }                                                                       \
       auto api_ret =                                                          \
           opApiFunc(workspace_addr, workspace_size, executor, acl_stream);    \
+      if (sasTrace) {                                                         \
+        std::ostringstream ossL3e;                                            \
+        ossL3e << "L3 RUN end ret=" << api_ret;                               \
+        SasOpDbgLog(ossL3e.str());                                            \
+      }                                                                       \
       TORCH_CHECK(api_ret == 0, "call " #aclnn_api " failed, detail:",        \
                   aclGetRecentErrMsg());                                      \
       ReleaseConvertTypes(converted_params);                                  \
@@ -591,6 +649,7 @@ typedef void (*ReleaseHugeMem)(void *, bool);
     cmd.Name(#aclnn_api);                                                     \
     cmd.SetCustomHandler(acl_call);                                           \
     cmd.Run();                                                                \
+    if (sasTrace) { SasOpDbgLog("L3 cmd.Run() done"); }                       \
     if (unInitMemFunc) {                                                      \
       unInitMemFunc(nullptr, false);                                          \
     }                                                                         \
