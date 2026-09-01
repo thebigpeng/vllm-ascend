@@ -57,6 +57,7 @@
 #include <c10/util/Logging.h>
 #include <array>
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 #include <memory>
 #include <mutex>
@@ -1329,6 +1330,24 @@ auto get_valid_tensor = [](const c10::optional<at::Tensor> &tensor_opt, at::Devi
     return tensor_opt.has_value() ? tensor_opt : torch::empty({0}, torch::dtype(torch::kInt32).device(device));
 };
 
+// DMA bypass for the SAS metadata op output (temporary debug/fix aid).
+//
+// Background: with the ZBAL mix-alloc allocator plugged into torch, every
+// runtime torch::empty() after the GVA heap init is routed into the SMA/GVA
+// heap (MemFabric symmetric memory at >=20T). If the AICPU execution
+// framework cannot accept a GVA address for this op's output descriptor,
+// aclnn execution fails with "AICPU kernel execute failed ... param invalid"
+// BEFORE the kernel's Compute() runs. Setting VLLM_ASCEND_SAS_OP_DMA_BYPASS=1
+// allocates the 4KB output via aclrtMalloc instead, which always yields plain
+// DMA device memory outside the GVA range — used to confirm/mitigate that
+// failure mode. Note the deleter synchronizes the allocating stream before
+// aclrtFree because the AICPU task writes the buffer asynchronously.
+static bool SasDmaBypassEnabled()
+{
+    static const bool enabled = ::getenv("VLLM_ASCEND_SAS_OP_DMA_BYPASS") != nullptr;
+    return enabled;
+}
+
 at::Tensor npu_sparse_attn_sharedkv_metadata_npu(
     int64_t num_heads_q,
     int64_t num_heads_kv,
@@ -1367,7 +1386,29 @@ at::Tensor npu_sparse_attn_sharedkv_metadata_npu(
     } else if (seqused_kv.has_value()) {
         output_device = seqused_kv.value().device();
     }
-    at::Tensor output = torch::empty({OUTPUT_SIZE}, torch::dtype(torch::kInt32).device(output_device));
+    at::Tensor output;
+    if (SasDmaBypassEnabled()) {
+        // Plain DMA allocation via the CANN runtime: bypasses the pluggable
+        // torch allocator entirely, so the buffer never lands in the ZBAL
+        // SMA/GVA heap.
+        const c10_npu::OptionalNPUGuard npu_guard(output_device);
+        void *raw = nullptr;
+        aclrtStream alloc_stream = c10_npu::getCurrentNPUStream().stream(false);
+        aclError malloc_err = aclrtMalloc(&raw, OUTPUT_SIZE * sizeof(int32_t), ACL_MEM_MALLOC_HUGE_FIRST);
+        TORCH_CHECK(malloc_err == ACL_SUCCESS,
+                    "SAS DMA bypass: aclrtMalloc failed, err=", static_cast<int>(malloc_err));
+        output = at::from_blob(
+            raw, {OUTPUT_SIZE},
+            [alloc_stream](void *p) {
+                // The AICPU metadata task writes this buffer asynchronously
+                // on alloc_stream; make sure it finished before freeing.
+                (void)aclrtSynchronizeStream(alloc_stream);
+                (void)aclrtFree(p);
+            },
+            torch::dtype(torch::kInt32).device(output_device));
+    } else {
+        output = torch::empty({OUTPUT_SIZE}, torch::dtype(torch::kInt32).device(output_device));
+    }
 
     auto cu_seqlens_q_val = get_valid_tensor(cu_seqlens_q, output_device);
     auto cu_seqlens_ori_kv_val = get_valid_tensor(cu_seqlens_ori_kv, output_device);
