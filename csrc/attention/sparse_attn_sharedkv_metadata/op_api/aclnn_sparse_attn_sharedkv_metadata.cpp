@@ -86,10 +86,15 @@ static void SasDbgLog(const std::string &stage)
         }                                                 \
     } while (0)
 
-// Device pointer of an (optional) aclTensor; nullptr-safe.
+// Identity of an (optional) aclTensor. aclTensor is an opaque type in this
+// build (no visible field definitions), so we cannot read the device pointer
+// here; the tensor handle identity is still diagnostic: l0op::Contiguous
+// returns the SAME handle for an already-contiguous input and a NEW handle
+// when it inserts a device-copy subtask. Device addresses are covered by the
+// Python-side audit (tensor.data_ptr()).
 static const void *SasDbgPtr(const aclTensor *t)
 {
-    return (t == nullptr) ? nullptr : t->devicePtr;
+    return static_cast<const void *>(t);
 }
 
 #ifdef __cplusplus
