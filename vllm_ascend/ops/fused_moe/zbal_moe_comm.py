@@ -111,6 +111,10 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         self.low_latency_num_max_tokens_per_rank = (
             envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK
         )
+        # Sender-side INT8 per-token quantization for low-latency dispatch:
+        # the receiver gets int8 tokens + dequant scales and skips
+        # npu_dynamic_quant (dynamic_scale path in moe_mlp).
+        self.low_latency_int8 = envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_INT8
 
         self._adapter = None
         # Normal dispatch dirties the low-latency buffer; this flag marks
@@ -228,11 +232,13 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             # RDMA slot offsets, so a dynamic value would desynchronize
             # buffer size from actual write addresses.
             num_max_tokens_per_rank = self.low_latency_num_max_tokens_per_rank
-            recv_x, recv_count, handle_dict, event = self._adapter.low_latency_dispatch(
-                x=hidden_states,
-                topk_idx=topk_idx,
-                num_max_tokens_per_rank=num_max_tokens_per_rank,
-                use_fp8=False,
+            recv_x, recv_count, handle_dict, recv_x_scales, event = (
+                self._adapter.low_latency_dispatch(
+                    x=hidden_states,
+                    topk_idx=topk_idx,
+                    num_max_tokens_per_rank=num_max_tokens_per_rank,
+                    use_fp8=self.low_latency_int8,
+                )
             )
             # recv_count ([num_local_experts]) is the per-expert token count
             # used as group_list by npu_grouped_matmul. Keep it as a device

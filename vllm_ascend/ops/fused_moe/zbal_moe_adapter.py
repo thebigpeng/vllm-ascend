@@ -279,23 +279,27 @@ class ZBALMoEAdapter:
         use_ue8m0: bool = False,
         async_finish: bool = False,
         return_recv_hook: bool = False,
-    ) -> Tuple[Any, torch.Tensor, Dict[str, Any], Any]:
+    ) -> Tuple[Any, torch.Tensor, Dict[str, Any], Optional[torch.Tensor], Any]:
         """Low-latency dispatch using ZBAL Buffer.
 
         Args:
             x: Input tokens, shape ``[num_tokens, hidden]``, dtype ``bfloat16``.
             topk_idx: Expert indices, shape ``[num_tokens, num_topk]``, dtype ``int64``.
             num_max_tokens_per_rank: Max tokens to dispatch per rank.
-            use_fp8: Whether to enable FP8 casting.
+            use_fp8: Whether to enable sender-side INT8 per-token dynamic
+                quantization (aligned with the normal dispatch path).
             round_scale: Whether to round scales to power of 2.
             use_ue8m0: Whether to use UE8M0 format (requires ``round_scale=True``).
             async_finish: If ``True``, current stream will not wait for completion.
             return_recv_hook: If ``True``, return a receiving hook.
 
         Returns:
-            recv_x: Received tokens (tensor or tuple for FP8).
+            recv_x: Received INT8 tokens, shape ``[num_max_tokens, hidden]``
+                (worst-case capacity; valid rows given by ``recv_count``).
             recv_count: Token count per local expert, shape ``[num_local_experts]``.
             handle_dict: Communication handle and related info.
+            recv_x_scales: Per-token dequant scales, shape ``[num_max_tokens]``
+                (row-aligned with ``recv_x``); ``None`` when ``use_fp8=False``.
             event: Event object.
         """
         logger.debug(
@@ -321,6 +325,11 @@ class ZBALMoEAdapter:
             return_recv_hook=return_recv_hook,
         )
 
+        # With use_fp8=True the buffer returns (int8 tensor, per-token scales).
+        recv_x_scales = None
+        if isinstance(recv_x, tuple):
+            recv_x, recv_x_scales = recv_x
+
         handle_dict = {
             "handle": handle,
             "num_max_tokens_per_rank": num_max_tokens_per_rank,
@@ -334,7 +343,7 @@ class ZBALMoEAdapter:
             "recv_count.shape=%s", type(recv_x).__name__, recv_count.shape,
         )
 
-        return recv_x, recv_count, handle_dict, event
+        return recv_x, recv_count, handle_dict, recv_x_scales, event
 
     def low_latency_combine(
         self,

@@ -136,6 +136,16 @@ env_variables: dict[str, Callable[[], Any]] = {
     "VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK": lambda: int(
         os.getenv("VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK", "128")
     ),
+    # Whether to enable sender-side INT8 per-token dynamic quantization for
+    # ZBAL low-latency MoE dispatch (aligned with the normal dispatch path).
+    # Only effective when VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY=1. Requires a zbal
+    # build with the low_latency INT8 dispatch kernel.
+    # 0 (default): bf16 transport, receiver runs npu_dynamic_quant.
+    # 1: INT8 transport + per-token dequant scales, receiver skips
+    #    npu_dynamic_quant.
+    "VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_INT8": lambda: bool(
+        int(os.getenv("VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_INT8", "0"))
+    ),
 }
 
 # end-env-vars-definition
