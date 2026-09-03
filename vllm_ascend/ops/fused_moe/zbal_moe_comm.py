@@ -54,20 +54,10 @@ from vllm_ascend.ops.fused_moe.zbal_moe_adapter import ZBALMoEAdapter
 
 logger = logging.getLogger(__name__)
 
-# Module-level flag indicating that graph compilation (warmup + capture) is
-# in progress. Set by NPUWorker.compile_or_warm_up_model() before the
-# warmup loop and cleared after capture_model() returns.
-#
-# Why we need this:
-#   combine_low_latency kernel lacks self-cleaning (no ResetMetaState, no
-#   STATE barrier) and relies on external clean_low_latency_buffer which
-#   uses Host-side AclrtMemset — an API that CANNOT be captured by ACL
-#   Graph. Moreover, the FFTS-based low_latency kernels are collective
-#   operations that can deadlock during warmup if ranks progress at
-#   different speeds, causing torch.npu.graph().__enter__()→synchronize()
-#   to hang. Therefore, during the entire graph compilation flow (both
-#   warmup iterations and the final capture), we force fallback to the
-#   normal dispatch/combine path which is graph-compatible.
+# Module-level flag set by NPUWorker to mark graph compilation (warmup +
+# capture) in progress. The low_latency kernels are FFTS collective ops
+# that can deadlock during warmup and are not ACL-Graph-capturable, so we
+# force fallback to the graph-compatible normal dispatch/combine path.
 _in_graph_compilation: bool = False
 
 
@@ -81,13 +71,10 @@ def set_in_graph_compilation(value: bool):
 class MoEZBALCombineMetadata:
     """Combine metadata for ZBAL MoE communication.
 
-    Carries the information needed by :meth:`TokenDispatcherWithZBAL.token_combine`
-    to reverse the dispatch operation.
-
     Attributes:
-        is_low_latency: Whether the corresponding dispatch used the
-            low-latency path. Combine must use the matching path to avoid
-            handle/buffer mismatches that would trigger MTE errors.
+        is_low_latency: Whether the dispatch used the low-latency path;
+            combine must use the matching path to avoid handle/buffer
+            mismatches that would trigger MTE errors.
     """
 
     topk_ids: torch.Tensor
@@ -119,19 +106,15 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
 
         # Read buffer sizes from environment variables.
         self.low_latency_mode = envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY
-        # Static cap for low-latency dispatch buffer. Read once at init and
-        # shared with the adapter. Batches larger than this cap transparently
+        # Static cap for the low-latency dispatch buffer; larger batches
         # fall back to the normal dispatch/combine path.
         self.low_latency_num_max_tokens_per_rank = (
             envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK
         )
 
         self._adapter = None
-        # When a normal dispatch runs on a buffer that was previously in
-        # low-latency mode, the low-latency buffer becomes dirty (its
-        # zero-initialized region is overwritten). We must call
-        # `clean_low_latency_buffer` before the next low-latency dispatch.
-        # This flag tracks that need so we can clean lazily on the next
+        # Normal dispatch dirties the low-latency buffer; this flag marks
+        # that clean_low_latency_buffer is needed before the next
         # low-latency forward.
         self._needs_clean_before_low_latency = False
 
@@ -142,6 +125,7 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         self,
         token_dispatch_input: MoETokenDispatchInput,
     ) -> MoETokenDispatchOutput[MoEZBALCombineMetadata]:
+        """Dispatch tokens to expert ranks using ZBAL Buffer."""
         if self._adapter is None:
             self._adapter = ZBALMoEAdapter(
                 group=self.device_group,
@@ -150,16 +134,13 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
                 low_latency_mode=self.low_latency_mode,
             )
 
-        """Dispatch tokens to expert ranks using ZBAL Buffer."""
         hidden_states = token_dispatch_input.hidden_states
         topk_weights = token_dispatch_input.topk_weights
         topk_ids = token_dispatch_input.topk_ids
 
         # ZBAL dispatch kernel routes tokens by dstExpertId / moeExpertNumPerRank,
-        # which assumes uniform expert distribution. EPLB (dynamic expert
-        # rebalancing) uses log2phy to remap expert indices, breaking this
-        # assumption. expert_map alone (without log2phy) is fine — it just marks
-        # which experts are local and ZBAL handles routing correctly.
+        # which assumes uniform expert distribution. EPLB's log2phy remapping
+        # breaks this assumption (plain expert_map is fine).
         if token_dispatch_input.routing.log2phy is not None:
             raise NotImplementedError(
                 "ZBAL MoE communication does not support EPLB (log2phy) yet. "
@@ -167,9 +148,8 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             )
 
         # ZBAL combine kernel always applies topk_weights (weighted reduction).
-        # When apply_router_weight_on_input=True, weights are already
-        # pre-multiplied into hidden_states, so combine must use ones to avoid
-        # double weighting.
+        # If apply_router_weight_on_input=True, weights were already
+        # pre-multiplied into hidden_states, so combine must use ones.
         apply_router_weight_on_input = (
             token_dispatch_input.routing.apply_router_weight_on_input
         )
@@ -190,33 +170,19 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         # ZBAL dispatch requires int64 topk_idx.
         topk_idx = topk_ids.to(torch.int64)
 
-        # Decide whether to use the low-latency path for this forward.
-        # The low-latency RDMA buffer is allocated ONCE at adapter init time
-        # based on `low_latency_num_max_tokens_per_rank` (a static env-var
-        # value). If the current batch exceeds this cap, we must NOT use the
-        # low-latency path — otherwise the C++ dispatch kernel would write
-        # past the pre-allocated buffer and trigger MTE address out-of-bounds
-        # errors in the subsequent combine. Falling back to the normal path
-        # (which uses dynamic layout computation) preserves correctness at
-        # the cost of higher latency for that single forward.
+        # Decide whether to use the low-latency path. The RDMA buffer is
+        # allocated ONCE at adapter init based on the static cap; a batch
+        # exceeding it must fall back to the normal path to avoid buffer
+        # overflow (MTE address out-of-bounds in combine).
         actual_tokens = hidden_states.shape[0]
         prefer_low_latency = self.low_latency_mode
 
-        # ACL Graph compilation incompatibility:
-        # During graph compilation (warmup + capture), we must NOT use the
-        # low_latency path. Two reasons:
-        #   1. combine_low_latency kernel lacks self-cleaning and relies on
-        #      Host-side clean_low_latency_buffer (AclrtMemset) which cannot
-        #      be captured by ACL Graph → stale meta flags → address OOB.
-        #   2. FFTS-based low_latency dispatch/combine are collective ops;
-        #      during warmup, ranks progress at different speeds across the
-        #      17 batch descriptors, causing FFTS slot deadlock → the
-        #      subsequent torch.npu.graph().__enter__()→synchronize() hangs.
-        # The normal dispatch/combine path has full self-cleaning and is
-        # graph-compatible. We check the module-level _in_graph_compilation
-        # flag (set by NPUWorker.compile_or_warm_up_model) because
-        # forward_context.capturing is only True during the final capture
-        # call, NOT during the preceding warmup iterations.
+        # During graph compilation (warmup + capture), fall back to the
+        # graph-compatible normal path: low_latency kernels are FFTS
+        # collective ops that can deadlock during warmup, and their
+        # host-side buffer cleaning cannot be captured. forward_context.
+        # capturing is only True during the final capture, hence the
+        # module-level flag.
         if prefer_low_latency and _in_graph_compilation:
             prefer_low_latency = False
             logger.info(
@@ -242,21 +208,13 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             # so the next low-latency forward knows to clean before use.
             self._needs_clean_before_low_latency = True
 
-        # Use standard or low-latency dispatch based on the decision above.
         recv_x_scales = None
         if use_low_latency:
-            # If the previous forward used normal dispatch, the low-latency
-            # buffer's meta exchange region is dirty (contains 0x3F800000
-            # residuals from normal STATE/FLAG flags). We must clean it
-            # before running any low-latency kernel.
-            #
-            # Flag value design (avoids cross-kernel collision):
-            #   normal dispatch/combine flag  = 0x3F800000 (1.0f)
-            #   dispatch_low_latency exp_flag = 2.0f (magicVal increment step=2)
-            #   combine_low_latency flag      = 0x40400000 (3.0f)
-            # All three values are distinct, so even if normal dispatch
-            # leaves residual 0x3F800000 in the meta region, the low_latency
-            # kernels' WaitSyncFlag will not false-positive on stale values.
+            # Clean the low-latency meta exchange region if a previous
+            # normal dispatch left it dirty. Flag values used by the
+            # normal and low-latency kernels are distinct (1.0f / 2.0f /
+            # 3.0f), so stale residuals cannot cause false-positive
+            # WaitSyncFlag matches, but the region still must be zeroed.
             if self._needs_clean_before_low_latency:
                 self._adapter.clean_low_latency_buffer(
                     num_max_dispatch_tokens_per_rank=self.low_latency_num_max_tokens_per_rank,
@@ -265,10 +223,10 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
                 )
                 self._needs_clean_before_low_latency = False
 
-            # Always pass the static cap as `num_max_tokens_per_rank`, NEVER
-            # `hidden_states.shape[0]`. The C++ runtime uses this value to
-            # compute RDMA slot offsets; passing a dynamic value would
-            # desynchronize buffer size from actual write addresses.
+            # Always pass the static cap as num_max_tokens_per_rank, never
+            # the actual batch size: the C++ runtime uses it to compute
+            # RDMA slot offsets, so a dynamic value would desynchronize
+            # buffer size from actual write addresses.
             num_max_tokens_per_rank = self.low_latency_num_max_tokens_per_rank
             recv_x, recv_count, handle_dict, event = self._adapter.low_latency_dispatch(
                 x=hidden_states,
@@ -276,34 +234,21 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
                 num_max_tokens_per_rank=num_max_tokens_per_rank,
                 use_fp8=False,
             )
-            # low_latency_dispatch returns recv_count with shape
-            # [num_local_experts], which is the per-expert token count
-            # needed by npu_grouped_matmul as group_list.
-            # NOTE: Keep recv_count as a device tensor for ACL graph
-            # compatibility. Calling .tolist() triggers a synchronous D2H
-            # copy (aclrtMemcpy) which is forbidden on captured streams.
-            # The Python list is not needed: token_combine only uses
-            # topk_ids/topk_weights/handle, and the MLP group_list is
-            # the device tensor below.
+            # recv_count ([num_local_experts]) is the per-expert token count
+            # used as group_list by npu_grouped_matmul. Keep it as a device
+            # tensor: .tolist() would trigger a D2H sync, which is forbidden
+            # on captured streams.
             group_list = recv_count.to(torch.int64)
             num_recv_tokens_per_expert_list = []
         else:
-            # Normal dispatch path — graph-compatible via num_worst_tokens.
-            # When num_worst_tokens > 0, the C++ runtime pre-allocates the
-            # receive buffer with the worst-case size and skips all D2H
-            # syncs (total_recv_token.item<int>() and
-            # recv_tokens_per_expert.to(at::kCPU)). The per-expert token
-            # count is returned as a device tensor in handle[5]
-            # (recv_tokens_per_expert) instead of a Python list.
-            #
-            # Worst case: ALL token-expert pairs from ALL ranks in the EP
-            # group could be routed to this rank's local experts. Each rank
-            # sends actual_tokens * topk pairs, so with ep_world_size ranks
-            # the maximum received count is ep_world_size * actual_tokens * topk.
-            # Using only actual_tokens * topk (local-only) causes the
-            # pre-allocated expandx_out buffer to be too small: the dispatch
-            # kernel writes past the end, corrupting recv_tokens_per_expert
-            # and causing MTE address-out-of-range in GroupedMatmulSwigluQuant.
+            # Normal dispatch path — graph-compatible via num_worst_tokens:
+            # the C++ runtime pre-allocates the receive buffer with the
+            # worst-case size and skips all D2H syncs, returning the
+            # per-expert token count as a device tensor.
+            # Worst case: all token-expert pairs from all EP ranks routed
+            # to local experts = ep_world_size * actual_tokens * topk.
+            # Undersizing causes the dispatch kernel to write past the
+            # buffer (MTE address out-of-range in GroupedMatmulSwigluQuant).
             topk = topk_ids.shape[1]
             num_worst_tokens = actual_tokens * topk * self.ep_world_size
             recv_x, recv_topk_idx, handle_dict, recv_x_scales = self._adapter.dispatch(
@@ -312,11 +257,9 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
                 topk_weights=combine_weights,
                 num_worst_tokens=num_worst_tokens,
             )
-            # Graph-compatible: use the device tensor recv_tokens_per_expert
-            # (shape [num_local_experts], dtype int64) stored on the Buffer
-            # after dispatch, instead of the Python list which requires D2H
-            # sync. This is exactly what npu_grouped_matmul expects as
-            # group_list (count mode).
+            # Graph-safe group_list: device tensor recv_tokens_per_expert
+            # (shape [num_local_experts], dtype int64) instead of the
+            # Python list that requires D2H sync.
             group_list = handle_dict["recv_tokens_per_expert"]
             num_recv_tokens_per_expert_list = []
 
@@ -359,10 +302,8 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             topk_weights = topk_weights.to(torch.float32)
         handle = combine_metadata.handle
 
-        # Use the combine path that matches the dispatch path recorded in
-        # `combine_metadata.is_low_latency`. The two paths use different
-        # C++ kernels with different handle layouts; mixing them would
-        # dereference invalid buffer offsets.
+        # Use the combine path matching the dispatch path: the two paths use
+        # different C++ kernels with different handle layouts.
         if combine_metadata.is_low_latency:
             topk_idx = combine_metadata.topk_ids.to(torch.int64)
             combined_x, event, hook = self._adapter.low_latency_combine(

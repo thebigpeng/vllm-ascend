@@ -144,18 +144,11 @@ def lazy_init_zbal_gva_mem(
 def _init_world_group_communicator() -> None:
     """Explicitly create the zbal world group communicator.
 
-    The world group's ProcessGroupZBAL is constructed during
-    ``init_process_group(backend='zbal')`` BEFORE ``zbal_init()`` bootstraps
-    zbal, so ``PrepareCommunicator`` skips ``initCommunicator()`` at that
-    point. The communicator is normally created lazily when the first
-    collective op is routed to ``zbalGroup_``. However, when
-    ``ZBAL_HCCL_OP`` redirects ALL ops to HCCL, no op ever reaches
-    ``zbalGroup_``, leaving the world group uncreated. Sub-group
-    communicators (e.g. MoE dispatch/combine) then fail with
-    "world group not created".
-
-    Calling this after bootstrap ensures the world group exists
-    regardless of which ops ``ZBAL_HCCL_OP`` redirects.
+    ProcessGroupZBAL is constructed before ``zbal_init()`` bootstraps zbal,
+    so the world communicator is normally created lazily by the first
+    collective op. When ``ZBAL_HCCL_OP`` redirects all ops to HCCL, no op
+    ever reaches zbal and sub-group communicators (e.g. MoE dispatch/
+    combine) would fail; create the world group here to avoid that.
     """
     try:
         world_group = dist.group.WORLD

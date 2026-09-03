@@ -22,8 +22,7 @@ interfaces, offering DeepEP-like functionality for high-throughput intranode
 all-to-all communication on Ascend NPUs.
 
 All ``zbal`` imports are deferred to method-level (lazy imports) to avoid
-import failures in non-NPU environments, consistent with the existing
-``zbal_utils.py`` pattern.
+import failures in non-NPU environments.
 """
 
 import logging
@@ -36,49 +35,6 @@ import vllm_ascend.envs as envs_ascend
 from vllm_ascend.distributed.zbal_utils import is_zbal_enabled
 
 logger = logging.getLogger(__name__)
-
-# GVA base address threshold (0 means unknown — set after zbal_init).
-# Tensors with data_ptr below this are in DMA VMM; above are in GVA.
-_GVA_BASE_ADDR: int = 0
-
-
-def _set_gva_base_addr():
-    """Try to query GVA base address from zbal runtime."""
-    global _GVA_BASE_ADDR
-    if _GVA_BASE_ADDR != 0:
-        return
-    try:
-        from zbal import get_gva_base_addr
-        _GVA_BASE_ADDR = get_gva_base_addr()
-        logger.info("[ZBAL] GVA base addr: 0x%x", _GVA_BASE_ADDR)
-    except Exception:
-        # zbal might not expose this API; threshold comparison will be skipped.
-        pass
-
-
-def _log_tensor_addrs(tag: str, *tensors):
-    """Log data_ptr of each tensor to diagnose GVA vs DMA VMM placement."""
-    _set_gva_base_addr()
-    parts = []
-    for i, t in enumerate(tensors):
-        if t is None:
-            continue
-        ptr = t.data_ptr()
-        region = "?"
-        if _GVA_BASE_ADDR != 0:
-            region = "GVA" if ptr >= _GVA_BASE_ADDR else "DMA_VMM"
-        parts.append(
-            f"t{i}: ptr=0x{ptr:x} region={region} "
-            f"shape={list(t.shape)} dtype={t.dtype} "
-            f"nbytes={t.numel() * t.element_size()}"
-        )
-    if parts:
-        logger.warning(
-            "[ZBALAddrCheck] %s rank=%s %s",
-            tag,
-            dist.get_rank() if dist.is_initialized() else -1,
-            " | ".join(parts),
-        )
 
 
 class ZBALMoEAdapter:
@@ -129,15 +85,10 @@ class ZBALMoEAdapter:
         # Lazy import: zbal is only available on NPU environments.
         from zbal.zbal_buffer import Buffer
 
-        # In low-latency mode, the ZBAL C++ runtime allocates the RDMA
-        # buffer ONCE (lazily on first low_latency_dispatch call) and reuses
-        # it across forward passes. If we let it auto-size based on the
-        # first batch's token count, subsequent larger batches will overflow
-        # the buffer and trigger MTE address out-of-bounds errors.
-        # To prevent this, we explicitly size the RDMA buffer using the
-        # static cap from VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK.
-        # This mirrors SGLang's approach of passing the same static value to
-        # both Buffer construction and every dispatch call.
+        # The RDMA buffer is allocated ONCE (lazily on first
+        # low_latency_dispatch call) and reused across forwards, so it must
+        # be sized by the static env-var cap rather than the first batch's
+        # token count, otherwise larger batches overflow the buffer.
         self.low_latency_num_max_tokens_per_rank = (
             envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK
             if low_latency_mode else 0
@@ -222,16 +173,9 @@ class ZBALMoEAdapter:
             allocate_on_comm_stream=allocate_on_comm_stream,
         )
 
-        # Print tensor addresses before dispatch to diagnose GVA/DMA memory issues.
-        # _log_tensor_addrs("dispatch_input", x, topk_idx, topk_weights)
-
-        # Step 2: Execute dispatch (pass topk_weights so zbal can forward them).
-        # ZBAL buffer.dispatch returns 6 values:
-        # (recv_x, recv_topk_idx, recv_topk_weights,
-        #  num_recv_tokens_per_expert_list, handle, event)
-        # In non-quant mode recv_x is a tensor; in quant mode
-        # (DEEP_NORMAL_MODE_USE_INT8_QUANT=1) recv_x is a tuple
-        # (recv_x, recv_x_scales).
+        # Step 2: Execute dispatch (topk_weights forwarded for weighted
+        # combine). In quant mode (DEEP_NORMAL_MODE_USE_INT8_QUANT=1),
+        # recv_x is a tuple (recv_x, recv_x_scales).
         (
             recv_x,
             recv_topk_idx,
@@ -260,10 +204,8 @@ class ZBALMoEAdapter:
         if isinstance(recv_x, tuple):
             recv_x, recv_x_scales = recv_x
 
-        # recv_tokens_per_expert is a device tensor with shape
-        # [num_local_experts] and dtype int64, stored on the Buffer after
-        # dispatch. It is the graph-safe replacement for the Python list
-        # num_recv_tokens_per_expert_list (which requires D2H sync).
+        # recv_tokens_per_expert is the graph-safe device-tensor replacement
+        # for the Python list num_recv_tokens_per_expert_list (D2H sync).
         handle_dict = {
             "handle": handle,
             "event": dispatch_event,
@@ -306,9 +248,6 @@ class ZBALMoEAdapter:
 
         config = config or self.combine_config
         handle = handle_dict["handle"]
-
-        # Print tensor addresses before combine to diagnose GVA/DMA memory issues.
-        # _log_tensor_addrs("combine_input", x, None, topk_weights)
 
         recv_x, _recv_topk_weights, event = self.buffer.combine(
             x=x,

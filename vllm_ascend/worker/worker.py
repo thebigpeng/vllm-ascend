@@ -287,8 +287,7 @@ class NPUWorker(WorkerBase):
 
         # take current memory snapshot
         # Note: in zbal mix-alloc mode, MemorySnapshot.measure has been
-        # patched (via init_zbal → _patch_memory_stats_for_mix_alloc) to
-        # use torch.npu.mem_get_info, so MemorySnapshot() works normally.
+        # patched to use torch.npu.mem_get_info, so it works normally.
         self.init_snapshot = MemorySnapshot()
         self.requested_memory = self.init_snapshot.total_memory * self.cache_config.gpu_memory_utilization
         if not is_zbal_enabled() and self.init_snapshot.free_memory < self.requested_memory:
@@ -373,14 +372,10 @@ class NPUWorker(WorkerBase):
             return kv_cache_memory_bytes
 
         # KV cache and GVA heap share the zbal-managed memory pool
-        # (VLLM_ASCEND_ZBAL_LOCAL_MEM_SIZE). The pool is carved into:
-        #   - used (weights loaded before zbal_init, in DMA VMM)
-        #   - KV cache (allocated here, in DMA VMM)
-        #   - GVA heap (allocated in lazy_init_zbal_gva_mem, in SMA/GVA,
-        #     for activations)
-        # KV cache budget = pool * utilization - used.
-        # GVA heap = pool - used_after_kv_cache (computed in
-        # lazy_init_zbal_gva_mem, will consume remaining free space).
+        # (VLLM_ASCEND_ZBAL_LOCAL_MEM_SIZE): weights are loaded before
+        # zbal_init (DMA VMM), KV cache is allocated here (DMA VMM), and
+        # the GVA heap for activations takes the remaining space in
+        # lazy_init_zbal_gva_mem.
         if is_zbal_enabled():
             from zbal import is_mix_alloc
 
@@ -555,11 +550,9 @@ class NPUWorker(WorkerBase):
                     warmup_sizes.append(compile_range.end)
 
         # When ZBAL low-latency MoE is enabled, set the graph-compilation
-        # flag so that TokenDispatcherWithZBAL falls back from low_latency
-        # to normal dispatch/combine during the entire compilation flow
-        # (warmup + capture). This avoids FFTS collective-op deadlock
-        # during warmup and combine_low_latency's graph-incompatibility
-        # during capture. See zbal_moe_comm.py for details.
+        # flag so TokenDispatcherWithZBAL falls back to the normal
+        # dispatch/combine path during compilation (warmup + capture).
+        # See zbal_moe_comm.py for details.
         from vllm_ascend.ops.fused_moe.zbal_moe_comm import set_in_graph_compilation
         zbal_low_latency_graph_mode = (
             is_zbal_enabled()
@@ -577,24 +570,18 @@ class NPUWorker(WorkerBase):
         if not self.model_config.enforce_eager:
             npugraph_memory_bytes = self.model_runner.capture_model()
 
-        # Clear the graph-compilation flag so that subsequent eager forwards
-        # (online serving) can use the low_latency path normally.
+        # Clear the flag so eager forwards (online serving) can use the
+        # low_latency path normally.
         if zbal_low_latency_graph_mode:
             set_in_graph_compilation(False)
-            # One-time sync after compilation: ensure ALL pending device
-            # operations (including FFTS stream work submitted by normal
-            # dispatch during warmup/capture) are complete before the first
-            # eager low_latency dispatch. This is NOT a per-prefill sync
-            # (which would add 0.5~2ms overhead). The first low_latency
-            # forward after graph compilation will call
-            # clean_low_latency_buffer (triggered by the
-            # _needs_clean_before_low_latency flag set during normal-dispatch
-            # fallback in graph compilation) to clear the meta exchange region.
+            # One-time sync: ensure all pending device ops (including FFTS
+            # work from normal dispatch during warmup/capture) complete
+            # before the first eager low_latency dispatch, which will also
+            # clean the dirty low-latency buffer (see
+            # _needs_clean_before_low_latency in zbal_moe_comm.py).
             torch.npu.synchronize()
-            # Ensure all EP ranks transition to eager mode simultaneously.
-            # low_latency dispatch is a collective op; if one rank starts
-            # serving before another has finished compilation, the collective
-            # op deadlocks.
+            # Barrier: low_latency dispatch is a collective op; ranks must
+            # transition to eager mode simultaneously to avoid deadlock.
             if torch.distributed.is_initialized():
                 torch.distributed.barrier()
 
@@ -775,14 +762,11 @@ class NPUWorker(WorkerBase):
         with context:
             self.model_runner.initialize_kv_cache(kv_cache_config)
 
-        # In zbal mix-alloc mode, initialize GVA heap AFTER weights and
-        # KV cache are loaded (they use DMA VMM via dma_malloc). This
-        # ensures activations use GVA (sma_malloc) while weights stay in
-        # DMA VMM, which is required because some operators (e.g.
-        # npu_quant_matmul) do not support GVA addresses for weights.
-        # ProcessGroupZBAL supports delayed initCommunicator, so
-        # collective operations will lazily initialize the communicator
-        # after zbal_bootstrap completes here.
+        # In zbal mix-alloc mode, initialize the GVA heap AFTER weights and
+        # KV cache are loaded (they use DMA VMM; some operators, e.g.
+        # npu_quant_matmul, do not support GVA addresses for weights).
+        # ProcessGroupZBAL supports delayed initCommunicator, so collective
+        # ops lazily initialize the communicator after bootstrap here.
         if is_zbal_enabled():
             lazy_init_zbal_gva_mem(
                 device=torch.device(f"npu:{self.local_rank}"),
