@@ -281,6 +281,18 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             group_list = handle_dict["recv_tokens_per_expert"]
             num_recv_tokens_per_expert_list = []
 
+        # W4A8 per-channel guard: grouped_matmul_swiglu_quant_v2 consumes
+        # per-expert COUNTS (group_list_type=1), but zbal kernels now emit
+        # prefix sums by default. Convert back here so this holds whether or
+        # not the moe_mlp bias branch performs its own 0->1 conversion
+        # (converting once makes that conversion a no-op). Tiny [num_local_
+        # experts] op; only W4A8 per-channel models pay it.
+        if token_dispatch_input.quant.use_w4a8_per_channel_gmm_swiglu and self._zbal_group_list_type == 0:
+            group_list = torch.cat([group_list[:1], torch.diff(group_list, dim=0)])
+            group_list_type_out = 1
+        else:
+            group_list_type_out = self._zbal_group_list_type
+
         combine_metadata = MoEZBALCombineMetadata(
             topk_ids=topk_ids,
             topk_weights=combine_weights,
@@ -298,8 +310,9 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             hidden_states=recv_x,
             group_list=group_list,
             # Must match the output format of the zbal dispatch kernels
-            # (counts=1 / prefix sum=0), see __init__.
-            group_list_type=self._zbal_group_list_type,
+            # (counts=1 / prefix sum=0), see __init__ — except for the W4A8
+            # per-channel guard above.
+            group_list_type=group_list_type_out,
             combine_metadata=combine_metadata,
             dynamic_scale=recv_x_scales,
         )
