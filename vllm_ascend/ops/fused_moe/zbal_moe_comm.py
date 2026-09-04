@@ -25,6 +25,7 @@ for high-throughput intranode all-to-all communication on Ascend NPUs.
 from __future__ import annotations
 
 import logging
+import os
 from dataclasses import dataclass
 
 from typing import Optional
@@ -124,6 +125,17 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
 
         self.ep_rank_id = get_ep_group().rank_in_group
         self.ep_world_size = get_ep_group().world_size
+
+        # ZBAL kernels export per-expert recv counts as raw counts (type 1,
+        # zbal default) or prefix sum (type 0), controlled by zbal's
+        # MOE_EXPERT_TOKEN_NUMS_TYPE env var (read by the zbal C++ host on
+        # every dispatch call). vllm-ascend GMM ops consume prefix sum
+        # (group_list_type=0) directly; with counts, moe_mlp inserts a
+        # separate cumsum op (~40us eager launch overhead per MoE layer).
+        # Default to prefix sum unless explicitly overridden; the value
+        # read here must stay in sync with the env var seen by zbal.
+        os.environ.setdefault("MOE_EXPERT_TOKEN_NUMS_TYPE", "0")
+        self._zbal_group_list_type = 0 if os.getenv("MOE_EXPERT_TOKEN_NUMS_TYPE") == "0" else 1
 
     def token_dispatch(
         self,
@@ -285,7 +297,9 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         return MoETokenDispatchOutput(
             hidden_states=recv_x,
             group_list=group_list,
-            group_list_type=1,
+            # Must match the output format of the zbal dispatch kernels
+            # (counts=1 / prefix sum=0), see __init__.
+            group_list_type=self._zbal_group_list_type,
             combine_metadata=combine_metadata,
             dynamic_scale=recv_x_scales,
         )
