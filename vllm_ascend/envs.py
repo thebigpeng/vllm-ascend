@@ -136,17 +136,17 @@ env_variables: dict[str, Callable[[], Any]] = {
     "VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK": lambda: int(
         os.getenv("VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK", "128")
     ),
-    # Mirrors zbal's MOE_EXPERT_TOKEN_NUMS_TYPE (read by zbal's C++
-    # low_latency host layer to select the expert-token-count output
-    # format of the dispatch kernel). The shared env var is the single
-    # knob so both sides can never disagree.
+    # Mirrors zbal's MOE_EXPERT_TOKEN_NUMS_TYPE (read by zbal's C++ host
+    # layer to select the expert-token-count output format of BOTH the
+    # low_latency and normal dispatch kernels). The shared env var is the
+    # single knob so both sides can never disagree.
     # 0: kernel writes prefix-sum group_list directly; the integration
     #    passes group_list_type=0 downstream and moe_mlp skips its
-    #    aclnnCusmsum conversion. Requires a zbal build whose
-    #    low_latency host layer reads this variable.
+    #    aclnnCusmsum conversion. Requires a zbal build containing the
+    #    kernel-side prefix-sum support (both dispatch paths).
     # 1 (default): per-expert counts; moe_mlp converts via cumsum.
-    # Only the low_latency path is affected; the normal path always
-    # outputs per-expert counts on its device tensor.
+    # NOTE: type=0 requires the NEW zbal and this integration code to be
+    # deployed together — version skew with this env set corrupts group_list.
     "VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_GROUP_LIST_TYPE": lambda: int(
         os.getenv("MOE_EXPERT_TOKEN_NUMS_TYPE", "1")
     ),

@@ -105,9 +105,10 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         self.low_latency_int8 = envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_INT8
         # group_list format of the low_latency dispatch output, mirroring
         # zbal's MOE_EXPERT_TOKEN_NUMS_TYPE (shared env var, read once —
-        # see envs.py). 0 = prefix sum written kernel-side, 1 = per-expert
-        # counts. The normal path always outputs per-expert counts.
-        self.low_latency_group_list_type = (
+        # see envs.py). 0 = prefix sum written kernel-side (fed to gmm
+        # directly, no host cumsum), 1 = per-expert counts. Applies to both
+        # the normal and low_latency dispatch kernels.
+        self.group_list_type = (
             envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_GROUP_LIST_TYPE
         )
 
@@ -193,7 +194,7 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             # .tolist() would trigger a D2H sync, forbidden on captured
             # streams.
             group_list = recv_count.to(torch.int64)
-            group_list_type = self.low_latency_group_list_type
+            group_list_type = self.group_list_type
             num_recv_tokens_per_expert_list = []
         else:
             # Normal dispatch path — graph-compatible via num_worst_tokens:
@@ -214,11 +215,12 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             )
             # Graph-safe group_list: device tensor recv_tokens_per_expert
             # (shape [num_local_experts], dtype int64) instead of the
-            # Python list that requires D2H sync. The normal kernel always
-            # writes per-expert counts (MOE_EXPERT_TOKEN_NUMS_TYPE does not
-            # apply to this tensor), so moe_mlp must convert via cumsum.
+            # Python list that requires D2H sync. Format follows the same
+            # MOE_EXPERT_TOKEN_NUMS_TYPE switch as low_latency: 0 = prefix
+            # sum (fed to gmm directly, no host cumsum), 1 = per-expert
+            # counts (moe_mlp converts via cumsum).
             group_list = handle_dict["recv_tokens_per_expert"]
-            group_list_type = 1
+            group_list_type = self.group_list_type
             num_recv_tokens_per_expert_list = []
 
         combine_metadata = MoEZBALCombineMetadata(
