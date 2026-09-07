@@ -129,12 +129,26 @@ env_variables: dict[str, Callable[[], Any]] = {
     # Only effective when VLLM_ASCEND_ZBAL_MOE_ENABLE=1.
     # 0 (default): standard dispatch/combine; 1: low-latency (online serving).
     "VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY": lambda: bool(int(os.getenv("VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY", "0"))),
-    # Static cap for the ZBAL low-latency dispatch buffer, allocated ONCE
-    # based on this value. Forwards exceeding it fall back to the normal
-    # dispatch/combine path. Default 128 (matches SGLang); set to >=
-    # expected max decode batch size to avoid frequent fallbacks.
+    # Static cap sizing the ZBAL low-latency RDMA buffer, allocated ONCE
+    # based on this value. It must cover the largest batch actually served;
+    # an undersized cap causes out-of-bounds writes (MTE errors) in the
+    # low_latency kernels. Default 128; set to >= expected max decode batch.
     "VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK": lambda: int(
         os.getenv("VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK", "128")
+    ),
+    # Mirrors zbal's MOE_EXPERT_TOKEN_NUMS_TYPE (read by zbal's C++
+    # low_latency host layer to select the expert-token-count output
+    # format of the dispatch kernel). The shared env var is the single
+    # knob so both sides can never disagree.
+    # 0: kernel writes prefix-sum group_list directly; the integration
+    #    passes group_list_type=0 downstream and moe_mlp skips its
+    #    aclnnCusmsum conversion. Requires a zbal build whose
+    #    low_latency host layer reads this variable.
+    # 1 (default): per-expert counts; moe_mlp converts via cumsum.
+    # Only the low_latency path is affected; the normal path always
+    # outputs per-expert counts on its device tensor.
+    "VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_GROUP_LIST_TYPE": lambda: int(
+        os.getenv("MOE_EXPERT_TOKEN_NUMS_TYPE", "1")
     ),
     # Whether to enable sender-side INT8 per-token dynamic quantization for
     # ZBAL low-latency MoE dispatch (aligned with the normal dispatch path).
