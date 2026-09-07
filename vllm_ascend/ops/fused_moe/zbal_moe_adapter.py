@@ -404,24 +404,6 @@ class ZBALMoEAdapter:
     # Utilities
     # ------------------------------------------------------------------
 
-    def clean_low_latency_buffer(
-        self, num_max_dispatch_tokens_per_rank: int, hidden: int, num_experts: int
-    ):
-        """Clean the low-latency buffer if it is dirty.
-
-        Must be called before executing any low-latency kernel after running
-        the normal dispatch/combine.
-
-        Args:
-            num_max_dispatch_tokens_per_rank: Max tokens to dispatch per rank.
-            hidden: Hidden dimension size.
-            num_experts: Total number of experts.
-        """
-        self.buffer.clean_low_latency_buffer(
-            num_max_dispatch_tokens_per_rank, hidden, num_experts
-        )
-        logger.debug("[ZBALMoEAdapter] Low-latency buffer cleaned")
-
     def capture_event(self) -> Any:
         """Capture a NPU event on the current stream.
 

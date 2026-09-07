@@ -54,18 +54,6 @@ from vllm_ascend.ops.fused_moe.zbal_moe_adapter import ZBALMoEAdapter
 
 logger = logging.getLogger(__name__)
 
-# Module-level flag set by NPUWorker to mark graph compilation (warmup +
-# capture) in progress. The low_latency kernels are FFTS collective ops
-# that can deadlock during warmup and are not ACL-Graph-capturable, so we
-# force fallback to the graph-compatible normal dispatch/combine path.
-_in_graph_compilation: bool = False
-
-
-def set_in_graph_compilation(value: bool):
-    """Set the graph-compilation flag. Called by NPUWorker."""
-    global _in_graph_compilation
-    _in_graph_compilation = value
-
 
 @dataclass(frozen=True, slots=True)
 class MoEZBALCombineMetadata:
@@ -106,8 +94,8 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
 
         # Read buffer sizes from environment variables.
         self.low_latency_mode = envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY
-        # Static cap for the low-latency dispatch buffer; larger batches
-        # fall back to the normal dispatch/combine path.
+        # Static cap sizing the low-latency RDMA buffer (allocated once at
+        # adapter init); it must cover the max batch size actually served.
         self.low_latency_num_max_tokens_per_rank = (
             envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK
         )
@@ -117,10 +105,6 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         self.low_latency_int8 = envs_ascend.VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_INT8
 
         self._adapter = None
-        # Normal dispatch dirties the low-latency buffer; this flag marks
-        # that clean_low_latency_buffer is needed before the next
-        # low-latency forward.
-        self._needs_clean_before_low_latency = False
 
         self.ep_rank_id = get_ep_group().rank_in_group
         self.ep_world_size = get_ep_group().world_size
@@ -174,59 +158,14 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
         # ZBAL dispatch requires int64 topk_idx.
         topk_idx = topk_ids.to(torch.int64)
 
-        # Decide whether to use the low-latency path. The RDMA buffer is
-        # allocated ONCE at adapter init based on the static cap; a batch
-        # exceeding it must fall back to the normal path to avoid buffer
-        # overflow (MTE address out-of-bounds in combine).
-        actual_tokens = hidden_states.shape[0]
-        prefer_low_latency = self.low_latency_mode
-
-        # During graph compilation (warmup + capture), fall back to the
-        # graph-compatible normal path: low_latency kernels are FFTS
-        # collective ops that can deadlock during warmup, and their
-        # host-side buffer cleaning cannot be captured. forward_context.
-        # capturing is only True during the final capture, hence the
-        # module-level flag.
-        if prefer_low_latency and _in_graph_compilation:
-            prefer_low_latency = False
-            logger.info(
-                "[TokenDispatcherWithZBAL] Graph compilation in progress; "
-                "falling back from low_latency to normal dispatch for "
-                "graph compatibility (FFTS collective ops can deadlock "
-                "during warmup if ranks progress at different speeds)."
-            )
-
-        use_low_latency = (
-            prefer_low_latency
-            and actual_tokens <= self.low_latency_num_max_tokens_per_rank
-        )
-        if prefer_low_latency and not use_low_latency:
-            logger.warning(
-                "[TokenDispatcherWithZBAL] Batch %d exceeds low_latency cap "
-                "%d; falling back to normal dispatch for this forward. "
-                "To avoid frequent fallbacks, increase "
-                "VLLM_ASCEND_ZBAL_MOE_LOW_LATENCY_NUM_MAX_TOKENS_PER_RANK.",
-                actual_tokens, self.low_latency_num_max_tokens_per_rank,
-            )
-            # Normal dispatch leaves the low-latency buffer dirty. Mark it
-            # so the next low-latency forward knows to clean before use.
-            self._needs_clean_before_low_latency = True
+        # The dispatch path is fixed at init. The low_latency kernels are
+        # ACL-Graph-capturable (ZBAL registers graph-pool callbacks for
+        # address stability), so warmup, capture and replay all use the
+        # same path — no fallback to the normal path is needed.
+        use_low_latency = self.low_latency_mode
 
         recv_x_scales = None
         if use_low_latency:
-            # Clean the low-latency meta exchange region if a previous
-            # normal dispatch left it dirty. Flag values used by the
-            # normal and low-latency kernels are distinct (1.0f / 2.0f /
-            # 3.0f), so stale residuals cannot cause false-positive
-            # WaitSyncFlag matches, but the region still must be zeroed.
-            if self._needs_clean_before_low_latency:
-                self._adapter.clean_low_latency_buffer(
-                    num_max_dispatch_tokens_per_rank=self.low_latency_num_max_tokens_per_rank,
-                    hidden=self.hidden_size,
-                    num_experts=self.num_experts,
-                )
-                self._needs_clean_before_low_latency = False
-
             # Always pass the static cap as num_max_tokens_per_rank, never
             # the actual batch size: the C++ runtime uses it to compute
             # RDMA slot offsets, so a dynamic value would desynchronize
@@ -252,11 +191,11 @@ class TokenDispatcherWithZBAL(MoETokenDispatcher[MoEZBALCombineMetadata]):
             # worst-case size and skips all D2H syncs, returning the
             # per-expert token count as a device tensor.
             # Worst case: all token-expert pairs from all EP ranks routed
-            # to local experts = ep_world_size * actual_tokens * topk.
+            # to local experts = ep_world_size * num_tokens * topk.
             # Undersizing causes the dispatch kernel to write past the
             # buffer (MTE address out-of-range in GroupedMatmulSwigluQuant).
             topk = topk_ids.shape[1]
-            num_worst_tokens = actual_tokens * topk * self.ep_world_size
+            num_worst_tokens = hidden_states.shape[0] * topk * self.ep_world_size
             recv_x, recv_topk_idx, handle_dict, recv_x_scales = self._adapter.dispatch(
                 x=hidden_states,
                 topk_idx=topk_idx,
