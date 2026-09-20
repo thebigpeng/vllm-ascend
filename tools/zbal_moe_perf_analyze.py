@@ -1,10 +1,20 @@
 #!/usr/bin/env python3
 """Offline analyzer for ZBAL MoE dispatch/combine kernel performance.
 
-Parses the msprof text output (kernel_details.csv) produced by vllm-ascend's
-torch profiler (e.g. `--profile` with torch_profiler_dir set, collected by
+Takes the profiling output of vllm-ascend's torch profiler (e.g. `--profile`
+with torch_profiler_dir set, collected by
 vllm_ascend/profiler/torch_npu_profiler.py) and reports the overall execution
 performance of the ZBAL MoE dispatch & combine kernels.
+
+Pipeline (two stages):
+  1. Analysis: each trace directory under the given roots (one per rank,
+     e.g. `<worker_name>.msprof/PROF_*`) is fed to
+     `torch_npu.profiler.profiler.analyse(..., export_type="text")`, which
+     generates kernel_details.csv from the raw msprof data. analyse only
+     discovers PROF_* dirs one level below its input, so every trace dir is
+     analysed one by one. Use --no-analyse to skip this stage when the csv
+     files already exist (or when running in an environment without NPU).
+  2. Parsing: kernel_details.csv files are matched and aggregated.
 
 The kernel matching and aggregation logic mirrors zbal's test-side analyzer
 (membfabric_hybrid/app/zbal/test/python/operators/perf_analyze.py):
@@ -20,11 +30,13 @@ ZBAL MoE kernels covered (AICore kernel symbol names, grouped by phase):
 
 Usage:
     python tools/zbal_moe_perf_analyze.py <profiling_dir> [<dir2> ...]
+    python tools/zbal_moe_perf_analyze.py <dir> --no-analyse   # csv already there
 """
 
 import argparse
 import csv
 import os
+import sys
 from collections import defaultdict
 
 # kernel symbol name -> MoE phase ("dispatch" or "combine")
@@ -148,6 +160,41 @@ def write_table(rows, title):
     print()
 
 
+def run_analyse(roots: list[str]) -> None:
+    """Stage 1: run torch_npu offline analysis on every trace directory.
+
+    vllm-ascend's torch profiler leaves one raw msprof trace dir per rank
+    (e.g. `<worker_name>.msprof/PROF_*`). `torch_npu.profiler.profiler.analyse`
+    with export_type="text" generates kernel_details.csv (and other summary
+    csv files) from the raw data, and only scans PROF_* dirs one level below
+    its input path, so each trace dir must be analysed individually.
+    """
+    try:
+        from torch_npu.profiler.profiler import analyse
+    except ImportError as e:
+        sys.exit(
+            f"Cannot import torch_npu.profiler.profiler.analyse: {e}\n"
+            "Run this script in an environment with torch_npu installed, or pass "
+            "--no-analyse when kernel_details.csv files already exist."
+        )
+    for root in roots:
+        if not os.path.isdir(root):
+            print(f"[analyse] skip non-directory: {root}")
+            continue
+        subdirs = [os.path.join(root, d) for d in sorted(os.listdir(root)) if os.path.isdir(os.path.join(root, d))]
+        # When the root itself is a single trace dir (no sub dirs), analyse it
+        # directly; otherwise analyse every trace dir below it one by one.
+        targets = subdirs or [root]
+        for target in targets:
+            print(f"[analyse] analysing {target} ...")
+            try:
+                analyse(target, export_type="text")
+                print(f"[analyse] done: {target}")
+            except Exception as e:
+                # A dir without valid PROF_* data should not abort the rest.
+                print(f"[analyse] failed: {target}: {e}", file=sys.stderr)
+
+
 def report(roots: list[str]):
     csvs = find_kernel_csvs(roots)
     if not csvs:
@@ -216,7 +263,15 @@ def main():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("dirs", nargs="+", help="profiling output dir(s) containing msprof traces")
+    parser.add_argument(
+        "--no-analyse",
+        action="store_true",
+        help="skip the torch_npu.profiler analyse stage (use when kernel_details.csv already exists "
+        "or torch_npu is unavailable, e.g. on a non-NPU host)",
+    )
     args = parser.parse_args()
+    if not args.no_analyse:
+        run_analyse(args.dirs)
     report(args.dirs)
 
 
